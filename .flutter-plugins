@@ -45,6 +45,7 @@ shared_preferences_linux=/Users/moksh/development/flutter/.pub-cache/hosted/pub.
 shared_preferences_macos=/Users/moksh/development/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-2.0.5/
 shared_preferences_web=/Users/moksh/development/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-2.0.4/
 shared_preferences_windows=/Users/moksh/development/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_windows-2.1.2/
+smart_auth=/Users/moksh/development/flutter/.pub-cache/hosted/pub.dartlang.org/smart_auth-1.0.8/
 sqflite=/Users/moksh/development/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.2.2/
 syncfusion_flutter_pdfviewer=/Users/moksh/development/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_pdfviewer-20.4.43/
 syncfusion_pdfviewer_macos=/Users/moksh/development/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_pdfviewer_macos-20.4.43/
