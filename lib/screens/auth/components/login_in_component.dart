@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialv/auth/auth_service.dart';
 import 'package:socialv/main.dart';
 import 'package:socialv/network/rest_apis.dart';
 import 'package:socialv/screens/auth/screens/forget_password_screen.dart';
@@ -8,6 +9,7 @@ import 'package:socialv/screens/dashboard_screen.dart';
 import 'package:socialv/screens/post/screens/single_post_screen.dart';
 import 'package:socialv/services/login_service.dart';
 
+import '../../../service_locator.dart';
 import '../../../utils/app_constants.dart';
 
 class LoginInComponent extends StatefulWidget {
@@ -46,8 +48,12 @@ class _LoginInComponentState extends State<LoginInComponent> {
 
     hideKeyboard(context);
 
-    await loginUser(request: req, isSocialLogin: isSocialLogin).then((value) async {
-      Map req = {"player_id": getStringAsync(SharePreferencesKey.ONE_SIGNAL_PLAYER_ID), "add": 1};
+    await loginUser(request: req, isSocialLogin: isSocialLogin)
+        .then((value) async {
+      Map req = {
+        "player_id": getStringAsync(SharePreferencesKey.ONE_SIGNAL_PLAYER_ID),
+        "add": 1
+      };
 
       await setPlayerId(req).then((value) {
         //
@@ -69,9 +75,11 @@ class _LoginInComponentState extends State<LoginInComponent> {
       appStore.setLoading(false);
 
       if (widget.activityId != null) {
-        SinglePostScreen(postId: widget.activityId.validate()).launch(context, isNewTask: true);
+        SinglePostScreen(postId: widget.activityId.validate())
+            .launch(context, isNewTask: true);
       } else {
-        push(DashboardScreen(), isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
+        push(DashboardScreen(),
+            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
       }
     }).catchError((e) {
       appStore.setLoading(false);
@@ -118,7 +126,8 @@ class _LoginInComponentState extends State<LoginInComponent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               16.height,
-              Text(language.welcomeBack, style: boldTextStyle(size: 24)).paddingSymmetric(horizontal: 16),
+              Text(language.welcomeBack, style: boldTextStyle(size: 24))
+                  .paddingSymmetric(horizontal: 16),
               8.height,
               Text(
                 language.youHaveBeenMissed,
@@ -140,7 +149,8 @@ class _LoginInComponentState extends State<LoginInComponent> {
                         decoration: inputDecoration(
                           context,
                           label: '${language.username}/${language.email}',
-                          labelStyle: secondaryTextStyle(weight: FontWeight.w600),
+                          labelStyle:
+                              secondaryTextStyle(weight: FontWeight.w600),
                         ),
                       ).paddingSymmetric(horizontal: 16),
                       16.height,
@@ -150,12 +160,14 @@ class _LoginInComponentState extends State<LoginInComponent> {
                         focus: password,
                         textFieldType: TextFieldType.PASSWORD,
                         textStyle: boldTextStyle(),
-                        suffixIconColor: appStore.isDarkMode ? bodyDark : bodyWhite,
+                        suffixIconColor:
+                            appStore.isDarkMode ? bodyDark : bodyWhite,
                         decoration: inputDecoration(
                           context,
                           label: language.password,
                           contentPadding: EdgeInsets.all(0),
-                          labelStyle: secondaryTextStyle(weight: FontWeight.w600),
+                          labelStyle:
+                              secondaryTextStyle(weight: FontWeight.w600),
                         ),
                         isPassword: true,
                         onFieldSubmitted: (x) {
@@ -165,7 +177,8 @@ class _LoginInComponentState extends State<LoginInComponent> {
 
                             Map request = {
                               Users.username: nameCont.text.trim().validate(),
-                              Users.password: passwordCont.text.trim().validate(),
+                              Users.password:
+                                  passwordCont.text.trim().validate(),
                             };
                             login(req: request);
                           } else {
@@ -181,7 +194,8 @@ class _LoginInComponentState extends State<LoginInComponent> {
                             builder: (_) => Row(
                               children: [
                                 Checkbox(
-                                  shape: RoundedRectangleBorder(borderRadius: radius(2)),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: radius(2)),
                                   activeColor: context.primaryColor,
                                   value: appStore.doRemember,
                                   onChanged: (val) {
@@ -189,7 +203,9 @@ class _LoginInComponentState extends State<LoginInComponent> {
                                     setState(() {});
                                   },
                                 ),
-                                Text(language.rememberMe, style: secondaryTextStyle()).onTap(() {
+                                Text(language.rememberMe,
+                                        style: secondaryTextStyle())
+                                    .onTap(() {
                                   appStore.setRemember(!appStore.doRemember);
                                   setState(() {});
                                 }),
@@ -202,7 +218,9 @@ class _LoginInComponentState extends State<LoginInComponent> {
                             },
                             child: Text(
                               language.forgetPassword,
-                              style: secondaryTextStyle(color: context.primaryColor, fontStyle: FontStyle.italic),
+                              style: secondaryTextStyle(
+                                  color: context.primaryColor,
+                                  fontStyle: FontStyle.italic),
                             ),
                           ).paddingRight(8)
                         ],
@@ -212,39 +230,46 @@ class _LoginInComponentState extends State<LoginInComponent> {
                         context: context,
                         text: language.login.capitalizeFirstLetter(),
                         onTap: () {
-                          if (loginFormKey.currentState!.validate()) {
-                            loginFormKey.currentState!.save();
-                            hideKeyboard(context);
+                          AuthService(sl()).signUp('9086031210', 'moksh');
+                          // if (loginFormKey.currentState!.validate()) {
+                          //   loginFormKey.currentState!.save();
+                          //   hideKeyboard(context);
 
-                            Map request = {
-                              Users.username: nameCont.text.trim().validate(),
-                              Users.password: passwordCont.text.trim().validate(),
-                            };
-                            login(req: request);
-                          } else {
-                            appStore.setLoading(false);
-                          }
+                          //   Map request = {
+                          //     Users.username: nameCont.text.trim().validate(),
+                          //     Users.password: passwordCont.text.trim().validate(),
+                          //   };
+                          //   login(req: request);
+                          // } else {
+                          //   appStore.setLoading(false);
+                          // }
                         },
                       ),
                       16.height,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(language.dHaveAnAccount, style: secondaryTextStyle()),
+                          Text(language.dHaveAnAccount,
+                              style: secondaryTextStyle()),
                           4.width,
                           Text(
                             language.signUp,
-                            style: secondaryTextStyle(color: context.primaryColor, decoration: TextDecoration.underline),
+                            style: secondaryTextStyle(
+                                color: context.primaryColor,
+                                decoration: TextDecoration.underline),
                           ).onTap(() {
                             widget.callback?.call();
-                          }, highlightColor: Colors.transparent, splashColor: Colors.transparent)
+                          },
+                              highlightColor: Colors.transparent,
+                              splashColor: Colors.transparent)
                         ],
                       ),
                       16.height,
                       Row(
                         children: [
                           AppButton(
-                            shapeBorder: RoundedRectangleBorder(borderRadius: radius(defaultAppButtonRadius)),
+                            shapeBorder: RoundedRectangleBorder(
+                                borderRadius: radius(defaultAppButtonRadius)),
                             onTap: () {
                               appStore.setLoading(true);
                               googleSignIn();
@@ -255,7 +280,11 @@ class _LoginInComponentState extends State<LoginInComponent> {
                               children: [
                                 GoogleLogoWidget(size: 14),
                                 6.width,
-                                Text(language.signinWithGoogle, style: secondaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis).flexible(),
+                                Text(language.signinWithGoogle,
+                                        style: secondaryTextStyle(),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis)
+                                    .flexible(),
                               ],
                             ).center(),
                             elevation: 1,
@@ -264,7 +293,8 @@ class _LoginInComponentState extends State<LoginInComponent> {
                           16.width,
                           if (isIOS)
                             AppButton(
-                              shapeBorder: RoundedRectangleBorder(borderRadius: radius(defaultAppButtonRadius)),
+                              shapeBorder: RoundedRectangleBorder(
+                                  borderRadius: radius(defaultAppButtonRadius)),
                               onTap: () {
                                 appStore.setLoading(true);
                                 appleSignIn();
@@ -272,9 +302,14 @@ class _LoginInComponentState extends State<LoginInComponent> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Icon(Icons.apple, color: context.iconColor, size: 22),
+                                  Icon(Icons.apple,
+                                      color: context.iconColor, size: 22),
                                   6.width,
-                                  Text(language.signinWithApple, style: secondaryTextStyle(), maxLines: 1, overflow: TextOverflow.ellipsis).flexible(),
+                                  Text(language.signinWithApple,
+                                          style: secondaryTextStyle(),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis)
+                                      .flexible(),
                                 ],
                               ),
                               elevation: 1,

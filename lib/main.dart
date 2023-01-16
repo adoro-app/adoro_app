@@ -11,6 +11,7 @@ import 'package:socialv/language/app_localizations.dart';
 import 'package:socialv/language/languages.dart';
 import 'package:socialv/models/common_models.dart';
 import 'package:socialv/screens/splash_screen.dart';
+import 'package:socialv/service_locator.dart';
 import 'package:socialv/store/app_store.dart';
 import 'package:socialv/utils/app_constants.dart';
 
@@ -20,6 +21,7 @@ late BaseLanguage language;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setupServiceLocator();
 
   await initialize(aLocaleLanguageList: languageList());
 
@@ -41,7 +43,8 @@ void main() async {
   final status = await OneSignal.shared.getDeviceState();
   setValue(SharePreferencesKey.ONE_SIGNAL_PLAYER_ID, status?.userId.validate());
 
-  OneSignal.shared.setNotificationWillShowInForegroundHandler((OSNotificationReceivedEvent event) {
+  OneSignal.shared.setNotificationWillShowInForegroundHandler(
+      (OSNotificationReceivedEvent event) {
     event.complete(event.notification);
   });
   exitFullScreen();
@@ -65,7 +68,8 @@ class _MyAppState extends State<MyApp> {
 
   void init() async {
     afterBuildCreated(() async {
-      int themeModeIndex = getIntAsync(SharePreferencesKey.APP_THEME, defaultValue: AppThemeMode.ThemeModeSystem);
+      int themeModeIndex = getIntAsync(SharePreferencesKey.APP_THEME,
+          defaultValue: AppThemeMode.ThemeModeSystem);
 
       if (themeModeIndex == AppThemeMode.ThemeModeLight) {
         appStore.toggleDarkMode(value: false, isFromMain: true);
@@ -73,21 +77,28 @@ class _MyAppState extends State<MyApp> {
         appStore.toggleDarkMode(value: true, isFromMain: true);
       }
 
-
-      await appStore.setLoggedIn(getBoolAsync(SharePreferencesKey.IS_LOGGED_IN));
+      await appStore
+          .setLoggedIn(getBoolAsync(SharePreferencesKey.IS_LOGGED_IN));
       if (appStore.isLoggedIn) {
         appStore.setToken(getStringAsync(SharePreferencesKey.TOKEN));
-        appStore.setVerificationStatus(getStringAsync(SharePreferencesKey.VERIFICATION_STATUS));
+        appStore.setVerificationStatus(
+            getStringAsync(SharePreferencesKey.VERIFICATION_STATUS));
         appStore.setNonce(getStringAsync(SharePreferencesKey.NONCE));
         appStore.setLoginEmail(getStringAsync(SharePreferencesKey.LOGIN_EMAIL));
-        appStore.setLoginName(getStringAsync(SharePreferencesKey.LOGIN_DISPLAY_NAME));
-        appStore.setLoginFullName(getStringAsync(SharePreferencesKey.LOGIN_FULL_NAME));
-        appStore.setLoginUserId(getStringAsync(SharePreferencesKey.LOGIN_USER_ID));
-        appStore.setLoginAvatarUrl(getStringAsync(SharePreferencesKey.LOGIN_AVATAR_URL));
+        appStore.setLoginName(
+            getStringAsync(SharePreferencesKey.LOGIN_DISPLAY_NAME));
+        appStore.setLoginFullName(
+            getStringAsync(SharePreferencesKey.LOGIN_FULL_NAME));
+        appStore
+            .setLoginUserId(getStringAsync(SharePreferencesKey.LOGIN_USER_ID));
+        appStore.setLoginAvatarUrl(
+            getStringAsync(SharePreferencesKey.LOGIN_AVATAR_URL));
       }
 
-      if (getMemberListPref().isNotEmpty) appStore.recentMemberSearchList.addAll(getMemberListPref());
-      if (getGroupListPref().isNotEmpty) appStore.recentGroupsSearchList.addAll(getGroupListPref());
+      if (getMemberListPref().isNotEmpty)
+        appStore.recentMemberSearchList.addAll(getMemberListPref());
+      if (getGroupListPref().isNotEmpty)
+        appStore.recentGroupsSearchList.addAll(getGroupListPref());
     });
   }
 
@@ -110,7 +121,8 @@ class _MyAppState extends State<MyApp> {
           GlobalCupertinoLocalizations.delegate,
         ],
         localeResolutionCallback: (locale, supportedLocales) => locale,
-        locale: Locale(appStore.selectedLanguage.validate(value: Constants.defaultLanguage)),
+        locale: Locale(appStore.selectedLanguage
+            .validate(value: Constants.defaultLanguage)),
         onGenerateRoute: (settings) {
           String pathComponents = settings.name!.split('/').last;
 
