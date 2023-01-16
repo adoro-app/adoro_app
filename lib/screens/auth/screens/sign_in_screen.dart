@@ -79,12 +79,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(APP_ICON,
-                              height: 40, width: 40, fit: BoxFit.cover),
+                          Image.asset(APP_LOGO, height: 40, fit: BoxFit.cover),
                           8.width,
-                          Text(APP_NAME,
-                              style: boldTextStyle(
-                                  color: context.primaryColor, size: 28)),
                         ],
                       ),
                       40.height,
@@ -94,7 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             TextButton(
-                              child: Text(language.login.toUpperCase(),
+                              child: Text('LOGIN',
                                   style: boldTextStyle(
                                       color: selectedIndex == 0
                                           ? Colors.white

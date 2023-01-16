@@ -144,179 +144,206 @@ class _LoginInComponentState extends State<LoginInComponent> {
                         controller: nameCont,
                         nextFocus: password,
                         focus: name,
-                        textFieldType: TextFieldType.USERNAME,
+                        textFieldType: TextFieldType.PHONE,
                         textStyle: boldTextStyle(),
                         decoration: inputDecoration(
                           context,
-                          label: '${language.username}/${language.email}',
+                          label: 'Mobile Number',
                           labelStyle:
                               secondaryTextStyle(weight: FontWeight.w600),
                         ),
                       ).paddingSymmetric(horizontal: 16),
                       16.height,
-                      AppTextField(
-                        enabled: !appStore.isLoading,
-                        controller: passwordCont,
-                        focus: password,
-                        textFieldType: TextFieldType.PASSWORD,
-                        textStyle: boldTextStyle(),
-                        suffixIconColor:
-                            appStore.isDarkMode ? bodyDark : bodyWhite,
-                        decoration: inputDecoration(
-                          context,
-                          label: language.password,
-                          contentPadding: EdgeInsets.all(0),
-                          labelStyle:
-                              secondaryTextStyle(weight: FontWeight.w600),
-                        ),
-                        isPassword: true,
-                        onFieldSubmitted: (x) {
-                          if (loginFormKey.currentState!.validate()) {
-                            loginFormKey.currentState!.save();
-                            hideKeyboard(context);
+                      // AppTextField(
+                      //   enabled: !appStore.isLoading,
+                      //   controller: passwordCont,
+                      //   focus: password,
+                      //   textFieldType: TextFieldType.PASSWORD,
+                      //   textStyle: boldTextStyle(),
+                      //   suffixIconColor:
+                      //       appStore.isDarkMode ? bodyDark : bodyWhite,
+                      //   decoration: inputDecoration(
+                      //     context,
+                      //     label: language.password,
+                      //     contentPadding: EdgeInsets.all(0),
+                      //     labelStyle:
+                      //         secondaryTextStyle(weight: FontWeight.w600),
+                      //   ),
+                      //   isPassword: true,
+                      //   onFieldSubmitted: (x) {
+                      //     if (loginFormKey.currentState!.validate()) {
+                      //       loginFormKey.currentState!.save();
+                      //       hideKeyboard(context);
 
-                            Map request = {
-                              Users.username: nameCont.text.trim().validate(),
-                              Users.password:
-                                  passwordCont.text.trim().validate(),
-                            };
-                            login(req: request);
-                          } else {
-                            appStore.setLoading(false);
-                          }
-                        },
-                      ).paddingSymmetric(horizontal: 16),
-                      12.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Observer(
-                            builder: (_) => Row(
-                              children: [
-                                Checkbox(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: radius(2)),
-                                  activeColor: context.primaryColor,
-                                  value: appStore.doRemember,
-                                  onChanged: (val) {
-                                    appStore.setRemember(!appStore.doRemember);
-                                    setState(() {});
-                                  },
-                                ),
-                                Text(language.rememberMe,
-                                        style: secondaryTextStyle())
-                                    .onTap(() {
-                                  appStore.setRemember(!appStore.doRemember);
-                                  setState(() {});
-                                }),
-                              ],
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              ForgetPasswordScreen().launch(context);
-                            },
-                            child: Text(
-                              language.forgetPassword,
-                              style: secondaryTextStyle(
-                                  color: context.primaryColor,
-                                  fontStyle: FontStyle.italic),
-                            ),
-                          ).paddingRight(8)
-                        ],
-                      ),
-                      32.height,
-                      appButton(
-                        context: context,
-                        text: language.login.capitalizeFirstLetter(),
+                      //       Map request = {
+                      //         Users.username: nameCont.text.trim().validate(),
+                      //         Users.password:
+                      //             passwordCont.text.trim().validate(),
+                      //       };
+                      //       login(req: request);
+                      //     } else {
+                      //       appStore.setLoading(false);
+                      //     }
+                      //   },
+                      // ).paddingSymmetric(horizontal: 16),
+                      // 12.height,
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Observer(
+                      //       builder: (_) => Row(
+                      //         children: [
+                      //           Checkbox(
+                      //             shape: RoundedRectangleBorder(
+                      //                 borderRadius: radius(2)),
+                      //             activeColor: context.primaryColor,
+                      //             value: appStore.doRemember,
+                      //             onChanged: (val) {
+                      //               appStore.setRemember(!appStore.doRemember);
+                      //               setState(() {});
+                      //             },
+                      //           ),
+                      //           Text(language.rememberMe,
+                      //                   style: secondaryTextStyle())
+                      //               .onTap(() {
+                      //             appStore.setRemember(!appStore.doRemember);
+                      //             setState(() {});
+                      //           }),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     TextButton(
+                      //       onPressed: () {
+                      //         ForgetPasswordScreen().launch(context);
+                      //       },
+                      //       child: Text(
+                      //         language.forgetPassword,
+                      //         style: secondaryTextStyle(
+                      //             color: context.primaryColor,
+                      //             fontStyle: FontStyle.italic),
+                      //       ),
+                      //     ).paddingRight(8)
+                      //   ],
+                      // ),
+                      // 32.height,
+                      InkWell(
                         onTap: () {
                           AuthService(sl()).signUp('9086031210', 'moksh');
-                          // if (loginFormKey.currentState!.validate()) {
-                          //   loginFormKey.currentState!.save();
-                          //   hideKeyboard(context);
-
-                          //   Map request = {
-                          //     Users.username: nameCont.text.trim().validate(),
-                          //     Users.password: passwordCont.text.trim().validate(),
-                          //   };
-                          //   login(req: request);
-                          // } else {
-                          //   appStore.setLoading(false);
-                          // }
-                        },
-                      ),
-                      16.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(language.dHaveAnAccount,
-                              style: secondaryTextStyle()),
-                          4.width,
-                          Text(
-                            language.signUp,
-                            style: secondaryTextStyle(
-                                color: context.primaryColor,
-                                decoration: TextDecoration.underline),
-                          ).onTap(() {
-                            widget.callback?.call();
-                          },
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent)
-                        ],
-                      ),
-                      16.height,
-                      Row(
-                        children: [
-                          AppButton(
-                            shapeBorder: RoundedRectangleBorder(
-                                borderRadius: radius(defaultAppButtonRadius)),
-                            onTap: () {
-                              appStore.setLoading(true);
-                              googleSignIn();
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                GoogleLogoWidget(size: 14),
-                                6.width,
-                                Text(language.signinWithGoogle,
-                                        style: secondaryTextStyle(),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis)
-                                    .flexible(),
-                              ],
-                            ).center(),
-                            elevation: 1,
-                            color: context.cardColor,
-                          ).expand(),
-                          16.width,
-                          if (isIOS)
-                            AppButton(
-                              shapeBorder: RoundedRectangleBorder(
-                                  borderRadius: radius(defaultAppButtonRadius)),
-                              onTap: () {
-                                appStore.setLoading(true);
-                                appleSignIn();
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(Icons.apple,
-                                      color: context.iconColor, size: 22),
-                                  6.width,
-                                  Text(language.signinWithApple,
-                                          style: secondaryTextStyle(),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis)
-                                      .flexible(),
+                        }, // Add your button action here
+                        child: Container(
+                          width: context.width() - 32,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  Color(0xff00FFFF),
+                                  Color(0xffFFC0CB),
+                                  Color(0xffFFFF00),
                                 ],
-                              ),
-                              elevation: 1,
-                              color: context.cardColor,
-                            ).expand(),
-                        ],
-                      ).paddingSymmetric(horizontal: 16),
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(
+                              child: Text(
+                            'GET OTP',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )),
+                        ),
+                      ),
+                      // appButton(
+                      //   context: context,
+                      //   text: language.login.capitalizeFirstLetter(),
+                      //   onTap: () {
+                      //     if (loginFormKey.currentState!.validate()) {
+                      //       loginFormKey.currentState!.save();
+                      //       hideKeyboard(context);
+
+                      //       Map request = {
+                      //         Users.username: nameCont.text.trim().validate(),
+                      //         Users.password:
+                      //             passwordCont.text.trim().validate(),
+                      //       };
+                      //       login(req: request);
+                      //     } else {
+                      //       appStore.setLoading(false);
+                      //     }
+                      //   },
+                      // ),
+                      // 16.height,
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text(language.dHaveAnAccount,
+                      //         style: secondaryTextStyle()),
+                      //     4.width,
+                      //     Text(
+                      //       language.signUp,
+                      //       style: secondaryTextStyle(
+                      //           color: context.primaryColor,
+                      //           decoration: TextDecoration.underline),
+                      //     ).onTap(() {
+                      //       widget.callback?.call();
+                      //     },
+                      //         highlightColor: Colors.transparent,
+                      //         splashColor: Colors.transparent)
+                      //   ],
+                      // ),
+                      // 16.height,
+                      // Row(
+                      //   children: [
+                      //     AppButton(
+                      //       shapeBorder: RoundedRectangleBorder(
+                      //           borderRadius: radius(defaultAppButtonRadius)),
+                      //       onTap: () {
+                      //         appStore.setLoading(true);
+                      //         googleSignIn();
+                      //       },
+                      //       child: Row(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         crossAxisAlignment: CrossAxisAlignment.center,
+                      //         children: [
+                      //           GoogleLogoWidget(size: 14),
+                      //           6.width,
+                      //           Text(language.signinWithGoogle,
+                      //                   style: secondaryTextStyle(),
+                      //                   maxLines: 1,
+                      //                   overflow: TextOverflow.ellipsis)
+                      //               .flexible(),
+                      //         ],
+                      //       ).center(),
+                      //       elevation: 1,
+                      //       color: context.cardColor,
+                      //     ).expand(),
+                      //     16.width,
+                      //     if (isIOS)
+                      //       AppButton(
+                      //         shapeBorder: RoundedRectangleBorder(
+                      //             borderRadius: radius(defaultAppButtonRadius)),
+                      //         onTap: () {
+                      //           appStore.setLoading(true);
+                      //           appleSignIn();
+                      //         },
+                      //         child: Row(
+                      //           mainAxisSize: MainAxisSize.min,
+                      //           children: [
+                      //             Icon(Icons.apple,
+                      //                 color: context.iconColor, size: 22),
+                      //             6.width,
+                      //             Text(language.signinWithApple,
+                      //                     style: secondaryTextStyle(),
+                      //                     maxLines: 1,
+                      //                     overflow: TextOverflow.ellipsis)
+                      //                 .flexible(),
+                      //           ],
+                      //         ),
+                      //         elevation: 1,
+                      //         color: context.cardColor,
+                      //       ).expand(),
+                      //   ],
+                      // ).paddingSymmetric(horizontal: 16),
                       50.height,
                     ],
                   ),

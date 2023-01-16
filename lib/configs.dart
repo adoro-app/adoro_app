@@ -4,6 +4,8 @@ const APP_NAME = "SocialV";
 /// App Icon src
 const APP_ICON = "assets/app_icon.png";
 
+const APP_LOGO = "assets/logo.png";
+
 /// Splash screen image src
 const SPLASH_SCREEN_IMAGE = 'assets/images/splash_image.png';
 
@@ -40,4 +42,3 @@ const mTestAdMobBannerId = 'ca-app-pub-3940256099942544/6300978111';
 // live
 const CONSUMER_KEY = '';
 const CONSUMER_SECRET = '';
-

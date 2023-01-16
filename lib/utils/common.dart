@@ -37,16 +37,24 @@ InputDecoration inputDecoration(
     prefixIcon: prefixIcon,
     errorMaxLines: 2,
     errorStyle: primaryTextStyle(color: Colors.red, size: 12),
-    enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: dividerColor)),
-    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: context.primaryColor)),
-    border: UnderlineInputBorder(borderSide: BorderSide(color: context.primaryColor)),
-    focusedErrorBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.0)),
-    errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.0)),
+    enabledBorder:
+        UnderlineInputBorder(borderSide: BorderSide(color: dividerColor)),
+    focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: context.primaryColor)),
+    border: UnderlineInputBorder(
+        borderSide: BorderSide(color: context.primaryColor)),
+    focusedErrorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.red, width: 1.0)),
+    errorBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.red, width: 1.0)),
     alignLabelWithHint: true,
   );
 }
 
-InputDecoration inputDecorationFilled(BuildContext context, {String? label, EdgeInsetsGeometry? contentPadding, required Color fillColor}) {
+InputDecoration inputDecorationFilled(BuildContext context,
+    {String? label,
+    EdgeInsetsGeometry? contentPadding,
+    required Color fillColor}) {
   return InputDecoration(
     fillColor: fillColor,
     filled: true,
@@ -54,12 +62,22 @@ InputDecoration inputDecorationFilled(BuildContext context, {String? label, Edge
     labelText: label,
     labelStyle: secondaryTextStyle(weight: FontWeight.w600),
     errorStyle: primaryTextStyle(color: Colors.red, size: 12),
-    enabledBorder: OutlineInputBorder(borderRadius: radius(defaultAppButtonRadius), borderSide: BorderSide(color: context.cardColor)),
-    disabledBorder: OutlineInputBorder(borderRadius: radius(defaultAppButtonRadius), borderSide: BorderSide(color: context.cardColor)),
-    focusedBorder: OutlineInputBorder(borderRadius: radius(defaultAppButtonRadius), borderSide: BorderSide(color: context.cardColor)),
-    border: OutlineInputBorder(borderRadius: radius(defaultAppButtonRadius), borderSide: BorderSide(color: context.cardColor)),
-    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.0)),
-    errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.0)),
+    enabledBorder: OutlineInputBorder(
+        borderRadius: radius(defaultAppButtonRadius),
+        borderSide: BorderSide(color: context.cardColor)),
+    disabledBorder: OutlineInputBorder(
+        borderRadius: radius(defaultAppButtonRadius),
+        borderSide: BorderSide(color: context.cardColor)),
+    focusedBorder: OutlineInputBorder(
+        borderRadius: radius(defaultAppButtonRadius),
+        borderSide: BorderSide(color: context.cardColor)),
+    border: OutlineInputBorder(
+        borderRadius: radius(defaultAppButtonRadius),
+        borderSide: BorderSide(color: context.cardColor)),
+    focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red, width: 1.0)),
+    errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.red, width: 1.0)),
     alignLabelWithHint: true,
   );
 }
@@ -70,13 +88,23 @@ Widget headerContainer({required Widget child, required BuildContext context}) {
     children: [
       Container(
         width: context.width(),
-        decoration: BoxDecoration(color: context.primaryColor, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Color(0xff00FFFF),
+              Color(0xffFFC0CB),
+              Color(0xffFFFF00),
+            ], begin: Alignment.centerLeft, end: Alignment.centerRight),
+            borderRadius:
+                radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
         padding: EdgeInsets.all(22),
         child: child,
       ),
       Container(
         height: 20,
-        decoration: BoxDecoration(color: context.cardColor, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
+        decoration: BoxDecoration(
+            color: context.cardColor,
+            borderRadius:
+                radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)),
       )
     ],
   );
@@ -93,7 +121,8 @@ Widget appButton({
   TextStyle? textStyle,
 }) {
   return AppButton(
-    shapeBorder: shapeBorder ?? RoundedRectangleBorder(borderRadius: radius(defaultAppButtonRadius)),
+    shapeBorder: shapeBorder ??
+        RoundedRectangleBorder(borderRadius: radius(defaultAppButtonRadius)),
     text: text,
     textStyle: textStyle ?? boldTextStyle(color: Colors.white),
     onTap: onTap,
@@ -106,7 +135,8 @@ Widget appButton({
 
 Future<File?> getImageSource({bool isCamera = true}) async {
   final picker = ImagePicker();
-  final pickedImage = await picker.pickImage(source: isCamera ? ImageSource.camera : ImageSource.gallery);
+  final pickedImage = await picker.pickImage(
+      source: isCamera ? ImageSource.camera : ImageSource.gallery);
   return File(pickedImage!.path);
 }
 
@@ -118,15 +148,24 @@ void onShareTap(BuildContext context) async {
   Share.share('Share $APP_NAME app $playStoreBaseURL${await getPackageName()}');
 }
 
-String getFormattedDate(String date) => DateFormat.yMMMMd('en_US').format(DateTime.parse(date));
+String getFormattedDate(String date) =>
+    DateFormat.yMMMMd('en_US').format(DateTime.parse(date));
 
 List<MemberResponse> getMemberListPref() {
-  if (getStringAsync(SharePreferencesKey.RECENT_SEARCH_MEMBERS).isNotEmpty) return (json.decode(getStringAsync(SharePreferencesKey.RECENT_SEARCH_MEMBERS)) as List).map((i) => MemberResponse.fromJson(i)).toList();
+  if (getStringAsync(SharePreferencesKey.RECENT_SEARCH_MEMBERS).isNotEmpty)
+    return (json.decode(
+            getStringAsync(SharePreferencesKey.RECENT_SEARCH_MEMBERS)) as List)
+        .map((i) => MemberResponse.fromJson(i))
+        .toList();
   return [];
 }
 
 List<GroupResponse> getGroupListPref() {
-  if (getStringAsync(SharePreferencesKey.RECENT_SEARCH_GROUPS).isNotEmpty) return (json.decode(getStringAsync(SharePreferencesKey.RECENT_SEARCH_GROUPS)) as List).map((i) => GroupResponse.fromJson(i)).toList();
+  if (getStringAsync(SharePreferencesKey.RECENT_SEARCH_GROUPS).isNotEmpty)
+    return (json.decode(
+            getStringAsync(SharePreferencesKey.RECENT_SEARCH_GROUPS)) as List)
+        .map((i) => GroupResponse.fromJson(i))
+        .toList();
   return [];
 }
 
@@ -164,7 +203,10 @@ class TabPainter extends BoxPainter {
 Future<List<File>> getMultipleFiles({required MediaModel mediaType}) async {
   FilePickerResult? filePickerResult;
   List<File> imgList = [];
-  filePickerResult = await FilePicker.platform.pickFiles(allowMultiple: true, type: FileType.custom, allowedExtensions: mediaType.allowedType.validate());
+  filePickerResult = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: mediaType.allowedType.validate());
 
   if (filePickerResult != null) {
     filePickerResult.files.forEach((element) {
@@ -190,7 +232,9 @@ String getFileExtension(String fileName) {
 
 String convertToAgo(String dateTime) {
   if (dateTime.isNotEmpty) {
-    DateTime input = DateFormat(dateTime.contains('T') ? DATE_FORMAT_2 : DATE_FORMAT_1).parse(dateTime, true);
+    DateTime input =
+        DateFormat(dateTime.contains('T') ? DATE_FORMAT_2 : DATE_FORMAT_1)
+            .parse(dateTime, true);
     return input.timeAgo;
   } else {
     return '';
@@ -214,7 +258,10 @@ Future<void> openWebPage(BuildContext context, {required String url}) async {
         enableUrlBarHiding: true,
         showPageTitle: true,
         animation: CustomTabsSystemAnimation.slideIn(),
-        extraCustomTabs: const <String>['org.mozilla.firefox', 'com.microsoft.emmx'],
+        extraCustomTabs: const <String>[
+          'org.mozilla.firefox',
+          'com.microsoft.emmx'
+        ],
       ),
       safariVCOption: SafariViewControllerOption(
         preferredBarTintColor: theme.primaryColor,
@@ -241,14 +288,16 @@ void ifNotTester(VoidCallback callback) {
 Future<List<MediaSourceModel>> getMultipleImages() async {
   FilePickerResult? filePickerResult;
   List<MediaSourceModel> imgList = [];
-  filePickerResult = await FilePicker.platform.pickFiles(allowMultiple: true, type: FileType.media);
+  filePickerResult = await FilePicker.platform
+      .pickFiles(allowMultiple: true, type: FileType.media);
   String mediaType = MediaTypes.photo;
 
   if (filePickerResult != null) {
     filePickerResult.files.forEach((element) {
       log('element: ${element.path.validate().split("/").last.split(".").last}');
 
-      if (allowedVideoExtensions.any((e) => e == element.path.validate().split("/").last.split(".").last)) {
+      if (allowedVideoExtensions.any((e) =>
+          e == element.path.validate().split("/").last.split(".").last)) {
         mediaType = MediaTypes.video;
       }
 
@@ -281,5 +330,6 @@ String getPrice(String price) {
 }
 
 void setStatusBarColorBasedOnTheme() {
-  setStatusBarColor(appStore.isDarkMode ? appBackgroundColorDark : appLayoutBackground);
+  setStatusBarColor(
+      appStore.isDarkMode ? appBackgroundColorDark : appLayoutBackground);
 }
