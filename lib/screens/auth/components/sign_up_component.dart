@@ -58,8 +58,13 @@ class _SignUpComponentState extends State<SignUpComponent> {
           Users.password: passwordCont.text.validate(),
         };
 
-        await loginUser(request: request, isSocialLogin: false).then((value) async {
-          Map req = {"player_id": getStringAsync(SharePreferencesKey.ONE_SIGNAL_PLAYER_ID), "add": 1};
+        await loginUser(request: request, isSocialLogin: false)
+            .then((value) async {
+          Map req = {
+            "player_id":
+                getStringAsync(SharePreferencesKey.ONE_SIGNAL_PLAYER_ID),
+            "add": 1
+          };
 
           await setPlayerId(req).then((value) {
             //
@@ -97,9 +102,11 @@ class _SignUpComponentState extends State<SignUpComponent> {
       toast(language.registeredSuccessfully);
 
       if (widget.activityId != null) {
-        SinglePostScreen(postId: widget.activityId.validate()).launch(context, isNewTask: true);
+        SinglePostScreen(postId: widget.activityId.validate())
+            .launch(context, isNewTask: true);
       } else {
-        push(DashboardScreen(), isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
+        push(DashboardScreen(),
+            isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
       }
     }).catchError((e) {
       appStore.setLoading(false);
@@ -128,9 +135,12 @@ class _SignUpComponentState extends State<SignUpComponent> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               16.height,
-              Text(language.helloUser, style: boldTextStyle(size: 24)).paddingSymmetric(horizontal: 16),
+              Text('Welcome Creator', style: boldTextStyle(size: 24))
+                  .paddingSymmetric(horizontal: 16),
               8.height,
-              Text(language.createYourAccountFor, style: secondaryTextStyle(weight: FontWeight.w500)).paddingSymmetric(horizontal: 16),
+              Text('Join the world of creators',
+                      style: secondaryTextStyle(weight: FontWeight.w500))
+                  .paddingSymmetric(horizontal: 16),
               Form(
                 key: signupFormKey,
                 child: Container(
@@ -147,7 +157,8 @@ class _SignUpComponentState extends State<SignUpComponent> {
                         decoration: inputDecoration(
                           context,
                           label: language.username,
-                          labelStyle: secondaryTextStyle(weight: FontWeight.w600),
+                          labelStyle:
+                              secondaryTextStyle(weight: FontWeight.w600),
                         ),
                       ).paddingSymmetric(horizontal: 16),
                       8.height,
@@ -156,114 +167,162 @@ class _SignUpComponentState extends State<SignUpComponent> {
                         controller: fullNameCont,
                         nextFocus: email,
                         focus: fullName,
-                        textFieldType: TextFieldType.NAME,
+                        textFieldType: TextFieldType.NUMBER,
                         textStyle: boldTextStyle(),
                         decoration: inputDecoration(
                           context,
-                          label: language.fullName,
-                          labelStyle: secondaryTextStyle(weight: FontWeight.w600),
-                        ),
-                      ).paddingSymmetric(horizontal: 16),
-                      8.height,
-                      AppTextField(
-                        enabled: !appStore.isLoading,
-                        controller: emailCont,
-                        nextFocus: password,
-                        focus: email,
-                        textFieldType: TextFieldType.EMAIL,
-                        textStyle: boldTextStyle(),
-                        decoration: inputDecoration(
-                          context,
-                          label: language.yourEmail,
-                          labelStyle: secondaryTextStyle(weight: FontWeight.w600),
+                          label: 'Mobile Number',
+                          labelStyle:
+                              secondaryTextStyle(weight: FontWeight.w600),
                         ),
                       ).paddingSymmetric(horizontal: 16),
                       16.height,
-                      AppTextField(
-                        enabled: !appStore.isLoading,
-                        controller: passwordCont,
-                        nextFocus: contact,
-                        focus: password,
-                        textInputAction: TextInputAction.done,
-                        textFieldType: TextFieldType.PASSWORD,
-                        textStyle: boldTextStyle(),
-                        suffixIconColor: appStore.isDarkMode ? bodyDark : bodyWhite,
-                        decoration: inputDecoration(
-                          context,
-                          label: language.password,
-                          contentPadding: EdgeInsets.all(0),
-                          labelStyle: secondaryTextStyle(weight: FontWeight.w600),
-                        ),
-                        isPassword: true,
-                        onFieldSubmitted: (x) {
-                          if (agreeTNC) {
-                            register();
-                          } else {
-                            toast('Please agree our terms and conditions');
-                          }
-                        },
-                      ).paddingSymmetric(horizontal: 16),
-                      Row(
-                        children: [
-                          Checkbox(
-                            shape: RoundedRectangleBorder(borderRadius: radius(2)),
-                            activeColor: context.primaryColor,
-                            value: agreeTNC,
-                            onChanged: (val) {
-                              agreeTNC = !agreeTNC;
-                              setState(() {});
-                            },
+                      InkWell(
+                        onTap: () {}, // Add your button action here
+                        child: Container(
+                          width: context.width() - 32,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  Color(0xff00FFFF),
+                                  Color(0xffFFC0CB),
+                                  Color(0xffFFFF00),
+                                ],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight),
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          RichTextWidget(
-                            textAlign: TextAlign.center,
-                            list: [
-                              TextSpan(text: language.bySigningUpYou + " ", style: secondaryTextStyle(fontFamily: fontFamily)),
-                              TextSpan(
-                                text: "\n${language.termsCondition}",
-                                style: secondaryTextStyle(color: Colors.blue, decoration: TextDecoration.underline, fontStyle: FontStyle.italic,fontFamily: fontFamily),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    openWebPage(context, url: TERMS_AND_CONDITIONS_URL);
-                                  },
-                              ),
-                              TextSpan(text: " & ", style: secondaryTextStyle()),
-                              TextSpan(
-                                text: "${language.privacyPolicy}.",
-                                style: secondaryTextStyle(color: Colors.blue, decoration: TextDecoration.underline, fontStyle: FontStyle.italic),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    openWebPage(context, url: PRIVACY_POLICY_URL);
-                                  },
-                              ),
-                            ],
-                          ).paddingAll(16),
-                        ],
+                          child: Center(
+                              child: Text(
+                            'GET OTP',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )),
+                        ),
                       ),
-                      appButton(
-                        context: context,
-                        text: language.signUp.capitalizeFirstLetter(),
-                        onTap: () {
-                          if (agreeTNC) {
-                            register();
-                          } else {
-                            toast('Please agree our terms and conditions');
-                          }
-                        },
-                      ),
-                      16.height,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(language.alreadyHaveAnAccount, style: secondaryTextStyle()),
-                          4.width,
-                          Text(
-                            language.signIn,
-                            style: secondaryTextStyle(color: context.primaryColor, decoration: TextDecoration.underline),
-                          ).onTap(() {
-                            widget.callback?.call();
-                          }, highlightColor: Colors.transparent, splashColor: Colors.transparent)
-                        ],
-                      ),
+                      // AppTextField(
+                      //   enabled: !appStore.isLoading,
+                      //   controller: emailCont,
+                      //   nextFocus: password,
+                      //   focus: email,
+                      //   textFieldType: TextFieldType.EMAIL,
+                      //   textStyle: boldTextStyle(),
+                      //   decoration: inputDecoration(
+                      //     context,
+                      //     label: language.yourEmail,
+                      //     labelStyle:
+                      //         secondaryTextStyle(weight: FontWeight.w600),
+                      //   ),
+                      // ).paddingSymmetric(horizontal: 16),
+                      // 16.height,
+                      // AppTextField(
+                      //   enabled: !appStore.isLoading,
+                      //   controller: passwordCont,
+                      //   nextFocus: contact,
+                      //   focus: password,
+                      //   textInputAction: TextInputAction.done,
+                      //   textFieldType: TextFieldType.PASSWORD,
+                      //   textStyle: boldTextStyle(),
+                      //   suffixIconColor:
+                      //       appStore.isDarkMode ? bodyDark : bodyWhite,
+                      //   decoration: inputDecoration(
+                      //     context,
+                      //     label: language.password,
+                      //     contentPadding: EdgeInsets.all(0),
+                      //     labelStyle:
+                      //         secondaryTextStyle(weight: FontWeight.w600),
+                      //   ),
+                      //   isPassword: true,
+                      //   onFieldSubmitted: (x) {
+                      //     if (agreeTNC) {
+                      //       register();
+                      //     } else {
+                      //       toast('Please agree our terms and conditions');
+                      //     }
+                      //   },
+                      // ).paddingSymmetric(horizontal: 16),
+                      // Row(
+                      //   children: [
+                      //     Checkbox(
+                      //       shape:
+                      //           RoundedRectangleBorder(borderRadius: radius(2)),
+                      //       activeColor: context.primaryColor,
+                      //       value: agreeTNC,
+                      //       onChanged: (val) {
+                      //         agreeTNC = !agreeTNC;
+                      //         setState(() {});
+                      //       },
+                      //     ),
+                      //     RichTextWidget(
+                      //       textAlign: TextAlign.center,
+                      //       list: [
+                      //         TextSpan(
+                      //             text: language.bySigningUpYou + " ",
+                      //             style: secondaryTextStyle(
+                      //                 fontFamily: fontFamily)),
+                      //         TextSpan(
+                      //           text: "\n${language.termsCondition}",
+                      //           style: secondaryTextStyle(
+                      //               color: Colors.blue,
+                      //               decoration: TextDecoration.underline,
+                      //               fontStyle: FontStyle.italic,
+                      //               fontFamily: fontFamily),
+                      //           recognizer: TapGestureRecognizer()
+                      //             ..onTap = () {
+                      //               openWebPage(context,
+                      //                   url: TERMS_AND_CONDITIONS_URL);
+                      //             },
+                      //         ),
+                      //         TextSpan(
+                      //             text: " & ", style: secondaryTextStyle()),
+                      //         TextSpan(
+                      //           text: "${language.privacyPolicy}.",
+                      //           style: secondaryTextStyle(
+                      //               color: Colors.blue,
+                      //               decoration: TextDecoration.underline,
+                      //               fontStyle: FontStyle.italic),
+                      //           recognizer: TapGestureRecognizer()
+                      //             ..onTap = () {
+                      //               openWebPage(context,
+                      //                   url: PRIVACY_POLICY_URL);
+                      //             },
+                      //         ),
+                      //       ],
+                      //     ).paddingAll(16),
+                      //   ],
+                      // ),
+                      // appButton(
+                      //   context: context,
+                      //   text: language.signUp.capitalizeFirstLetter(),
+                      //   onTap: () {
+                      //     if (agreeTNC) {
+                      //       register();
+                      //     } else {
+                      //       toast('Please agree our terms and conditions');
+                      //     }
+                      //   },
+                      // ),
+                      // 16.height,
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text(language.alreadyHaveAnAccount,
+                      //         style: secondaryTextStyle()),
+                      //     4.width,
+                      //     Text(
+                      //       language.signIn,
+                      //       style: secondaryTextStyle(
+                      //           color: context.primaryColor,
+                      //           decoration: TextDecoration.underline),
+                      //     ).onTap(() {
+                      //       widget.callback?.call();
+                      //     },
+                      //         highlightColor: Colors.transparent,
+                      //         splashColor: Colors.transparent)
+                      //   ],
+                      // ),
                       50.height,
                     ],
                   ),
