@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/auth/auth_service.dart';
+import 'package:socialv/auth/cubit/auth_cubit.dart';
 import 'package:socialv/main.dart';
 import 'package:socialv/network/rest_apis.dart';
 import 'package:socialv/screens/auth/screens/forget_password_screen.dart';
@@ -27,20 +28,19 @@ class _LoginInComponentState extends State<LoginInComponent> {
 
   bool doRemember = false;
 
-  TextEditingController nameCont = TextEditingController();
-  TextEditingController passwordCont = TextEditingController();
+  TextEditingController mobileNoController = TextEditingController();
 
-  FocusNode name = FocusNode();
-  FocusNode password = FocusNode();
+  // FocusNode name = FocusNode();
+  // FocusNode password = FocusNode();
 
   @override
   void initState() {
     super.initState();
 
-    if (appStore.doRemember) {
-      nameCont.text = appStore.loginName;
-      passwordCont.text = appStore.password;
-    }
+    // if (appStore.doRemember) {
+    //   nameCont.text = appStore.loginName;
+    //   passwordCont.text = appStore.password;
+    // }
   }
 
   Future<void> login({required Map req, bool isSocialLogin = false}) async {
@@ -60,7 +60,7 @@ class _LoginInComponentState extends State<LoginInComponent> {
       }).catchError((e) {
         log("Player id error : ${e.toString()}");
       });
-      appStore.setPassword(passwordCont.text.validate());
+      //  appStore.setPassword(passwordCont.text.validate());
       getMemberById();
     }).catchError((e) {
       appStore.setLoading(false);
@@ -141,9 +141,7 @@ class _LoginInComponentState extends State<LoginInComponent> {
                       30.height,
                       AppTextField(
                         enabled: !appStore.isLoading,
-                        controller: nameCont,
-                        nextFocus: password,
-                        focus: name,
+                        controller: mobileNoController,
                         textFieldType: TextFieldType.PHONE,
                         textStyle: boldTextStyle(),
                         decoration: inputDecoration(
@@ -228,7 +226,9 @@ class _LoginInComponentState extends State<LoginInComponent> {
                       // 32.height,
                       InkWell(
                         onTap: () {
-                          AuthService(sl()).signUp('9086031210', 'moksh');
+                          sl
+                              .get<AuthCubit>()
+                              .login(mobileNoController.text.trim());
                         }, // Add your button action here
                         child: Container(
                           width: context.width() - 32,

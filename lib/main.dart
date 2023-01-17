@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,10 +11,14 @@ import 'package:socialv/app_theme.dart';
 import 'package:socialv/language/app_localizations.dart';
 import 'package:socialv/language/languages.dart';
 import 'package:socialv/models/common_models.dart';
+import 'package:socialv/screens/auth/screens/otp_screen.dart';
 import 'package:socialv/screens/splash_screen.dart';
 import 'package:socialv/service_locator.dart';
 import 'package:socialv/store/app_store.dart';
 import 'package:socialv/utils/app_constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'auth/cubit/auth_cubit.dart';
 
 AppStore appStore = AppStore();
 
@@ -105,37 +110,52 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Observer(
-      builder: (_) => MaterialApp(
-        navigatorKey: navigatorKey,
-        title: APP_NAME,
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        home: SplashScreen(),
-        supportedLocales: LanguageDataModel.languageLocales(),
-        localizationsDelegates: [
-          AppLocalizations(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        localeResolutionCallback: (locale, supportedLocales) => locale,
-        locale: Locale(appStore.selectedLanguage
-            .validate(value: Constants.defaultLanguage)),
-        onGenerateRoute: (settings) {
-          String pathComponents = settings.name!.split('/').last;
-
-          if (pathComponents.isInt) {
-            return MaterialPageRoute(
-              builder: (context) {
-                return SplashScreen(activityId: pathComponents.toInt());
-              },
-            );
-          } else {
-            return MaterialPageRoute(builder: (_) => SplashScreen());
-          }
+      builder: (_) => BlocListener<AuthCubit, AuthState>(
+        bloc: sl.get<AuthCubit>(),
+        listener: (context, state) {
+          state.maybeWhen(
+            orElse: () {},
+            otpSent: () {
+              navigatorKey.currentState?.push(
+                CupertinoPageRoute(
+                  builder: (context) => OtpScreen(),
+                ),
+              );
+            },
+          );
         },
+        child: MaterialApp(
+          navigatorKey: navigatorKey,
+          title: APP_NAME,
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode: appStore.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          home: SplashScreen(),
+          supportedLocales: LanguageDataModel.languageLocales(),
+          localizationsDelegates: [
+            AppLocalizations(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          localeResolutionCallback: (locale, supportedLocales) => locale,
+          locale: Locale(appStore.selectedLanguage
+              .validate(value: Constants.defaultLanguage)),
+          onGenerateRoute: (settings) {
+            String pathComponents = settings.name!.split('/').last;
+
+            if (pathComponents.isInt) {
+              return MaterialPageRoute(
+                builder: (context) {
+                  return SplashScreen(activityId: pathComponents.toInt());
+                },
+              );
+            } else {
+              return MaterialPageRoute(builder: (_) => SplashScreen());
+            }
+          },
+        ),
       ),
     );
   }
