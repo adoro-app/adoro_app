@@ -56,7 +56,23 @@ class _ChooseCategoriesPageState extends State<ChooseCategoriesPage> {
                               color: Colors.white,
                             )),
                       ).paddingBottom(4.0),
-                      Icon(Icons.check),
+                      Container(
+                        height: 24,
+                        width: 24,
+                        child: Image.asset('assets/icons/ic_tick.png',
+                            fit: BoxFit.cover),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [
+                                Color(0xff00FFFF),
+                                Color(0xffFFC0CB),
+                                Color(0xffFFFF00),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                      ),
                     ],
                   ),
                 ),
