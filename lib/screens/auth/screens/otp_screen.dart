@@ -1,15 +1,22 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:pinput/pinput.dart';
+import 'package:socialv/auth/cubit/auth_cubit.dart';
+import 'package:socialv/auth/cubit/otp_verification_cubit.dart';
+import 'package:socialv/service_locator.dart';
 
 class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key});
+  final String mobileNo;
+
+  const OtpScreen({
+    super.key,
+    required this.mobileNo,
+  });
 
   @override
   Widget build(BuildContext context) {
-   final defaultPinTheme = PinTheme(
+    final defaultPinTheme = PinTheme(
       width: 50,
       height: 56,
       textStyle: TextStyle(
@@ -38,23 +45,27 @@ class OtpScreen extends StatelessWidget {
             32.height,
             Pinput(
               defaultPinTheme: defaultPinTheme,
-              // focusedPinTheme: focusedPinTheme,
-              // submittedPinTheme: submittedPinTheme,
-
+              length: 6,
               validator: (s) {
-                return s == '2222' ? null : 'Pin is incorrect';
+                return s?.length == 6 ? null : 'Pin is incorrect';
               },
               pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
               showCursor: true,
               onCompleted: (pin) => print(pin),
             ),
             16.height,
-            Text(
-              '00:19',
-              style: boldTextStyle(
-                size: 14,
-                color: Colors.green,
-              ),
+            BlocBuilder<OtpVerificationCubit, OtpVerificationState>(
+              builder: (context, state) {
+                return state.secondsLeft > 0
+                    ? Text(
+                        '00:${state.secondsLeft.toString().padLeft(2, '0')}',
+                        style: boldTextStyle(
+                          size: 14,
+                          color: Colors.green,
+                        ),
+                      )
+                    : const SizedBox();
+              },
             ).paddingSymmetric(horizontal: 16),
             16.height,
             Row(
@@ -62,14 +73,25 @@ class OtpScreen extends StatelessWidget {
               children: [
                 Text("Didn't receive the OTP?", style: secondaryTextStyle()),
                 4.width,
-                Text(
-                  'RESEND OTP',
-                  style: secondaryTextStyle(
-                    color: context.primaryColor,
-                  ),
-                ).onTap(() {},
-                    highlightColor: Colors.transparent,
-                    splashColor: Colors.transparent)
+                BlocBuilder<OtpVerificationCubit, OtpVerificationState>(
+                  builder: (context, state) {
+                    return TextButton(
+                      onPressed: state.secondsLeft == 0
+                          ? () {
+                              sl.get<AuthCubit>().login(mobileNo);
+                            }
+                          : null,
+                      style: TextButton.styleFrom(
+                        textStyle: secondaryTextStyle(
+                          color: context.primaryColor,
+                        ),
+                      ),
+                      child: Text(
+                        'RESEND OTP',
+                      ),
+                    );
+                  },
+                )
               ],
             ),
             48.height,
@@ -88,7 +110,7 @@ class OtpScreen extends StatelessWidget {
                 ),
                 child: Center(
                     child: Text(
-                  'GET OTP',
+                  'VERIFY NOW',
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 )),

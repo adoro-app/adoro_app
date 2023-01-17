@@ -115,13 +115,13 @@ class _MyAppState extends State<MyApp> {
         listener: (context, state) {
           state.maybeWhen(
             orElse: () {},
-            otpSent: () {
-              navigatorKey.currentState?.push(
-                CupertinoPageRoute(
-                  builder: (context) => OtpScreen(),
-                ),
-              );
-            },
+            // otpSent: () {
+            //   navigatorKey.currentState?.push(
+            //     CupertinoPageRoute(
+            //       builder: (context) => OtpScreen(),
+            //     ),
+            //   );
+            // },
           );
         },
         child: MaterialApp(
