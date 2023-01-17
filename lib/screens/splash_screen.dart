@@ -47,20 +47,20 @@ class _SplashScreenState extends State<SplashScreen> {
       await 2.seconds.delay;
     }
 
-    if (widget.activityId != null) {
-      if (appStore.isLoggedIn) {
-        SinglePostScreen(postId: widget.activityId.validate())
-            .launch(context, isNewTask: true);
-      } else {
-        SignInScreen(activityId: widget.activityId.validate())
-            .launch(context, isNewTask: true);
-      }
-    } else if (appStore.isLoggedIn && !isTokenExpire) {
-      DashboardScreen().launch(context, isNewTask: true);
-    } else {
-      ChooseCategoriesPage().launch(context);
-      // SignInScreen().launch(context, isNewTask: true);
-    }
+    // if (widget.activityId != null) {
+    //   if (appStore.isLoggedIn) {
+    //     SinglePostScreen(postId: widget.activityId.validate())
+    //         .launch(context, isNewTask: true);
+    //   } else {
+    //     SignInScreen(activityId: widget.activityId.validate())
+    //         .launch(context, isNewTask: true);
+    //   }
+    // } else if (appStore.isLoggedIn && !isTokenExpire) {
+    //   DashboardScreen().launch(context, isNewTask: true);
+    // } else {
+    //   ChooseCategoriesPage().launch(context);
+    //   // SignInScreen().launch(context, isNewTask: true);
+    // }
   }
 
   @override

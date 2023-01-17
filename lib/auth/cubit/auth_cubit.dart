@@ -9,7 +9,11 @@ part 'auth_cubit.freezed.dart';
 class AuthCubit extends Cubit<AuthState> {
   final AuthService _authService;
 
-  AuthCubit(this._authService) : super(const AuthState.initial());
+  AuthCubit(this._authService) : super(const AuthState.initial()) {
+    Future.delayed(const Duration(seconds: 3), () {
+      emit(AuthState.unauthenticated());
+    });
+  }
 
   Future<void> login(String mobileNo) async {
     emit(const AuthState.sendingOtp());

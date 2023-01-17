@@ -12,6 +12,7 @@ import 'package:socialv/language/app_localizations.dart';
 import 'package:socialv/language/languages.dart';
 import 'package:socialv/models/common_models.dart';
 import 'package:socialv/screens/auth/screens/otp_screen.dart';
+import 'package:socialv/screens/auth/screens/sign_in_screen.dart';
 import 'package:socialv/screens/splash_screen.dart';
 import 'package:socialv/service_locator.dart';
 import 'package:socialv/store/app_store.dart';
@@ -115,6 +116,13 @@ class _MyAppState extends State<MyApp> {
         listener: (context, state) {
           state.maybeWhen(
             orElse: () {},
+            unauthenticated: () {
+                navigatorKey.currentState?.push(
+                CupertinoPageRoute(
+                  builder: (context) => SignInScreen(),
+                ),
+              );
+            },
             // otpSent: () {
             //   navigatorKey.currentState?.push(
             //     CupertinoPageRoute(
@@ -142,19 +150,19 @@ class _MyAppState extends State<MyApp> {
           localeResolutionCallback: (locale, supportedLocales) => locale,
           locale: Locale(appStore.selectedLanguage
               .validate(value: Constants.defaultLanguage)),
-          onGenerateRoute: (settings) {
-            String pathComponents = settings.name!.split('/').last;
+          // onGenerateRoute: (settings) {
+          //   String pathComponents = settings.name!.split('/').last;
 
-            if (pathComponents.isInt) {
-              return MaterialPageRoute(
-                builder: (context) {
-                  return SplashScreen(activityId: pathComponents.toInt());
-                },
-              );
-            } else {
-              return MaterialPageRoute(builder: (_) => SplashScreen());
-            }
-          },
+          //   if (pathComponents.isInt) {
+          //     return MaterialPageRoute(
+          //       builder: (context) {
+          //         return SplashScreen(activityId: pathComponents.toInt());
+          //       },
+          //     );
+          //   } else {
+          //     return MaterialPageRoute(builder: (_) => SplashScreen());
+          //   }
+          // },
         ),
       ),
     );
