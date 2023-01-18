@@ -14,16 +14,15 @@ class ApiService {
       final status = response.data['status'] as int;
 
       if (status == 200) {
-        final memeCategories =
-            (response.data['data'] as List<Map<String, dynamic>>)
-                .map((e) => MemeCategory.fromJson(e))
-                .toList();
+        final memeCategories = (response.data['data'] as List<dynamic>)
+            .map((e) => MemeCategory.fromJson(e))
+            .toList();
         return memeCategories;
       }
       return null;
     } catch (e) {
       print('---------------------');
-      print('ERROR: e');
+      print('ERROR: $e');
       print('---------------------');
       return null;
     }

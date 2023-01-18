@@ -8,6 +8,8 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:socialv/app_theme.dart';
+import 'package:socialv/choose_categories/choose_categories_page.dart';
+import 'package:socialv/choose_categories/cubit/choose_meme_categories_cubit.dart';
 import 'package:socialv/language/app_localizations.dart';
 import 'package:socialv/language/languages.dart';
 import 'package:socialv/models/common_models.dart';
@@ -118,9 +120,18 @@ class _MyAppState extends State<MyApp> {
           state.maybeWhen(
             orElse: () {},
             unauthenticated: () {
+              // navigatorKey.currentState?.pushAndRemoveUntil(
+              //   CupertinoPageRoute(
+              //     builder: (context) => SignInScreen(),
+              //   ),
+              //   (_) => false,
+              // );
               navigatorKey.currentState?.pushAndRemoveUntil(
                 CupertinoPageRoute(
-                  builder: (context) => SignInScreen(),
+                  builder: (context) => BlocProvider(
+                    create: (context) => ChooseMemeCategoriesCubit(apiService: sl()),
+                    child: ChooseCategoriesPage(),
+                  ),
                 ),
                 (_) => false,
               );
