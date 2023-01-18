@@ -25,7 +25,8 @@ class DashboardScreen extends StatefulWidget {
 List<VisibilityOptions>? visibilities;
 List<ReportType>? reportTypes;
 
-class _DashboardScreenState extends State<DashboardScreen> with TickerProviderStateMixin {
+class _DashboardScreenState extends State<DashboardScreen>
+    with TickerProviderStateMixin {
   bool hasUpdate = false;
   late AnimationController _animationController;
 
@@ -74,7 +75,6 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
       appStore.setVerificationStatus(value.verificationStatus.validate());
       visibilities = value.visibilities.validate();
       reportTypes = value.reportTypes.validate();
-
     }).catchError(onError);
   }
 
@@ -120,26 +120,63 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
         },
         color: context.primaryColor,
         child: Scaffold(
+          bottomNavigationBar: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: BottomNavigationBar(
+                elevation: 5,
+                backgroundColor: Colors.white,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                type: BottomNavigationBarType.fixed,
+                currentIndex: 0,
+                onTap: (val) async {},
+                selectedItemColor: Colors.blue[700],
+                selectedFontSize: 13,
+                unselectedFontSize: 13,
+                iconSize: 30,
+                items: [
+                  BottomNavigationBarItem(
+                      label: "",
+                      icon: Image.asset(ic_home,
+                          height: 24, width: 24, fit: BoxFit.cover)),
+                  BottomNavigationBarItem(
+                      label: "",
+                      icon: Image.asset(ic_plus_circle,
+                          height: 24, width: 24, fit: BoxFit.cover)),
+                  BottomNavigationBarItem(
+                      label: "", icon: Image.asset(ic_rank, fit: BoxFit.cover)),
+                  BottomNavigationBarItem(
+                      label: "",
+                      icon: Image.asset(ic_user,
+                          color: Colors.black,
+                          height: 24,
+                          width: 24,
+                          fit: BoxFit.cover)),
+                ],
+              ),
+            ),
+          ),
+          drawer: Drawer(),
           body: CustomScrollView(
             controller: _controller,
             slivers: <Widget>[
               Theme(
                 data: ThemeData(useMaterial3: false),
                 child: SliverAppBar(
+                  iconTheme: IconThemeData(color: Colors.black),
                   forceElevated: true,
-                  elevation: 0.5,
+                  elevation: 0,
                   expandedHeight: 110,
                   floating: true,
                   pinned: true,
                   backgroundColor: context.scaffoldBackgroundColor,
-                  title: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(APP_ICON, width: 26),
-                      4.width,
-                      Text(APP_NAME, style: boldTextStyle(color: context.primaryColor, size: 24, fontFamily: fontFamily)),
-                    ],
+                  titleSpacing: 0,
+                  title: Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Image.asset(APP_LOGO,
+                        width: MediaQuery.of(context).size.width * 0.3),
                   ),
                   actions: [
                     IconButton(
@@ -154,143 +191,223 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
                       },
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
-                      icon: Image.asset(ic_plus, height: 22, width: 22, fit: BoxFit.fitWidth, color: context.iconColor),
+                      icon: Image.asset(ic_search,
+                          height: 22,
+                          width: 22,
+                          fit: BoxFit.fitWidth,
+                          color: context.iconColor),
                     ),
-                    8.width,
-                    Image.asset(ic_bag, height: 24, width: 24, fit: BoxFit.fitWidth, color: context.iconColor).onTap(() {
+                    4.width,
+                    Image.asset(ic_message,
+                            height: 24,
+                            width: 24,
+                            fit: BoxFit.fitWidth,
+                            color: context.iconColor)
+                        .onTap(() {
                       InitialShopScreen().launch(context);
-                    }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
+                    },
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent),
                     8.width,
-                    Observer(
-                      builder: (_) => IconButton(
-                        highlightColor: Colors.transparent,
-                        splashColor: Colors.transparent,
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            transitionAnimationController: _animationController,
-                            builder: (context) {
-                              return FractionallySizedBox(
-                                heightFactor: 0.93,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                      width: 45,
-                                      height: 5,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Colors.white),
-                                    ),
-                                    8.height,
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        color: context.cardColor,
-                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
-                                      ),
-                                      child: UserDetailBottomSheetWidget(
-                                        callback: () {
-                                          //mPage = 1;
-                                          //future = getPostList();
-                                        },
-                                      ),
-                                    ).expand(),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        icon: cachedImage(appStore.loginAvatarUrl, height: 30, width: 30, fit: BoxFit.cover).cornerRadiusWithClipRRect(15),
-                      ),
-                    ),
+                    // Observer(
+                    //   builder: (_) => IconButton(
+                    //     highlightColor: Colors.transparent,
+                    //     splashColor: Colors.transparent,
+                    //     onPressed: () {
+                    //       showModalBottomSheet(
+                    //         context: context,
+                    //         isScrollControlled: true,
+                    //         backgroundColor: Colors.transparent,
+                    //         transitionAnimationController: _animationController,
+                    //         builder: (context) {
+                    //           return FractionallySizedBox(
+                    //             heightFactor: 0.93,
+                    //             child: Column(
+                    //               mainAxisSize: MainAxisSize.min,
+                    //               children: [
+                    //                 Container(
+                    //                   width: 45,
+                    //                   height: 5,
+                    //                   decoration: BoxDecoration(
+                    //                       borderRadius:
+                    //                           BorderRadius.circular(16),
+                    //                       color: Colors.white),
+                    //                 ),
+                    //                 8.height,
+                    //                 Container(
+                    //                   decoration: BoxDecoration(
+                    //                     color: context.cardColor,
+                    //                     borderRadius: BorderRadius.only(
+                    //                         topLeft: Radius.circular(16),
+                    //                         topRight: Radius.circular(16)),
+                    //                   ),
+                    //                   child: UserDetailBottomSheetWidget(
+                    //                     callback: () {
+                    //                       //mPage = 1;
+                    //                       //future = getPostList();
+                    //                     },
+                    //                   ),
+                    //                 ).expand(),
+                    //               ],
+                    //             ),
+                    //           );
+                    //         },
+                    //       );
+                    //     },
+                    //     icon: cachedImage(appStore.loginAvatarUrl,
+                    //             height: 30, width: 30, fit: BoxFit.cover)
+                    //         .cornerRadiusWithClipRRect(15),
+                    //   ),
+                    // ),
                   ],
                   bottom: TabBar(
-                    indicatorColor: context.primaryColor,
+                    isScrollable: true,
+                    indicatorColor: Colors.transparent,
                     controller: tabController,
                     onTap: (val) async {
                       selectedIndex = val;
                       setState(() {});
                     },
                     tabs: [
-                      Tooltip(
-                        richMessage: TextSpan(text: language.home, style: secondaryTextStyle(color: Colors.white)),
-                        child: Image.asset(
-                          selectedIndex == 0 ? ic_home_selected : ic_home,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover,
-                          color: selectedIndex == 0 ? context.primaryColor : context.iconColor,
-                        ).paddingSymmetric(vertical: 11),
-                      ),
-                      Tooltip(
-                        richMessage: TextSpan(text: language.searchHere, style: secondaryTextStyle(color: Colors.white)),
-                        child: Image.asset(
-                          selectedIndex == 1 ? ic_search_selected : ic_search,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover,
-                          color: selectedIndex == 1 ? context.primaryColor : context.iconColor,
-                        ).paddingSymmetric(vertical: 11),
-                      ),
-                      Tooltip(
-                        richMessage: TextSpan(text: language.forums, style: secondaryTextStyle(color: Colors.white)),
-                        child: Image.asset(
-                          selectedIndex == 2 ? ic_forum_filled : ic_forum,
-                          height: 44,
-                          width: 52,
-                          fit: BoxFit.cover,
-                          color: selectedIndex == 2 ? context.primaryColor : context.iconColor,
-                        ),
-                      ),
-                      Tooltip(
-                        richMessage: TextSpan(text: language.notifications, style: secondaryTextStyle(color: Colors.white)),
-                        child: selectedIndex == 3
-                            ? Image.asset(ic_notification_selected, height: 24, width: 24, fit: BoxFit.cover).paddingSymmetric(vertical: 11)
-                            : Observer(
-                                builder: (_) => Stack(
-                                  clipBehavior: Clip.none,
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Image.asset(
-                                      ic_notification,
-                                      height: 24,
-                                      width: 24,
-                                      fit: BoxFit.cover,
-                                      color: context.iconColor,
-                                    ).paddingSymmetric(vertical: 11),
-                                    if (appStore.notificationCount != 0)
-                                      Positioned(
-                                        right: appStore.notificationCount.toString().length > 1 ? -6 : -4,
-                                        top: 3,
-                                        child: Container(
-                                          padding: EdgeInsets.all(appStore.notificationCount.toString().length > 1 ? 4 : 6),
-                                          decoration: BoxDecoration(color: appColorPrimary, shape: BoxShape.circle),
-                                          child: Text(
-                                            appStore.notificationCount.toString(),
-                                            style: boldTextStyle(color: Colors.white, size: 10, weight: FontWeight.w700, letterSpacing: 0.7),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                      ),
-                      Tooltip(
-                        richMessage: TextSpan(
-                            text: language.profile,
-                            style: secondaryTextStyle(
-                              color: Colors.white,
-                            )),
-                        child: Image.asset(
-                          selectedIndex == 4 ? ic_profile_filled : ic_profile,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover,
-                          color: selectedIndex == 4 ? context.primaryColor : context.iconColor,
-                        ).paddingSymmetric(vertical: 11),
-                      ),
+                      selectedIndex == 0
+                          ? TabBarWidget(text: 'Relevant')
+                          : Text('Relevant',
+                              style: secondaryTextStyle(color: Colors.black)),
+                      selectedIndex == 1
+                          ? TabBarWidget(text: 'Trending')
+                          : Text('Trending',
+                              style: secondaryTextStyle(color: Colors.black)),
+                      selectedIndex == 2
+                          ? TabBarWidget(text: 'Fresh')
+                          : Text('Fresh',
+                              style: secondaryTextStyle(color: Colors.black)),
+                      selectedIndex == 3
+                          ? TabBarWidget(text: 'News')
+                          : Text('News',
+                              style: secondaryTextStyle(color: Colors.black)),
+                      selectedIndex == 4
+                          ? TabBarWidget(text: 'Relevant')
+                          : Text('Relevant',
+                              style: secondaryTextStyle(color: Colors.black)),
+                      selectedIndex == 5
+                          ? TabBarWidget(text: 'dank')
+                          : Text('dank',
+                              style: secondaryTextStyle(color: Colors.black)),
+
+                      // Tooltip(
+                      //   richMessage: TextSpan(
+                      //       text: language.home,
+                      //       style: secondaryTextStyle(color: Colors.white)),
+                      //   child: Image.asset(
+                      //     selectedIndex == 0 ? ic_home_selected : ic_home,
+                      //     height: 24,
+                      //     width: 24,
+                      //     fit: BoxFit.cover,
+                      //     color: selectedIndex == 0
+                      //         ? context.primaryColor
+                      //         : context.iconColor,
+                      //   ).paddingSymmetric(vertical: 11),
+                      // ),
+                      // Tooltip(
+                      //   richMessage: TextSpan(
+                      //       text: language.searchHere,
+                      //       style: secondaryTextStyle(color: Colors.white)),
+                      //   child: Image.asset(
+                      //     selectedIndex == 1 ? ic_search_selected : ic_search,
+                      //     height: 24,
+                      //     width: 24,
+                      //     fit: BoxFit.cover,
+                      //     color: selectedIndex == 1
+                      //         ? context.primaryColor
+                      //         : context.iconColor,
+                      //   ).paddingSymmetric(vertical: 11),
+                      // ),
+                      // Tooltip(
+                      //   richMessage: TextSpan(
+                      //       text: language.forums,
+                      //       style: secondaryTextStyle(color: Colors.white)),
+                      //   child: Image.asset(
+                      //     selectedIndex == 2 ? ic_forum_filled : ic_forum,
+                      //     height: 44,
+                      //     width: 52,
+                      //     fit: BoxFit.cover,
+                      //     color: selectedIndex == 2
+                      //         ? context.primaryColor
+                      //         : context.iconColor,
+                      //   ),
+                      // ),
+                      // Tooltip(
+                      //   richMessage: TextSpan(
+                      //       text: language.notifications,
+                      //       style: secondaryTextStyle(color: Colors.white)),
+                      //   child: selectedIndex == 3
+                      //       ? Image.asset(ic_notification_selected,
+                      //               height: 24, width: 24, fit: BoxFit.cover)
+                      //           .paddingSymmetric(vertical: 11)
+                      //       : Observer(
+                      //           builder: (_) => Stack(
+                      //             clipBehavior: Clip.none,
+                      //             alignment: Alignment.center,
+                      //             children: [
+                      //               Image.asset(
+                      //                 ic_notification,
+                      //                 height: 24,
+                      //                 width: 24,
+                      //                 fit: BoxFit.cover,
+                      //                 color: context.iconColor,
+                      //               ).paddingSymmetric(vertical: 11),
+                      //               if (appStore.notificationCount != 0)
+                      //                 Positioned(
+                      //                   right: appStore.notificationCount
+                      //                               .toString()
+                      //                               .length >
+                      //                           1
+                      //                       ? -6
+                      //                       : -4,
+                      //                   top: 3,
+                      //                   child: Container(
+                      //                     padding: EdgeInsets.all(appStore
+                      //                                 .notificationCount
+                      //                                 .toString()
+                      //                                 .length >
+                      //                             1
+                      //                         ? 4
+                      //                         : 6),
+                      //                     decoration: BoxDecoration(
+                      //                         color: appColorPrimary,
+                      //                         shape: BoxShape.circle),
+                      //                     child: Text(
+                      //                       appStore.notificationCount
+                      //                           .toString(),
+                      //                       style: boldTextStyle(
+                      //                           color: Colors.white,
+                      //                           size: 10,
+                      //                           weight: FontWeight.w700,
+                      //                           letterSpacing: 0.7),
+                      //                       textAlign: TextAlign.center,
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //             ],
+                      //           ),
+                      //         ),
+                      // ),
+                      // Tooltip(
+                      //   richMessage: TextSpan(
+                      //       text: language.profile,
+                      //       style: secondaryTextStyle(
+                      //         color: Colors.white,
+                      //       )),
+                      //   child: Image.asset(
+                      //     selectedIndex == 4 ? ic_profile_filled : ic_profile,
+                      //     height: 24,
+                      //     width: 24,
+                      //     fit: BoxFit.cover,
+                      //     color: selectedIndex == 4
+                      //         ? context.primaryColor
+                      //         : context.iconColor,
+                      //   ).paddingSymmetric(vertical: 11),
+                      // ),
                     ],
                   ),
                 ),
@@ -307,6 +424,30 @@ class _DashboardScreenState extends State<DashboardScreen> with TickerProviderSt
           ),
         ),
       ),
+    );
+  }
+}
+
+class TabBarWidget extends StatelessWidget {
+  const TabBarWidget({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 96,
+      height: 40,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Color(0xff00FFFF),
+            Color(0xffFFC0CB),
+            Color(0xffFFFF00),
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          borderRadius: BorderRadius.circular(10)),
+      child: Text(text),
     );
   }
 }
