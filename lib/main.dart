@@ -120,21 +120,21 @@ class _MyAppState extends State<MyApp> {
           state.maybeWhen(
             orElse: () {},
             unauthenticated: () {
-              // navigatorKey.currentState?.pushAndRemoveUntil(
-              //   CupertinoPageRoute(
-              //     builder: (context) => SignInScreen(),
-              //   ),
-              //   (_) => false,
-              // );
               navigatorKey.currentState?.pushAndRemoveUntil(
                 CupertinoPageRoute(
-                  builder: (context) => BlocProvider(
-                    create: (context) => ChooseMemeCategoriesCubit(apiService: sl()),
-                    child: ChooseCategoriesPage(),
-                  ),
+                  builder: (context) => SignInScreen(),
                 ),
                 (_) => false,
               );
+              // navigatorKey.currentState?.pushAndRemoveUntil(
+              //   CupertinoPageRoute(
+              //     builder: (context) => BlocProvider(
+              //       create: (context) => ChooseMemeCategoriesCubit(apiService: sl()),
+              //       child: ChooseCategoriesPage(),
+              //     ),
+              //   ),
+              //   (_) => false,
+              // );
             },
             authenticated: () {
               navigatorKey.currentState?.pushAndRemoveUntil(
