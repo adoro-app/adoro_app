@@ -126,6 +126,9 @@ class _LoginInComponentState extends State<LoginInComponent> {
       listener: (context, state) {
         state.maybeWhen(
           orElse: () {},
+          error: (error) {
+            toast(error.message);
+          },
           otpSent: () {
             Navigator.push(
               context,

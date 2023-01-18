@@ -24,7 +24,7 @@ mixin _$AuthState {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,7 +35,7 @@ mixin _$AuthState {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -46,7 +46,7 @@ mixin _$AuthState {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -146,7 +146,7 @@ class _$_Initial implements _Initial {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) {
     return initial();
   }
@@ -160,7 +160,7 @@ class _$_Initial implements _Initial {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) {
     return initial?.call();
   }
@@ -174,7 +174,7 @@ class _$_Initial implements _Initial {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -278,7 +278,7 @@ class _$_UnAuthenticated implements _UnAuthenticated {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) {
     return unauthenticated();
   }
@@ -292,7 +292,7 @@ class _$_UnAuthenticated implements _UnAuthenticated {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) {
     return unauthenticated?.call();
   }
@@ -306,7 +306,7 @@ class _$_UnAuthenticated implements _UnAuthenticated {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -410,7 +410,7 @@ class _$_SendingOtp implements _SendingOtp {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) {
     return sendingOtp();
   }
@@ -424,7 +424,7 @@ class _$_SendingOtp implements _SendingOtp {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) {
     return sendingOtp?.call();
   }
@@ -438,7 +438,7 @@ class _$_SendingOtp implements _SendingOtp {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) {
     if (sendingOtp != null) {
@@ -542,7 +542,7 @@ class _$_OtpStent implements _OtpStent {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) {
     return otpSent();
   }
@@ -556,7 +556,7 @@ class _$_OtpStent implements _OtpStent {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) {
     return otpSent?.call();
   }
@@ -570,7 +570,7 @@ class _$_OtpStent implements _OtpStent {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) {
     if (otpSent != null) {
@@ -674,7 +674,7 @@ class _$_VerifyingOtp implements _VerifyingOtp {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) {
     return verifyingOtp();
   }
@@ -688,7 +688,7 @@ class _$_VerifyingOtp implements _VerifyingOtp {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) {
     return verifyingOtp?.call();
   }
@@ -702,7 +702,7 @@ class _$_VerifyingOtp implements _VerifyingOtp {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) {
     if (verifyingOtp != null) {
@@ -806,7 +806,7 @@ class _$_Authenticated implements _Authenticated {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) {
     return authenticated();
   }
@@ -820,7 +820,7 @@ class _$_Authenticated implements _Authenticated {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) {
     return authenticated?.call();
   }
@@ -834,7 +834,7 @@ class _$_Authenticated implements _Authenticated {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
@@ -898,6 +898,10 @@ abstract class _Authenticated implements AuthState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({AuthError error});
+
+  $AuthErrorCopyWith<$Res> get error;
 }
 
 /// @nodoc
@@ -906,26 +910,58 @@ class __$$_ErrorCopyWithImpl<$Res>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = null,
+  }) {
+    return _then(_$_Error(
+      error: null == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as AuthError,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AuthErrorCopyWith<$Res> get error {
+    return $AuthErrorCopyWith<$Res>(_value.error, (value) {
+      return _then(_value.copyWith(error: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error();
+  const _$_Error({required this.error});
+
+  @override
+  final AuthError error;
 
   @override
   String toString() {
-    return 'AuthState.error()';
+    return 'AuthState.error(error: $error)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Error);
+        (other.runtimeType == runtimeType &&
+            other is _$_Error &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, error);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -936,9 +972,9 @@ class _$_Error implements _Error {
     required TResult Function() otpSent,
     required TResult Function() verifyingOtp,
     required TResult Function() authenticated,
-    required TResult Function() error,
+    required TResult Function(AuthError error) error,
   }) {
-    return error();
+    return error(this.error);
   }
 
   @override
@@ -950,9 +986,9 @@ class _$_Error implements _Error {
     TResult? Function()? otpSent,
     TResult? Function()? verifyingOtp,
     TResult? Function()? authenticated,
-    TResult? Function()? error,
+    TResult? Function(AuthError error)? error,
   }) {
-    return error?.call();
+    return error?.call(this.error);
   }
 
   @override
@@ -964,11 +1000,11 @@ class _$_Error implements _Error {
     TResult Function()? otpSent,
     TResult Function()? verifyingOtp,
     TResult Function()? authenticated,
-    TResult Function()? error,
+    TResult Function(AuthError error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(this.error);
     }
     return orElse();
   }
@@ -1021,5 +1057,10 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements AuthState {
-  const factory _Error() = _$_Error;
+  const factory _Error({required final AuthError error}) = _$_Error;
+
+  AuthError get error;
+  @JsonKey(ignore: true)
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

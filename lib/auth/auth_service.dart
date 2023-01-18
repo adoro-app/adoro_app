@@ -1,11 +1,13 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:socialv/auth/auth_error.dart';
 
 class AuthService {
   final Dio _dio;
 
   AuthService(this._dio);
 
-  Future<bool> login(String mobileNo) async {
+  Future<Either<AuthError, Unit>> login(String mobileNo) async {
     try {
       final response = await _dio.post(
         '/login',
@@ -13,12 +15,17 @@ class AuthService {
           'mobileNo': mobileNo,
         },
       );
-      if (response.data['status'] == 200) {
-        return true;
+      final status = response.data['status'] as int;
+      final msg = response.data['msg'] as String;
+      if (status == 200) {
+        return right(unit);
       }
-      return false;
+      return left(AuthError.userNotRegistered(message: msg));
     } catch (e) {
-      return false;
+      print('---------------------');
+      print('ERROR: e');
+      print('---------------------');
+      return left(const AuthError.unknown());
     }
   }
 

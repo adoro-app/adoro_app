@@ -8,5 +8,7 @@ class AuthState with _$AuthState {
   const factory AuthState.otpSent() = _OtpStent;
   const factory AuthState.verifyingOtp() = _VerifyingOtp;
   const factory AuthState.authenticated() = _Authenticated;
-  const factory AuthState.error() = _Error;
+  const factory AuthState.error({
+    required AuthError error,
+  }) = _Error;
 }

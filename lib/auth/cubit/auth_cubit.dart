@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:socialv/auth/auth_error.dart';
 import 'package:socialv/auth/auth_service.dart';
 
 part 'auth_state.dart';
@@ -17,12 +18,12 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> login(String mobileNo) async {
     emit(const AuthState.sendingOtp());
-    final success = await _authService.login(mobileNo);
-    if (success) {
-      emit(const AuthState.otpSent());
-    } else {
-      emit(const AuthState.error());
-    }
+    final failureOrSuccess = await _authService.login(mobileNo);
+    failureOrSuccess.fold((l) {
+      emit(AuthState.error(error: l));
+    }, (r) {
+      emit(AuthState.otpSent());
+    });
   }
 
   Future<void> verifyOTP(String mobileNo, String otp) async {
@@ -31,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
     if (success) {
       emit(const AuthState.authenticated());
     } else {
-      emit(const AuthState.error());
+      //emit(const AuthState.error());
     }
   }
 }
