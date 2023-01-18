@@ -1,11 +1,26 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:socialv/auth/auth_error.dart';
+import 'package:socialv/auth/credentials_storage.dart';
 
 class AuthService {
   final Dio _dio;
+  final CredentialsStorage _credentialsStorage;
 
-  AuthService(this._dio);
+  AuthService(
+    this._dio,
+    this._credentialsStorage,
+  );
+
+  Future<String?> getSignedInCredentials() async {
+    try {
+      final storedCredentials = await _credentialsStorage.read();
+      return storedCredentials;
+    } on PlatformException {
+      return null;
+    }
+  }
 
   Future<Either<AuthError, Unit>> login(String mobileNo) async {
     try {
@@ -71,6 +86,8 @@ class AuthService {
       final status = response.data['status'] as int;
 
       if (status == 200) {
+        final token = response.data['token'] as String;
+        _credentialsStorage.save(token);
         return right(unit);
       }
       return left(const AuthError.wrongOTP());
@@ -80,5 +97,9 @@ class AuthService {
       print('---------------------');
       return left(const AuthError.unknown());
     }
+  }
+
+  Future<void> signOut() async {
+    await _credentialsStorage.clear();
   }
 }

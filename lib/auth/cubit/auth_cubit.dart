@@ -11,9 +11,18 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthService _authService;
 
   AuthCubit(this._authService) : super(const AuthState.initial()) {
-    Future.delayed(Duration(seconds: 5), () {
-      emit(AuthState.unauthenticated());
+    Future.delayed(Duration(seconds: 3), () {
+      _checkAuthStatus();
     });
+  }
+
+  Future<void> _checkAuthStatus() async {
+    final token = await _authService.getSignedInCredentials();
+    if (token == null) {
+      emit(AuthState.unauthenticated());
+    } else {
+      emit(AuthState.authenticated());
+    }
   }
 
   Future<void> login(String mobileNo) async {
