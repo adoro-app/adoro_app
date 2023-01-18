@@ -18,6 +18,34 @@ class ChooseMemeCategoriesCubit extends Cubit<ChooseMemeCategoriesState> {
       emit(ChooseMemeCategoriesState.error());
       return;
     }
-    emit(ChooseMemeCategoriesState.success(categories: categories));
+    emit(
+      ChooseMemeCategoriesState.success(
+        categories: categories,
+        selectedCategories: [],
+      ),
+    );
+  }
+
+  void categoryTapped(int id) {
+    state.maybeWhen(
+      orElse: () {},
+      success: (categories, selectedCategories) {
+        if (selectedCategories.contains(id)) {
+          emit(
+            ChooseMemeCategoriesState.success(
+              categories: categories,
+              selectedCategories: [...selectedCategories]..remove(id),
+            ),
+          );
+        } else {
+          emit(
+            ChooseMemeCategoriesState.success(
+              categories: categories,
+              selectedCategories: [...selectedCategories, id],
+            ),
+          );
+        }
+      },
+    );
   }
 }

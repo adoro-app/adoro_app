@@ -20,7 +20,9 @@ mixin _$ChooseMemeCategoriesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MemeCategory> categories) success,
+    required TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)
+        success,
     required TResult Function() error,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +30,9 @@ mixin _$ChooseMemeCategoriesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<MemeCategory> categories)? success,
+    TResult? Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult? Function()? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +40,9 @@ mixin _$ChooseMemeCategoriesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MemeCategory> categories)? success,
+    TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult Function()? error,
     required TResult orElse(),
   }) =>
@@ -126,7 +132,9 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MemeCategory> categories) success,
+    required TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)
+        success,
     required TResult Function() error,
   }) {
     return initial();
@@ -137,7 +145,9 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<MemeCategory> categories)? success,
+    TResult? Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult? Function()? error,
   }) {
     return initial?.call();
@@ -148,7 +158,9 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MemeCategory> categories)? success,
+    TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -239,7 +251,9 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MemeCategory> categories) success,
+    required TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)
+        success,
     required TResult Function() error,
   }) {
     return loading();
@@ -250,7 +264,9 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<MemeCategory> categories)? success,
+    TResult? Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult? Function()? error,
   }) {
     return loading?.call();
@@ -261,7 +277,9 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MemeCategory> categories)? success,
+    TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult Function()? error,
     required TResult orElse(),
   }) {
@@ -319,7 +337,7 @@ abstract class _$$_SuccessCopyWith<$Res> {
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<MemeCategory> categories});
+  $Res call({List<MemeCategory> categories, List<int> selectedCategories});
 }
 
 /// @nodoc
@@ -333,12 +351,17 @@ class __$$_SuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = null,
+    Object? selectedCategories = null,
   }) {
     return _then(_$_Success(
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
               as List<MemeCategory>,
+      selectedCategories: null == selectedCategories
+          ? _value._selectedCategories
+          : selectedCategories // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -346,8 +369,11 @@ class __$$_SuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Success implements _Success {
-  const _$_Success({required final List<MemeCategory> categories})
-      : _categories = categories;
+  const _$_Success(
+      {required final List<MemeCategory> categories,
+      required final List<int> selectedCategories})
+      : _categories = categories,
+        _selectedCategories = selectedCategories;
 
   final List<MemeCategory> _categories;
   @override
@@ -357,9 +383,18 @@ class _$_Success implements _Success {
     return EqualUnmodifiableListView(_categories);
   }
 
+  final List<int> _selectedCategories;
+  @override
+  List<int> get selectedCategories {
+    if (_selectedCategories is EqualUnmodifiableListView)
+      return _selectedCategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedCategories);
+  }
+
   @override
   String toString() {
-    return 'ChooseMemeCategoriesState.success(categories: $categories)';
+    return 'ChooseMemeCategoriesState.success(categories: $categories, selectedCategories: $selectedCategories)';
   }
 
   @override
@@ -368,12 +403,16 @@ class _$_Success implements _Success {
         (other.runtimeType == runtimeType &&
             other is _$_Success &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories));
+                .equals(other._categories, _categories) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedCategories, _selectedCategories));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_categories));
+      runtimeType,
+      const DeepCollectionEquality().hash(_categories),
+      const DeepCollectionEquality().hash(_selectedCategories));
 
   @JsonKey(ignore: true)
   @override
@@ -386,10 +425,12 @@ class _$_Success implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MemeCategory> categories) success,
+    required TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)
+        success,
     required TResult Function() error,
   }) {
-    return success(categories);
+    return success(categories, selectedCategories);
   }
 
   @override
@@ -397,10 +438,12 @@ class _$_Success implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<MemeCategory> categories)? success,
+    TResult? Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult? Function()? error,
   }) {
-    return success?.call(categories);
+    return success?.call(categories, selectedCategories);
   }
 
   @override
@@ -408,12 +451,14 @@ class _$_Success implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MemeCategory> categories)? success,
+    TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult Function()? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(categories);
+      return success(categories, selectedCategories);
     }
     return orElse();
   }
@@ -457,10 +502,12 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements ChooseMemeCategoriesState {
-  const factory _Success({required final List<MemeCategory> categories}) =
-      _$_Success;
+  const factory _Success(
+      {required final List<MemeCategory> categories,
+      required final List<int> selectedCategories}) = _$_Success;
 
   List<MemeCategory> get categories;
+  List<int> get selectedCategories;
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
@@ -504,7 +551,9 @@ class _$_Error implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MemeCategory> categories) success,
+    required TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)
+        success,
     required TResult Function() error,
   }) {
     return error();
@@ -515,7 +564,9 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(List<MemeCategory> categories)? success,
+    TResult? Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult? Function()? error,
   }) {
     return error?.call();
@@ -526,7 +577,9 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MemeCategory> categories)? success,
+    TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
     TResult Function()? error,
     required TResult orElse(),
   }) {

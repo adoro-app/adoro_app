@@ -6,6 +6,7 @@ class ChooseMemeCategoriesState with _$ChooseMemeCategoriesState {
   const factory ChooseMemeCategoriesState.loading() = _Loading;
   const factory ChooseMemeCategoriesState.success({
     required List<MemeCategory> categories,
+    required List<int> selectedCategories,
   }) = _Success;
   const factory ChooseMemeCategoriesState.error() = _Error;
 }
