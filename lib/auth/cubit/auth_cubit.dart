@@ -11,7 +11,7 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthService _authService;
 
   AuthCubit(this._authService) : super(const AuthState.initial()) {
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 5), () {
       emit(AuthState.unauthenticated());
     });
   }
@@ -28,11 +28,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> verifyOTP(String mobileNo, String otp) async {
     emit(const AuthState.verifyingOtp());
-    final success = await _authService.validateOTP(mobileNo, otp);
-    if (success) {
-      emit(const AuthState.authenticated());
-    } else {
-      //emit(const AuthState.error());
-    }
+    final failureOrSuccess = await _authService.validateOTP(mobileNo, otp);
+    failureOrSuccess.fold((l) {
+      emit(AuthState.error(error: l));
+    }, (r) {
+      emit(AuthState.authenticated());
+    });
   }
 }

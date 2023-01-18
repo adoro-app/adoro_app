@@ -13,6 +13,7 @@ import 'package:socialv/language/languages.dart';
 import 'package:socialv/models/common_models.dart';
 import 'package:socialv/screens/auth/screens/otp_screen.dart';
 import 'package:socialv/screens/auth/screens/sign_in_screen.dart';
+import 'package:socialv/screens/dashboard_screen.dart';
 import 'package:socialv/screens/splash_screen.dart';
 import 'package:socialv/service_locator.dart';
 import 'package:socialv/store/app_store.dart';
@@ -117,10 +118,19 @@ class _MyAppState extends State<MyApp> {
           state.maybeWhen(
             orElse: () {},
             unauthenticated: () {
-                navigatorKey.currentState?.push(
+              navigatorKey.currentState?.pushAndRemoveUntil(
                 CupertinoPageRoute(
                   builder: (context) => SignInScreen(),
                 ),
+                (_) => false,
+              );
+            },
+            authenticated: () {
+              navigatorKey.currentState?.pushAndRemoveUntil(
+                CupertinoPageRoute(
+                  builder: (context) => DashboardScreen(),
+                ),
+                (_) => false,
               );
             },
             // otpSent: () {

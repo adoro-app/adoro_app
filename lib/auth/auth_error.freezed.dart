@@ -20,18 +20,21 @@ mixin _$AuthError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String message) userNotRegistered,
+    required TResult Function(String message) wrongOTP,
     required TResult Function(String message) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? userNotRegistered,
+    TResult? Function(String message)? wrongOTP,
     TResult? Function(String message)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? userNotRegistered,
+    TResult Function(String message)? wrongOTP,
     TResult Function(String message)? unknown,
     required TResult orElse(),
   }) =>
@@ -39,18 +42,21 @@ mixin _$AuthError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UserNotRegistered value) userNotRegistered,
+    required TResult Function(_WrongOTP value) wrongOTP,
     required TResult Function(_Unknown value) unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserNotRegistered value)? userNotRegistered,
+    TResult? Function(_WrongOTP value)? wrongOTP,
     TResult? Function(_Unknown value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserNotRegistered value)? userNotRegistered,
+    TResult Function(_WrongOTP value)? wrongOTP,
     TResult Function(_Unknown value)? unknown,
     required TResult orElse(),
   }) =>
@@ -161,6 +167,7 @@ class _$_UserNotRegistered extends _UserNotRegistered {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String message) userNotRegistered,
+    required TResult Function(String message) wrongOTP,
     required TResult Function(String message) unknown,
   }) {
     return userNotRegistered(message);
@@ -170,6 +177,7 @@ class _$_UserNotRegistered extends _UserNotRegistered {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? userNotRegistered,
+    TResult? Function(String message)? wrongOTP,
     TResult? Function(String message)? unknown,
   }) {
     return userNotRegistered?.call(message);
@@ -179,6 +187,7 @@ class _$_UserNotRegistered extends _UserNotRegistered {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? userNotRegistered,
+    TResult Function(String message)? wrongOTP,
     TResult Function(String message)? unknown,
     required TResult orElse(),
   }) {
@@ -192,6 +201,7 @@ class _$_UserNotRegistered extends _UserNotRegistered {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UserNotRegistered value) userNotRegistered,
+    required TResult Function(_WrongOTP value) wrongOTP,
     required TResult Function(_Unknown value) unknown,
   }) {
     return userNotRegistered(this);
@@ -201,6 +211,7 @@ class _$_UserNotRegistered extends _UserNotRegistered {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserNotRegistered value)? userNotRegistered,
+    TResult? Function(_WrongOTP value)? wrongOTP,
     TResult? Function(_Unknown value)? unknown,
   }) {
     return userNotRegistered?.call(this);
@@ -210,6 +221,7 @@ class _$_UserNotRegistered extends _UserNotRegistered {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserNotRegistered value)? userNotRegistered,
+    TResult Function(_WrongOTP value)? wrongOTP,
     TResult Function(_Unknown value)? unknown,
     required TResult orElse(),
   }) {
@@ -230,6 +242,150 @@ abstract class _UserNotRegistered extends AuthError {
   @override
   @JsonKey(ignore: true)
   _$$_UserNotRegisteredCopyWith<_$_UserNotRegistered> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_WrongOTPCopyWith<$Res> implements $AuthErrorCopyWith<$Res> {
+  factory _$$_WrongOTPCopyWith(
+          _$_WrongOTP value, $Res Function(_$_WrongOTP) then) =
+      __$$_WrongOTPCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String message});
+}
+
+/// @nodoc
+class __$$_WrongOTPCopyWithImpl<$Res>
+    extends _$AuthErrorCopyWithImpl<$Res, _$_WrongOTP>
+    implements _$$_WrongOTPCopyWith<$Res> {
+  __$$_WrongOTPCopyWithImpl(
+      _$_WrongOTP _value, $Res Function(_$_WrongOTP) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$_WrongOTP(
+      message: null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_WrongOTP extends _WrongOTP {
+  const _$_WrongOTP({this.message = 'Wrong OTP entered!'}) : super._();
+
+  @override
+  @JsonKey()
+  final String message;
+
+  @override
+  String toString() {
+    return 'AuthError.wrongOTP(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_WrongOTP &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_WrongOTPCopyWith<_$_WrongOTP> get copyWith =>
+      __$$_WrongOTPCopyWithImpl<_$_WrongOTP>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String message) userNotRegistered,
+    required TResult Function(String message) wrongOTP,
+    required TResult Function(String message) unknown,
+  }) {
+    return wrongOTP(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String message)? userNotRegistered,
+    TResult? Function(String message)? wrongOTP,
+    TResult? Function(String message)? unknown,
+  }) {
+    return wrongOTP?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String message)? userNotRegistered,
+    TResult Function(String message)? wrongOTP,
+    TResult Function(String message)? unknown,
+    required TResult orElse(),
+  }) {
+    if (wrongOTP != null) {
+      return wrongOTP(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_UserNotRegistered value) userNotRegistered,
+    required TResult Function(_WrongOTP value) wrongOTP,
+    required TResult Function(_Unknown value) unknown,
+  }) {
+    return wrongOTP(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_UserNotRegistered value)? userNotRegistered,
+    TResult? Function(_WrongOTP value)? wrongOTP,
+    TResult? Function(_Unknown value)? unknown,
+  }) {
+    return wrongOTP?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_UserNotRegistered value)? userNotRegistered,
+    TResult Function(_WrongOTP value)? wrongOTP,
+    TResult Function(_Unknown value)? unknown,
+    required TResult orElse(),
+  }) {
+    if (wrongOTP != null) {
+      return wrongOTP(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _WrongOTP extends AuthError {
+  const factory _WrongOTP({final String message}) = _$_WrongOTP;
+  const _WrongOTP._() : super._();
+
+  @override
+  String get message;
+  @override
+  @JsonKey(ignore: true)
+  _$$_WrongOTPCopyWith<_$_WrongOTP> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -299,6 +455,7 @@ class _$_Unknown extends _Unknown {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String message) userNotRegistered,
+    required TResult Function(String message) wrongOTP,
     required TResult Function(String message) unknown,
   }) {
     return unknown(message);
@@ -308,6 +465,7 @@ class _$_Unknown extends _Unknown {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String message)? userNotRegistered,
+    TResult? Function(String message)? wrongOTP,
     TResult? Function(String message)? unknown,
   }) {
     return unknown?.call(message);
@@ -317,6 +475,7 @@ class _$_Unknown extends _Unknown {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String message)? userNotRegistered,
+    TResult Function(String message)? wrongOTP,
     TResult Function(String message)? unknown,
     required TResult orElse(),
   }) {
@@ -330,6 +489,7 @@ class _$_Unknown extends _Unknown {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_UserNotRegistered value) userNotRegistered,
+    required TResult Function(_WrongOTP value) wrongOTP,
     required TResult Function(_Unknown value) unknown,
   }) {
     return unknown(this);
@@ -339,6 +499,7 @@ class _$_Unknown extends _Unknown {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_UserNotRegistered value)? userNotRegistered,
+    TResult? Function(_WrongOTP value)? wrongOTP,
     TResult? Function(_Unknown value)? unknown,
   }) {
     return unknown?.call(this);
@@ -348,6 +509,7 @@ class _$_Unknown extends _Unknown {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_UserNotRegistered value)? userNotRegistered,
+    TResult Function(_WrongOTP value)? wrongOTP,
     TResult Function(_Unknown value)? unknown,
     required TResult orElse(),
   }) {

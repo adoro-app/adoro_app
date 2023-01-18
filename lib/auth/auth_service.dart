@@ -50,7 +50,7 @@ class AuthService {
     }
   }
 
-  Future<bool> validateOTP(
+  Future<Either<AuthError, Unit>> validateOTP(
     String mobileNo,
     String otp,
   ) async {
@@ -62,12 +62,17 @@ class AuthService {
           'otp': otp,
         },
       );
-      if (response.data['status'] == 200) {
-        return true;
+      final status = response.data['status'] as int;
+
+      if (status == 200) {
+        return right(unit);
       }
-      return false;
+      return left(const AuthError.wrongOTP());
     } catch (e) {
-      return false;
+      print('---------------------');
+      print('ERROR: e');
+      print('---------------------');
+      return left(const AuthError.unknown());
     }
   }
 }
