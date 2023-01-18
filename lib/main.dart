@@ -126,31 +126,25 @@ class _MyAppState extends State<MyApp> {
                 ),
                 (_) => false,
               );
+            },
+            authenticated: () {
               // navigatorKey.currentState?.pushAndRemoveUntil(
               //   CupertinoPageRoute(
-              //     builder: (context) => BlocProvider(
-              //       create: (context) => ChooseMemeCategoriesCubit(apiService: sl()),
-              //       child: ChooseCategoriesPage(),
-              //     ),
+              //     builder: (context) => DashboardScreen(),
               //   ),
               //   (_) => false,
               // );
-            },
-            authenticated: () {
               navigatorKey.currentState?.pushAndRemoveUntil(
                 CupertinoPageRoute(
-                  builder: (context) => DashboardScreen(),
+                  builder: (context) => BlocProvider(
+                    create: (context) =>
+                        ChooseMemeCategoriesCubit(apiService: sl()),
+                    child: ChooseCategoriesPage(),
+                  ),
                 ),
                 (_) => false,
               );
             },
-            // otpSent: () {
-            //   navigatorKey.currentState?.push(
-            //     CupertinoPageRoute(
-            //       builder: (context) => OtpScreen(),
-            //     ),
-            //   );
-            // },
           );
         },
         child: MaterialApp(
