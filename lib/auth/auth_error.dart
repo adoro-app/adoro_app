@@ -7,7 +7,10 @@ class AuthError with _$AuthError {
   const factory AuthError.userNotRegistered({
     required String message,
   }) = _UserNotRegistered;
-   const factory AuthError.wrongOTP({
+  const factory AuthError.alreadyRegistered({
+    required String message,
+  }) = _UserAlreadyRegistered;
+  const factory AuthError.wrongOTP({
     @Default('Wrong OTP entered!') String message,
   }) = _WrongOTP;
   const factory AuthError.unknown({

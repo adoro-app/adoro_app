@@ -29,7 +29,7 @@ class AuthService {
     }
   }
 
-  Future<bool> signUp(
+  Future<Either<AuthError, Unit>> signUp(
     String mobileNo,
     String username,
   ) async {
@@ -41,12 +41,18 @@ class AuthService {
           'username': username,
         },
       );
-      if (response.data['status'] == 200) {
-        return true;
+      final status = response.data['status'] as int;
+      final msg = response.data['msg'] as String;
+
+      if (status == 200) {
+        return right(unit);
       }
-      return false;
+      return left(AuthError.alreadyRegistered(message: msg));
     } catch (e) {
-      return false;
+      print('---------------------');
+      print('ERROR: e');
+      print('---------------------');
+      return left(const AuthError.unknown());
     }
   }
 

@@ -26,6 +26,19 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
+  Future<void> signUp(
+    String mobileNo,
+    String username,
+  ) async {
+    emit(const AuthState.sendingOtp());
+    final failureOrSuccess = await _authService.signUp(mobileNo, username);
+    failureOrSuccess.fold((l) {
+      emit(AuthState.error(error: l));
+    }, (r) {
+      emit(AuthState.otpSent());
+    });
+  }
+
   Future<void> verifyOTP(String mobileNo, String otp) async {
     emit(const AuthState.verifyingOtp());
     final failureOrSuccess = await _authService.validateOTP(mobileNo, otp);
