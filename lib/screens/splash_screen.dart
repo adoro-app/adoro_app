@@ -77,28 +77,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Image.asset(SPLASH_SCREEN_IMAGE,
-              height: context.height(),
-              width: context.width(),
-              fit: BoxFit.cover),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(APP_ICON,
-                  height: 50,
-                  width: 52,
-                  fit: BoxFit.cover,
-                  color: Colors.white),
-              8.width,
-              Text(APP_NAME,
-                  style: boldTextStyle(color: Colors.white, size: 40)),
-            ],
-          ),
-        ],
-      ),
-    );
+        body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              colors: [
+                Color(0xff00FFFF),
+                Color(0xffFFC0CB),
+                Color(0xffFFFF00),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )),
+            child: Center(child: Image.asset('assets/app_logo.png'))));
   }
 }
