@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialv/screens/dashboard_screen.dart';
 
 class DoneScreen extends StatelessWidget {
   const DoneScreen({super.key});
@@ -25,7 +27,10 @@ class DoneScreen extends StatelessWidget {
               child: Image.asset('assets/icons/ic_verified_user.png')),
           SizedBox(height: 20),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  CupertinoPageRoute(builder: (context) => DashboardScreen()));
+            },
             child: Center(
               child: Container(
                 width: context.width() - 32,
