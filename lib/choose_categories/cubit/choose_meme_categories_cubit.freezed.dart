@@ -23,7 +23,8 @@ mixin _$ChooseMemeCategoriesState {
     required TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)
         success,
-    required TResult Function() error,
+    required TResult Function() categoriesUploaded,
+    required TResult Function(ChooseMemeCategoryError? error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -33,7 +34,8 @@ mixin _$ChooseMemeCategoriesState {
     TResult? Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult? Function()? error,
+    TResult? Function()? categoriesUploaded,
+    TResult? Function(ChooseMemeCategoryError? error)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,7 +45,8 @@ mixin _$ChooseMemeCategoriesState {
     TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult Function()? error,
+    TResult Function()? categoriesUploaded,
+    TResult Function(ChooseMemeCategoryError? error)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -52,6 +55,7 @@ mixin _$ChooseMemeCategoriesState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_CategoriesUploaded value) categoriesUploaded,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -60,6 +64,7 @@ mixin _$ChooseMemeCategoriesState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -68,6 +73,7 @@ mixin _$ChooseMemeCategoriesState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -135,7 +141,8 @@ class _$_Initial implements _Initial {
     required TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)
         success,
-    required TResult Function() error,
+    required TResult Function() categoriesUploaded,
+    required TResult Function(ChooseMemeCategoryError? error) error,
   }) {
     return initial();
   }
@@ -148,7 +155,8 @@ class _$_Initial implements _Initial {
     TResult? Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult? Function()? error,
+    TResult? Function()? categoriesUploaded,
+    TResult? Function(ChooseMemeCategoryError? error)? error,
   }) {
     return initial?.call();
   }
@@ -161,7 +169,8 @@ class _$_Initial implements _Initial {
     TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult Function()? error,
+    TResult Function()? categoriesUploaded,
+    TResult Function(ChooseMemeCategoryError? error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -176,6 +185,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_CategoriesUploaded value) categoriesUploaded,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -187,6 +197,7 @@ class _$_Initial implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -198,6 +209,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -254,7 +266,8 @@ class _$_Loading implements _Loading {
     required TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)
         success,
-    required TResult Function() error,
+    required TResult Function() categoriesUploaded,
+    required TResult Function(ChooseMemeCategoryError? error) error,
   }) {
     return loading();
   }
@@ -267,7 +280,8 @@ class _$_Loading implements _Loading {
     TResult? Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult? Function()? error,
+    TResult? Function()? categoriesUploaded,
+    TResult? Function(ChooseMemeCategoryError? error)? error,
   }) {
     return loading?.call();
   }
@@ -280,7 +294,8 @@ class _$_Loading implements _Loading {
     TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult Function()? error,
+    TResult Function()? categoriesUploaded,
+    TResult Function(ChooseMemeCategoryError? error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -295,6 +310,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_CategoriesUploaded value) categoriesUploaded,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -306,6 +322,7 @@ class _$_Loading implements _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -317,6 +334,7 @@ class _$_Loading implements _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -428,7 +446,8 @@ class _$_Success implements _Success {
     required TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)
         success,
-    required TResult Function() error,
+    required TResult Function() categoriesUploaded,
+    required TResult Function(ChooseMemeCategoryError? error) error,
   }) {
     return success(categories, selectedCategories);
   }
@@ -441,7 +460,8 @@ class _$_Success implements _Success {
     TResult? Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult? Function()? error,
+    TResult? Function()? categoriesUploaded,
+    TResult? Function(ChooseMemeCategoryError? error)? error,
   }) {
     return success?.call(categories, selectedCategories);
   }
@@ -454,7 +474,8 @@ class _$_Success implements _Success {
     TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult Function()? error,
+    TResult Function()? categoriesUploaded,
+    TResult Function(ChooseMemeCategoryError? error)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -469,6 +490,7 @@ class _$_Success implements _Success {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_CategoriesUploaded value) categoriesUploaded,
     required TResult Function(_Error value) error,
   }) {
     return success(this);
@@ -480,6 +502,7 @@ class _$_Success implements _Success {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
@@ -491,6 +514,7 @@ class _$_Success implements _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -514,33 +538,35 @@ abstract class _Success implements ChooseMemeCategoriesState {
 }
 
 /// @nodoc
-abstract class _$$_ErrorCopyWith<$Res> {
-  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
-      __$$_ErrorCopyWithImpl<$Res>;
+abstract class _$$_CategoriesUploadedCopyWith<$Res> {
+  factory _$$_CategoriesUploadedCopyWith(_$_CategoriesUploaded value,
+          $Res Function(_$_CategoriesUploaded) then) =
+      __$$_CategoriesUploadedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ErrorCopyWithImpl<$Res>
-    extends _$ChooseMemeCategoriesStateCopyWithImpl<$Res, _$_Error>
-    implements _$$_ErrorCopyWith<$Res> {
-  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+class __$$_CategoriesUploadedCopyWithImpl<$Res>
+    extends _$ChooseMemeCategoriesStateCopyWithImpl<$Res, _$_CategoriesUploaded>
+    implements _$$_CategoriesUploadedCopyWith<$Res> {
+  __$$_CategoriesUploadedCopyWithImpl(
+      _$_CategoriesUploaded _value, $Res Function(_$_CategoriesUploaded) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Error implements _Error {
-  const _$_Error();
+class _$_CategoriesUploaded implements _CategoriesUploaded {
+  const _$_CategoriesUploaded();
 
   @override
   String toString() {
-    return 'ChooseMemeCategoriesState.error()';
+    return 'ChooseMemeCategoriesState.categoriesUploaded()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Error);
+        (other.runtimeType == runtimeType && other is _$_CategoriesUploaded);
   }
 
   @override
@@ -554,9 +580,10 @@ class _$_Error implements _Error {
     required TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)
         success,
-    required TResult Function() error,
+    required TResult Function() categoriesUploaded,
+    required TResult Function(ChooseMemeCategoryError? error) error,
   }) {
-    return error();
+    return categoriesUploaded();
   }
 
   @override
@@ -567,9 +594,10 @@ class _$_Error implements _Error {
     TResult? Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult? Function()? error,
+    TResult? Function()? categoriesUploaded,
+    TResult? Function(ChooseMemeCategoryError? error)? error,
   }) {
-    return error?.call();
+    return categoriesUploaded?.call();
   }
 
   @override
@@ -580,11 +608,12 @@ class _$_Error implements _Error {
     TResult Function(
             List<MemeCategory> categories, List<int> selectedCategories)?
         success,
-    TResult Function()? error,
+    TResult Function()? categoriesUploaded,
+    TResult Function(ChooseMemeCategoryError? error)? error,
     required TResult orElse(),
   }) {
-    if (error != null) {
-      return error();
+    if (categoriesUploaded != null) {
+      return categoriesUploaded();
     }
     return orElse();
   }
@@ -595,6 +624,171 @@ class _$_Error implements _Error {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_CategoriesUploaded value) categoriesUploaded,
+    required TResult Function(_Error value) error,
+  }) {
+    return categoriesUploaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_CategoriesUploaded value)? categoriesUploaded,
+    TResult? Function(_Error value)? error,
+  }) {
+    return categoriesUploaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_CategoriesUploaded value)? categoriesUploaded,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (categoriesUploaded != null) {
+      return categoriesUploaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CategoriesUploaded implements ChooseMemeCategoriesState {
+  const factory _CategoriesUploaded() = _$_CategoriesUploaded;
+}
+
+/// @nodoc
+abstract class _$$_ErrorCopyWith<$Res> {
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ChooseMemeCategoryError? error});
+
+  $ChooseMemeCategoryErrorCopyWith<$Res>? get error;
+}
+
+/// @nodoc
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$ChooseMemeCategoriesStateCopyWithImpl<$Res, _$_Error>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? error = freezed,
+  }) {
+    return _then(_$_Error(
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as ChooseMemeCategoryError?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChooseMemeCategoryErrorCopyWith<$Res>? get error {
+    if (_value.error == null) {
+      return null;
+    }
+
+    return $ChooseMemeCategoryErrorCopyWith<$Res>(_value.error!, (value) {
+      return _then(_value.copyWith(error: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_Error implements _Error {
+  const _$_Error({this.error});
+
+  @override
+  final ChooseMemeCategoryError? error;
+
+  @override
+  String toString() {
+    return 'ChooseMemeCategoriesState.error(error: $error)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Error &&
+            (identical(other.error, error) || other.error == error));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, error);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)
+        success,
+    required TResult Function() categoriesUploaded,
+    required TResult Function(ChooseMemeCategoryError? error) error,
+  }) {
+    return error(this.error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
+    TResult? Function()? categoriesUploaded,
+    TResult? Function(ChooseMemeCategoryError? error)? error,
+  }) {
+    return error?.call(this.error);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(
+            List<MemeCategory> categories, List<int> selectedCategories)?
+        success,
+    TResult Function()? categoriesUploaded,
+    TResult Function(ChooseMemeCategoryError? error)? error,
+    required TResult orElse(),
+  }) {
+    if (error != null) {
+      return error(this.error);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_CategoriesUploaded value) categoriesUploaded,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -606,6 +800,7 @@ class _$_Error implements _Error {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -617,6 +812,7 @@ class _$_Error implements _Error {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_CategoriesUploaded value)? categoriesUploaded,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -628,5 +824,10 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements ChooseMemeCategoriesState {
-  const factory _Error() = _$_Error;
+  const factory _Error({final ChooseMemeCategoryError? error}) = _$_Error;
+
+  ChooseMemeCategoryError? get error;
+  @JsonKey(ignore: true)
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }

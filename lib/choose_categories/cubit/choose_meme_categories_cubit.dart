@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:socialv/models/meme_category.dart';
 import 'package:socialv/network/api_service.dart';
 
+import 'choose_meme_category_error.dart';
+
 part 'choose_meme_categories_state.dart';
 part 'choose_meme_categories_cubit.freezed.dart';
 
@@ -47,5 +49,13 @@ class ChooseMemeCategoriesCubit extends Cubit<ChooseMemeCategoriesState> {
         }
       },
     );
+  }
+
+  Future<void> uploadSelectedCategory(List<int> selectedCategories) async {
+    final failureOrSuccess =
+        await apiService.updateSelectedCategories(selectedCategories);
+    failureOrSuccess.fold((l) {
+      emit(ChooseMemeCategoriesState.error(error: l));
+    }, (r) => emit(ChooseMemeCategoriesState.categoriesUploaded()));
   }
 }
