@@ -151,8 +151,11 @@ class _LoginInComponentState extends State<LoginInComponent> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 16.height,
-                Text(language.welcomeBack, style: boldTextStyle(size: 24))
-                    .paddingSymmetric(horizontal: 16),
+                Text(language.welcomeBack,
+                    style: boldTextStyle(
+                      size: 24,
+                      weight: FontWeight.w600,
+                    )).paddingSymmetric(horizontal: 16),
                 8.height,
                 Text(
                   language.youHaveBeenMissed,

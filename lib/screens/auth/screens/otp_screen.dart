@@ -64,10 +64,11 @@ class _OtpScreenState extends State<OtpScreen> {
           child: Column(
             children: [
               200.height,
-              Text('OTP Verification', style: boldTextStyle(size: 20))
+              Text('OTP Verification',
+                      style: boldTextStyle(size: 20, weight: FontWeight.w600))
                   .paddingSymmetric(horizontal: 16),
               8.height,
-              Text('We have sent a 4 digit code to your mobile no.',
+              Text('We have sent a 6 digit code to your mobile no.',
                       style: secondaryTextStyle(weight: FontWeight.w500))
                   .paddingSymmetric(horizontal: 16),
               32.height,
