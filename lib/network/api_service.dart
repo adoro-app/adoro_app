@@ -34,6 +34,34 @@ class ApiService {
     }
   }
 
+  Future<void> updateUserDetails(
+      {required int userId,
+      required int mobileNumber,
+      required String userName,
+      required String bankName,
+      required String beneficiaryName,
+      required int accountNumber,
+      required int ifscCode}) async {
+    try {
+      final response = await _dio.post('/updateUserDetails', data: {
+        "userId": userId,
+        "mobileNumber": mobileNumber,
+        "userName": userName,
+        "bankName": bankName,
+        "beneficiaryName": beneficiaryName,
+        "accountNumber": accountNumber,
+        "ifscCode": ifscCode
+      });
+      final status = response.data['status'] as int;
+      print(response);
+      print(status);
+    } catch (e) {
+      print('---------------------');
+      print('ERROR: $e');
+      print('---------------------');
+    }
+  }
+
   Future<Either<ChooseMemeCategoryError, Unit>> updateSelectedCategories(
       List<int> selectedCategories) async {
     try {
