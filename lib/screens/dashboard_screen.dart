@@ -1,6 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialv/auth/cubit/auth_cubit.dart';
 import 'package:socialv/main.dart';
 import 'package:socialv/models/dashboard_api_response.dart';
 import 'package:socialv/network/rest_apis.dart';
@@ -9,11 +13,10 @@ import 'package:socialv/screens/fragments/home_fragment.dart';
 import 'package:socialv/screens/fragments/notification_fragment.dart';
 import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
-import 'package:socialv/screens/home/components/user_detail_bottomsheet_widget.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
+import 'package:socialv/screens/profile/screens/profile_screen.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
-import 'package:socialv/utils/cached_network_image.dart';
 
 int selectedIndex = 0;
 
@@ -93,6 +96,8 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<AuthCubit>().state.user;
+
     return DoublePressBackWidget(
       onWillPop: () {
         if (selectedIndex != 0) {
@@ -158,7 +163,49 @@ class _DashboardScreenState extends State<DashboardScreen>
               ),
             ),
           ),
-          drawer: Drawer(),
+          drawer: Drawer(
+            child: ListView(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Align(
+                      child: Icon(Icons.arrow_back),
+                      alignment: Alignment.topLeft,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                    radius: 33,
+                    backgroundImage: user?.image == null
+                        ? AssetImage(profile_img)
+                        : Image.network(user!.image!) as ImageProvider,
+                  ),
+                  title: Text(user?.beneficiaryName ?? '',
+                      style: boldTextStyle(size: 17, weight: FontWeight.w600)),
+                  subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 6.0),
+                      child: Text(user?.username ?? '',
+                          style: secondaryTextStyle(weight: FontWeight.w500))),
+                ),
+                ListTileComponent(
+                    title: "Notification", icon: ic_notification_svg),
+                ListTileComponent(title: "Result", icon: ic_result),
+                ListTileComponent(
+                  title: "Messages",
+                  icon: ic_messages,
+                ),
+                ListTileComponent(title: "Wallet", icon: ic_wallet),
+                ListTileComponent(title: "Refer & Earn", icon: ic_refer_earn),
+                ListTileComponent(title: "Support", icon: ic_support),
+                ListTileComponent(title: "Settings", icon: ic_settings),
+              ],
+            ),
+          ),
           body: CustomScrollView(
             controller: _controller,
             slivers: <Widget>[
@@ -430,6 +477,33 @@ class _DashboardScreenState extends State<DashboardScreen>
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class ListTileComponent extends StatelessWidget {
+  const ListTileComponent({
+    Key? key,
+    required this.title,
+    required this.icon,
+  }) : super(key: key);
+  final String title;
+  final String icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: SvgPicture.asset(icon),
+      // Image.asset(
+      //   ,
+      //   height: 24,
+      //   color: bodyWhite,
+      // ),
+      title: Transform(
+        transform: Matrix4.translationValues(-16, 0.0, 0.0),
+        child: Text(title,
+            style: boldTextStyle(size: 14, weight: FontWeight.w600)),
       ),
     );
   }

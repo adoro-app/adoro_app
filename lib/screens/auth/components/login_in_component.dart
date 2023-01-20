@@ -126,10 +126,10 @@ class _LoginInComponentState extends State<LoginInComponent> {
       listener: (context, state) {
         state.maybeWhen(
           orElse: () {},
-          error: (error) {
+          error: (error, _) {
             toast(error.message);
           },
-          otpSent: () {
+          otpSent: (_) {
             Navigator.push(
               context,
               CupertinoPageRoute(

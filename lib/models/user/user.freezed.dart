@@ -28,8 +28,8 @@ mixin _$User {
   String? get image => throw _privateConstructorUsedError;
   String? get bankName => throw _privateConstructorUsedError;
   String? get beneficiaryName => throw _privateConstructorUsedError;
-  int? get accountNumber => throw _privateConstructorUsedError;
-  int? get ifscCode => throw _privateConstructorUsedError;
+  String? get accountNumber => throw _privateConstructorUsedError;
+  String? get ifscCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,8 +50,8 @@ abstract class $UserCopyWith<$Res> {
       String? image,
       String? bankName,
       String? beneficiaryName,
-      int? accountNumber,
-      int? ifscCode});
+      String? accountNumber,
+      String? ifscCode});
 }
 
 /// @nodoc
@@ -114,11 +114,11 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       accountNumber: freezed == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       ifscCode: freezed == ifscCode
           ? _value.ifscCode
           : ifscCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
     ) as $Val);
   }
 }
@@ -138,8 +138,8 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String? image,
       String? bankName,
       String? beneficiaryName,
-      int? accountNumber,
-      int? ifscCode});
+      String? accountNumber,
+      String? ifscCode});
 }
 
 /// @nodoc
@@ -198,11 +198,11 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       accountNumber: freezed == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       ifscCode: freezed == ifscCode
           ? _value.ifscCode
           : ifscCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
     ));
   }
 }
@@ -242,9 +242,9 @@ class _$_User extends _User {
   @override
   final String? beneficiaryName;
   @override
-  final int? accountNumber;
+  final String? accountNumber;
   @override
-  final int? ifscCode;
+  final String? ifscCode;
 
   @override
   String toString() {
@@ -303,8 +303,8 @@ abstract class _User extends User {
       required final String? image,
       required final String? bankName,
       required final String? beneficiaryName,
-      required final int? accountNumber,
-      required final int? ifscCode}) = _$_User;
+      required final String? accountNumber,
+      required final String? ifscCode}) = _$_User;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -326,9 +326,9 @@ abstract class _User extends User {
   @override
   String? get beneficiaryName;
   @override
-  int? get accountNumber;
+  String? get accountNumber;
   @override
-  int? get ifscCode;
+  String? get ifscCode;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

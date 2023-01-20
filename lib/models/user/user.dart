@@ -14,8 +14,8 @@ class User with _$User {
     required String? image,
     required String? bankName,
     required String? beneficiaryName,
-    required int? accountNumber,
-    required int? ifscCode,
+    required String? accountNumber,
+    required String? ifscCode,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

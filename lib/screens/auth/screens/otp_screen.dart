@@ -49,7 +49,7 @@ class _OtpScreenState extends State<OtpScreen> {
       listener: (context, state) {
         state.maybeWhen(
           orElse: () {},
-          error: (error) {
+          error: (error, _) {
             error.maybeWhen(
               orElse: () {},
               wrongOTP: (message) {

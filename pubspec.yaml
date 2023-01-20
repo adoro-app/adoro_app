@@ -59,7 +59,7 @@ dependencies:
   # Story
   story_time: ^1.0.6
   numberpicker: ^2.1.1
-
+  flutter_svg: ^0.22.0 
   lottie: ^1.4.3
 
   flutter_localizations:
@@ -72,7 +72,7 @@ dependencies:
   pinput: ^2.2.21
   flutter_secure_storage: ^7.0.1
   shimmer: ^2.0.0
-
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
