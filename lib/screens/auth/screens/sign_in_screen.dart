@@ -80,11 +80,11 @@ class _SignInScreenState extends State<SignInScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(APP_LOGO, height: 40, fit: BoxFit.cover),
+                          Image.asset(APP_LOGO, height: 60, fit: BoxFit.cover),
                           8.width,
                         ],
                       ),
-                      40.height,
+                      20.height,
                       headerContainer(
                         context: context,
                         child: Row(
@@ -93,9 +93,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             TextButton(
                               child: Text('LOGIN',
                                   style: boldTextStyle(
+                                      weight: FontWeight.w600,
                                       color: selectedIndex == 0
                                           ? Colors.white
-                                          : Colors.white54)),
+                                          : Color(0xff8BAFE7))),
                               onPressed: () {
                                 selectedIndex = 0;
                                 setState(() {});
@@ -104,9 +105,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             TextButton(
                               child: Text(language.signUp.toUpperCase(),
                                   style: boldTextStyle(
+                                      weight: FontWeight.w600,
                                       color: selectedIndex == 1
                                           ? Colors.white
-                                          : Colors.white54)),
+                                          : Color(0xff8BAFE7))),
                               onPressed: () {
                                 selectedIndex = 1;
                                 setState(() {});

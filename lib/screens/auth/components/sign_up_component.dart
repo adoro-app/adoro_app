@@ -162,7 +162,8 @@ class _SignUpComponentState extends State<SignUpComponent> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 16.height,
-                Text('Welcome Creator', style: boldTextStyle(size: 24))
+                Text('Welcome Creator',
+                        style: boldTextStyle(weight: FontWeight.w600, size: 24))
                     .paddingSymmetric(horizontal: 16),
                 8.height,
                 Text('Join the world of creators',

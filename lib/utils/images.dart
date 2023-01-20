@@ -57,6 +57,7 @@ const ic_store = 'assets/icons/ic_store.png';
 const ic_store_filled = 'assets/icons/ic_store_filled.png';
 const ic_star_filled = 'assets/icons/ic_star_filled.png';
 const ic_user = 'assets/icons/ic_user.png';
+const ic_home_box = 'assets/icons/ic_home_box.png';
 const ic_document_filled = 'assets/icons/ic_document_filled.png';
 const ic_profile_filled = 'assets/icons/ic_profile_filled.png';
 const ic_forum = 'assets/icons/ic_forum.png';

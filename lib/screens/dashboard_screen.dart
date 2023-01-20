@@ -125,7 +125,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: BottomNavigationBar(
-                elevation: 5,
+                elevation: 6,
                 backgroundColor: Colors.white,
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
@@ -139,7 +139,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 items: [
                   BottomNavigationBarItem(
                       label: "",
-                      icon: Image.asset(ic_home,
+                      icon: Image.asset(ic_home_box,
                           height: 24, width: 24, fit: BoxFit.cover)),
                   BottomNavigationBarItem(
                       label: "",
@@ -202,7 +202,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                             height: 24,
                             width: 24,
                             fit: BoxFit.fitWidth,
-                            color: context.iconColor)
+                            color: Colors.black)
                         .onTap(() {
                       InitialShopScreen().launch(context);
                     },
@@ -272,27 +272,34 @@ class _DashboardScreenState extends State<DashboardScreen>
                       selectedIndex == 0
                           ? TabBarWidget(text: 'Relevant')
                           : Text('Relevant',
-                              style: secondaryTextStyle(color: Colors.black)),
+                              style: secondaryTextStyle(
+                                  color: Color(0xff6F7F92),
+                                  weight: FontWeight.w600)),
                       selectedIndex == 1
                           ? TabBarWidget(text: 'Trending')
                           : Text('Trending',
-                              style: secondaryTextStyle(color: Colors.black)),
+                              style: secondaryTextStyle(
+                                  color: Color(0xff6F7F92),
+                                  weight: FontWeight.w600)),
                       selectedIndex == 2
                           ? TabBarWidget(text: 'Fresh')
                           : Text('Fresh',
-                              style: secondaryTextStyle(color: Colors.black)),
+                              style: secondaryTextStyle(
+                                  color: Color(0xff6F7F92),
+                                  weight: FontWeight.w600)),
                       selectedIndex == 3
                           ? TabBarWidget(text: 'News')
                           : Text('News',
-                              style: secondaryTextStyle(color: Colors.black)),
+                              style: secondaryTextStyle(
+                                  color: Color(0xff6F7F92),
+                                  weight: FontWeight.w600)),
+
                       selectedIndex == 4
-                          ? TabBarWidget(text: 'Relevant')
-                          : Text('Relevant',
-                              style: secondaryTextStyle(color: Colors.black)),
-                      selectedIndex == 5
                           ? TabBarWidget(text: 'dank')
                           : Text('dank',
-                              style: secondaryTextStyle(color: Colors.black)),
+                              style: secondaryTextStyle(
+                                  color: Color(0xff6F7F92),
+                                  weight: FontWeight.w600)),
 
                       // Tooltip(
                       //   richMessage: TextSpan(
@@ -446,8 +453,10 @@ class TabBarWidget extends StatelessWidget {
             Color(0xffFFC0CB),
             Color(0xffFFFF00),
           ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          borderRadius: BorderRadius.circular(10)),
-      child: Text(text),
+          borderRadius: BorderRadius.circular(5)),
+      child: Text(text,
+          style:
+              secondaryTextStyle(weight: FontWeight.w600, color: Colors.white)),
     );
   }
 }
