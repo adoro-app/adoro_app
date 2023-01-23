@@ -5,6 +5,7 @@ import 'package:socialv/models/meme_category.dart';
 import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 
 import '../choose_categories/cubit/choose_meme_category_error.dart';
+import '../models/user/user.dart';
 import '../service_locator.dart';
 
 class ApiService {
@@ -87,6 +88,34 @@ class ApiService {
         return left(ChooseMemeCategoryError.server(
             e.response?.data['msg'] ?? 'Something went wrong!'));
       }
+    }
+  }
+
+  Future<List<User>?> getPostLikesUsers(String postId) async {
+    try {
+      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+
+      final response = await _dio.post(
+        '/getPostLikesUsers',
+        data: {"post_id": "2"},
+        options: Options(
+          headers: {
+            'token': token,
+          },
+        ),
+      );
+      final status = response.data['status'] as int;
+      if (status == 200) {
+        final users = (response.data['data'] as List<dynamic>)
+            .map((e) => User.fromJson(e))
+            .toList();
+        return users;
+      }
+      return null;
+    } catch (e) {
+      print('---------------------');
+      print('ERROR: $e');
+      print('---------------------');
     }
   }
 }
