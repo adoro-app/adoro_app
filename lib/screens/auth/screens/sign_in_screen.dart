@@ -93,6 +93,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             TextButton(
                               child: Text('LOGIN',
                                   style: boldTextStyle(
+                                      fontFamily: 'Poppins',
                                       weight: FontWeight.w600,
                                       color: selectedIndex == 0
                                           ? Colors.white
@@ -105,6 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             TextButton(
                               child: Text(language.signUp.toUpperCase(),
                                   style: boldTextStyle(
+                                      fontFamily: 'Poppins',
                                       weight: FontWeight.w600,
                                       color: selectedIndex == 1
                                           ? Colors.white

@@ -65,12 +65,17 @@ class _OtpScreenState extends State<OtpScreen> {
             children: [
               200.height,
               Text('OTP Verification',
-                      style: boldTextStyle(size: 20, weight: FontWeight.w600))
-                  .paddingSymmetric(horizontal: 16),
+                  style: boldTextStyle(
+                    size: 20,
+                    weight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  )).paddingSymmetric(horizontal: 16),
               8.height,
               Text('We have sent a 6 digit code to your mobile no.',
-                      style: secondaryTextStyle(weight: FontWeight.w500))
-                  .paddingSymmetric(horizontal: 16),
+                  style: secondaryTextStyle(
+                    weight: FontWeight.w500,
+                    fontFamily: 'Poppins',
+                  )).paddingSymmetric(horizontal: 16),
               32.height,
               Pinput(
                 controller: _otpController,
@@ -90,6 +95,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       ? Text(
                           '00:${state.secondsLeft.toString().padLeft(2, '0')}',
                           style: boldTextStyle(
+                            fontFamily: 'Poppins',
                             size: 14,
                             color: Colors.green,
                           ),
@@ -146,7 +152,9 @@ class _OtpScreenState extends State<OtpScreen> {
                       child: Text(
                     'VERIFY NOW',
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                        fontFamily: 'Poppins',
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   )),
                 ),
               ),
