@@ -153,13 +153,16 @@ class _LoginInComponentState extends State<LoginInComponent> {
                 16.height,
                 Text(language.welcomeBack,
                     style: boldTextStyle(
+                      fontFamily: 'Poppins',
+                      fontStyle: FontStyle.normal,
                       size: 24,
                       weight: FontWeight.w600,
                     )).paddingSymmetric(horizontal: 16),
                 8.height,
                 Text(
                   language.youHaveBeenMissed,
-                  style: secondaryTextStyle(weight: FontWeight.w500),
+                  style: secondaryTextStyle(
+                      fontFamily: 'Poppins', weight: FontWeight.w500),
                 ).paddingSymmetric(horizontal: 16),
                 Form(
                   key: loginFormKey,
@@ -171,12 +174,17 @@ class _LoginInComponentState extends State<LoginInComponent> {
                           enabled: !appStore.isLoading,
                           controller: mobileNoController,
                           textFieldType: TextFieldType.PHONE,
-                          textStyle: boldTextStyle(),
+                          textStyle: boldTextStyle(
+                            fontFamily: 'Poppins',
+                          ),
                           decoration: inputDecoration(
                             context,
                             label: 'Mobile Number',
-                            labelStyle:
-                                secondaryTextStyle(weight: FontWeight.w600),
+                            labelStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
                           ),
                         ).paddingSymmetric(horizontal: 16),
                         16.height,
@@ -276,6 +284,7 @@ class _LoginInComponentState extends State<LoginInComponent> {
                                 child: Text(
                               'GET OTP',
                               style: TextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             )),

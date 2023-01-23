@@ -10,7 +10,7 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       id: json['id'] as int,
       username: json['username'] as String,
       email: json['email'] as String,
-      mobileNo: json['mobileNo'] as int,
+      mobileNo: json['mobileNo'] as String,
       otp: json['otp'] as int,
       image: json['image'] as String?,
       bankName: json['bankName'] as String?,

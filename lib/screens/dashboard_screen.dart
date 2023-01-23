@@ -320,24 +320,28 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ? TabBarWidget(text: 'Relevant')
                           : Text('Relevant',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
                       selectedIndex == 1
                           ? TabBarWidget(text: 'Trending')
                           : Text('Trending',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
                       selectedIndex == 2
                           ? TabBarWidget(text: 'Fresh')
                           : Text('Fresh',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
                       selectedIndex == 3
                           ? TabBarWidget(text: 'News')
                           : Text('News',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
 
@@ -345,6 +349,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ? TabBarWidget(text: 'dank')
                           : Text('dank',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
 
@@ -503,7 +508,12 @@ class ListTileComponent extends StatelessWidget {
       title: Transform(
         transform: Matrix4.translationValues(-16, 0.0, 0.0),
         child: Text(title,
-            style: boldTextStyle(size: 14, weight: FontWeight.w600)),
+            style: secondaryTextStyle(
+                fontFamily: 'Poppins',
+                fontStyle: FontStyle.normal,
+                size: 14,
+                weight: FontWeight.w600,
+                color: Color(0xff07142E))),
       ),
     );
   }
@@ -529,8 +539,10 @@ class TabBarWidget extends StatelessWidget {
           ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           borderRadius: BorderRadius.circular(5)),
       child: Text(text,
-          style:
-              secondaryTextStyle(weight: FontWeight.w600, color: Colors.white)),
+          style: secondaryTextStyle(
+              fontFamily: 'Poppins',
+              weight: FontWeight.w600,
+              color: Colors.white)),
     );
   }
 }

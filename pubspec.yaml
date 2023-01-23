@@ -96,5 +96,14 @@ flutter:
     - assets/flag/
     - assets/icons/
     - assets/lottie/
-
+  
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Light.ttf
+          weight: 100
+        - asset: fonts/Poppins-regular.ttf
+          weight: 400
+        - asset: fonts/Poppins-Bold.ttf
+          weight: 600
 
