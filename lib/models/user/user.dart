@@ -9,7 +9,7 @@ class User with _$User {
     required int id,
     required String username,
     required String email,
-    required int mobileNo,
+    required String mobileNo,
     required int otp,
     required String? image,
     required String? bankName,
