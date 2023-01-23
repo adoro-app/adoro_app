@@ -70,7 +70,7 @@ const ic_support = 'assets/icons/ic_support.svg';
 const ic_settings = 'assets/icons/ic_settings.svg';
 const ic_result = 'assets/icons/ic_result.svg';
 const ic_refer_earn = 'assets/icons/ic_refer_earn.svg';
-const ic_messages = 'assets/icons/ic_messages.svg';
+const ic_messages = 'assets/icons/ic_message.svg';
 const ic_edit_ = 'assets/icons/ic_edit_.png';
 
 /// Lottie Files

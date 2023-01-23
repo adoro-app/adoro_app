@@ -48,8 +48,10 @@ class DoneScreen extends StatelessWidget {
                 child: Center(
                     child: Text(
                   'DONE',
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
+                  style: boldTextStyle(
+                      fontFamily: 'Poppins',
+                      weight: FontWeight.w600,
+                      color: Colors.white),
                 )),
               ),
             ),
