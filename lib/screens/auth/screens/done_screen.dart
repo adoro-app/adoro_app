@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/screens/dashboard_screen.dart';
+import 'package:socialv/screens/home/cubit/home_cubit.dart';
+
+import '../../../service_locator.dart';
 
 class DoneScreen extends StatelessWidget {
   const DoneScreen({super.key});
@@ -28,8 +32,13 @@ class DoneScreen extends StatelessWidget {
           SizedBox(height: 20),
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  CupertinoPageRoute(builder: (context) => DashboardScreen()));
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                      builder: (context) => BlocProvider(
+                            create: (context) => HomeCubit(apiService: sl()),
+                            child: DashboardScreen(),
+                          )));
             },
             child: Center(
               child: Container(

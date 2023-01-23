@@ -5,6 +5,7 @@ import 'package:socialv/models/meme_category.dart';
 import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 
 import '../choose_categories/cubit/choose_meme_category_error.dart';
+import '../models/posts/feed.dart';
 import '../service_locator.dart';
 
 class ApiService {
@@ -31,6 +32,33 @@ class ApiService {
       print('ERROR: $e');
       print('---------------------');
       return null;
+    }
+  }
+
+  Future<List<Feed>?> getFeed(Category category) async {
+    try {
+      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+
+      final response = await _dio.get(
+        "/feed",
+        options: Options(
+          headers: {
+            "token":
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczOTc5MjQ2LCJleHAiOjE2NzQ4NDMyNDZ9.PYrIqLl_ra-aW2cbbzaXM9EzMUcn-O3IkRZ1H73WdYQ',
+          },
+        ),
+        queryParameters: {"category": category.name},
+      );
+
+      final feed = (response.data as List<dynamic>)
+          .map((e) => Feed.fromJson(e))
+          .toList();
+
+      return feed;
+    } catch (e) {
+      print('---------------------');
+      print('ERROR: $e');
+      print('---------------------');
     }
   }
 
@@ -90,3 +118,5 @@ class ApiService {
     }
   }
 }
+
+enum Category { trending, relevant, fresh }

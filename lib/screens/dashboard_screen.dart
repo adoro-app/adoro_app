@@ -10,10 +10,13 @@ import 'package:socialv/screens/fragments/notification_fragment.dart';
 import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
 import 'package:socialv/screens/home/components/user_detail_bottomsheet_widget.dart';
+import 'package:socialv/screens/post/components/post_component.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
 import 'package:socialv/utils/cached_network_image.dart';
+
+import '../models/posts/post_model.dart';
 
 int selectedIndex = 0;
 
@@ -35,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   late TabController tabController;
 
   bool onAnimationEnd = true;
-
+  List<PostModel> postList = [];
   List<Widget> appFragments = [];
 
   @override
