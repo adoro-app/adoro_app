@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/screens/dashboard_screen.dart';
 
+import '../../../utils/app_constants.dart';
+
 class DoneScreen extends StatelessWidget {
   const DoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -24,7 +26,7 @@ class DoneScreen extends StatelessWidget {
                 ], begin: Alignment.topLeft, end: Alignment.bottomRight),
                 borderRadius: BorderRadius.circular(100),
               ),
-              child: Image.asset('assets/icons/ic_verified_user.png')),
+              child: Image.asset(ic_verified_user)),
           SizedBox(height: 20),
           InkWell(
             onTap: () {

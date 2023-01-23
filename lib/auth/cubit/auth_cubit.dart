@@ -4,6 +4,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:socialv/auth/auth_error.dart';
 import 'package:socialv/auth/auth_service.dart';
 
+import '../../models/user/user.dart';
+
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';
 
@@ -18,10 +20,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> _checkAuthStatus() async {
     final token = await _authService.getSignedInCredentials();
+    final user = await _authService.getUserDetails();
     if (token == null) {
       emit(AuthState.unauthenticated());
     } else {
-      emit(AuthState.authenticated());
+      emit(AuthState.authenticated(user: user));
     }
   }
 
@@ -54,7 +57,7 @@ class AuthCubit extends Cubit<AuthState> {
     failureOrSuccess.fold((l) {
       emit(AuthState.error(error: l));
     }, (r) {
-      emit(AuthState.authenticated());
+      emit(AuthState.authenticated(user: r));
     });
   }
 }

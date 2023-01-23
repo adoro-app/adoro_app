@@ -58,7 +58,10 @@ void main() async {
   });
   exitFullScreen();
 
-  runApp(const MyApp());
+  runApp(BlocProvider(
+    create: (context) => AuthCubit(sl()),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -119,7 +122,7 @@ class _MyAppState extends State<MyApp> {
         listener: (context, state) {
           state.maybeWhen(
             orElse: () {},
-            unauthenticated: () {
+            unauthenticated: (user) {
               navigatorKey.currentState?.pushAndRemoveUntil(
                 CupertinoPageRoute(
                   builder: (context) => SignInScreen(),
@@ -127,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                 (_) => false,
               );
             },
-            authenticated: () {
+            authenticated: (_) {
               // navigatorKey.currentState?.pushAndRemoveUntil(
               //   CupertinoPageRoute(
               //     builder: (context) => DashboardScreen(),
