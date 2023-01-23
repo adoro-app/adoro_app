@@ -89,4 +89,26 @@ class ApiService {
       }
     }
   }
+
+  Future<Either<Exception, Unit>> deleteLike(String postId) async {
+    try {
+      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+
+      final response = await _dio.post(
+        '/deleteLike',
+        data: {"post_id": "2"},
+        options: Options(
+          headers: {'token': token},
+        ),
+      );
+      final status = response.data['status'] as int;
+      print('Status: $status');
+      return right(unit);
+    } on Exception catch (e) {
+      print('---------------------');
+      print('ERROR: $e');
+      print('---------------------');
+      return left(e);
+    }
+  }
 }
