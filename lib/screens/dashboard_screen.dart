@@ -125,44 +125,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         },
         color: context.primaryColor,
         child: Scaffold(
-          bottomNavigationBar: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: BottomNavigationBar(
-                elevation: 6,
-                backgroundColor: Colors.white,
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: 0,
-                onTap: (val) async {},
-                selectedItemColor: Colors.blue[700],
-                selectedFontSize: 13,
-                unselectedFontSize: 13,
-                iconSize: 30,
-                items: [
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_home_box,
-                          height: 24, width: 24, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_plus_circle,
-                          height: 24, width: 24, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "", icon: Image.asset(ic_rank, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_user,
-                          color: Colors.black,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover)),
-                ],
-              ),
-            ),
-          ),
           drawer: Drawer(
             child: ListView(
               children: [
@@ -543,6 +505,74 @@ class TabBarWidget extends StatelessWidget {
               fontFamily: 'Poppins',
               weight: FontWeight.w600,
               color: Colors.white)),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  List _screens = [
+    DashboardScreen(),
+    AddPostScreen(),
+    ProfileScreen(),
+    ProfileScreen(),
+  ];
+
+  void _updateIndex(int value) {
+    setState(() {
+      _currentIndex = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: BottomNavigationBar(
+            elevation: 6,
+            backgroundColor: Colors.white,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _currentIndex,
+            onTap: _updateIndex,
+            selectedItemColor: Colors.blue[700],
+            selectedFontSize: 13,
+            unselectedFontSize: 13,
+            iconSize: 30,
+            items: [
+              BottomNavigationBarItem(
+                  label: "",
+                  icon: Image.asset(ic_home_box,
+                      height: 24, width: 24, fit: BoxFit.cover)),
+              BottomNavigationBarItem(
+                  label: "",
+                  icon: Image.asset(ic_plus_circle,
+                      height: 24, width: 24, fit: BoxFit.cover)),
+              BottomNavigationBarItem(
+                  label: "", icon: Image.asset(ic_rank, fit: BoxFit.cover)),
+              BottomNavigationBarItem(
+                  label: "",
+                  icon: Image.asset(ic_user,
+                      color: Colors.black,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.cover)),
+            ],
+          ),
+        ),
+      ),
+      body: _screens[_currentIndex],
     );
   }
 }
