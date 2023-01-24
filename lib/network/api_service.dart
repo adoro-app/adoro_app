@@ -89,4 +89,25 @@ class ApiService {
       }
     }
   }
+
+  Future<Either<Exception, Unit>> likePost(String postId) async {
+    try {
+      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+      print(token);
+
+      final response = await _dio.post(
+        '/like',
+        options: Options(
+          headers: {'token': token},
+        ),
+        data: {
+          "post_id": postId,
+        },
+      );
+      print('Response like: $response');
+      return right(unit);
+    } on Exception catch (e) {
+      return left(e);
+    }
+  }
 }
