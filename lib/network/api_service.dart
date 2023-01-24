@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:socialv/auth/auth_service.dart';
@@ -87,6 +89,32 @@ class ApiService {
         return left(ChooseMemeCategoryError.server(
             e.response?.data['msg'] ?? 'Something went wrong!'));
       }
+    }
+  }
+
+  Future<Either<Exception, Unit>> uploadProfilePic({required File file}) async {
+    try {
+      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+      String fileName = file.path.split('/').last;
+      var formData = FormData.fromMap({
+        'profile_pic':
+            await MultipartFile.fromFile(file.path, filename: fileName)
+      });
+
+      final response = await _dio.post(
+        '/upload_profile_pic',
+        options: Options(
+          headers: {
+            'token': token,
+          },
+        ),
+        data: formData,
+      );
+      print('Response: $response');
+      return right(unit);
+    } on DioError catch (e) {
+      print('ERROR Occured: ${e.response}');
+      return left(e.response?.data['msg'] ?? 'Something went wrong!');
     }
   }
 }
