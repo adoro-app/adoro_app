@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:socialv/auth/auth_service.dart';
 import 'package:socialv/models/meme_category.dart';
+import 'package:socialv/models/posts/user_post.dart';
 import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 
 import '../choose_categories/cubit/choose_meme_category_error.dart';
@@ -24,6 +25,32 @@ class ApiService {
             .map((e) => MemeCategory.fromJson(e))
             .toList();
         return memeCategories;
+      }
+      return null;
+    } catch (e) {
+      print('---------------------');
+      print('ERROR: $e');
+      print('---------------------');
+      return null;
+    }
+  }
+
+  Future<List<UserPost>?> getAllPostByUser() async {
+    try {
+      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+      final response = await _dio.get(
+        '/getAllPostByUser',
+        options: Options(
+          headers: {'token': token},
+        ),
+      );
+      final status = response.data['status'] as int;
+
+      if (status == 200) {
+        final userPosts = (response.data['data'] as List<dynamic>)
+            .map((e) => UserPost.fromJson(e))
+            .toList();
+        return userPosts;
       }
       return null;
     } catch (e) {
