@@ -81,3 +81,4 @@ const shopping_cart = "assets/lottie/shopping_cart.json";
 
 //images
 const profile_img = "assets/images/profile_img.png";
+const app_name = 'assets/app_name.svg';
