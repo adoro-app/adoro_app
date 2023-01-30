@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:socialv/auth/auth_service.dart';
+import 'package:socialv/auth/credentials_storage.dart';
 import 'package:socialv/models/meme_category.dart';
 import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 
@@ -65,7 +66,7 @@ class ApiService {
   Future<Either<ChooseMemeCategoryError, Unit>> updateSelectedCategories(
       List<int> selectedCategories) async {
     try {
-      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+      final token = await sl.get<CredentialsStorage>().read();
       print(token);
       print(selectedCategories);
       final response = await _dio.post(
