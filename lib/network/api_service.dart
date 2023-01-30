@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:socialv/auth/auth_service.dart';
+import 'package:socialv/auth/credentials_storage.dart';
 import 'package:socialv/models/meme_category.dart';
 import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 
 import '../choose_categories/cubit/choose_meme_category_error.dart';
+import '../screens/post/cubit/create_post_error.dart';
 import '../service_locator.dart';
 
 class ApiService {
@@ -67,7 +69,7 @@ class ApiService {
   Future<Either<ChooseMemeCategoryError, Unit>> updateSelectedCategories(
       List<int> selectedCategories) async {
     try {
-      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+      final token = await sl.get<CredentialsStorage>().read();
       print(token);
       print(selectedCategories);
       final response = await _dio.post(
@@ -92,23 +94,22 @@ class ApiService {
     }
   }
 
-  Future<Either<Exception, Unit>> createPost({
+  Future<Either<CreatePostError, Unit>> createPost({
     required File file,
     required String categoryId,
     required String content,
-    required String contentType,
   }) async {
     try {
-      final token = await AuthService(sl(), sl()).getSignedInCredentials();
+      final token = await sl.get<CredentialsStorage>().read();
+      print(token);
       String fileName = file.path.split('/').last;
       var formData = FormData.fromMap({
         'category_id': categoryId,
         'content': content,
-        'content_type': contentType,
+        'content_type': 'video/image/gif',
         'content_url':
             await MultipartFile.fromFile(file.path, filename: fileName),
       });
-
       final response = await _dio.post(
         '/createPost',
         options: Options(

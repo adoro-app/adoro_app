@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/choose_categories/choose_categories_page.dart';
 import 'package:socialv/main.dart';
@@ -90,6 +91,6 @@ class _SplashScreenState extends State<SplashScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             )),
-            child: Center(child: Image.asset('assets/app_logo.png'))));
+            child: Center(child: SvgPicture.asset('assets/app_name.svg'))));
   }
 }

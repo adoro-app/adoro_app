@@ -111,7 +111,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
         SinglePostScreen(postId: widget.activityId.validate())
             .launch(context, isNewTask: true);
       } else {
-        push(DashboardScreen(),
+        push(HomeScreen(),
             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
       }
     }).catchError((e) {
