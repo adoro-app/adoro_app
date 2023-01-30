@@ -68,11 +68,12 @@ dependencies:
   freezed_annotation: ^2.2.0
   dartz: ^0.10.1
   flutter_bloc: ^8.1.1
+  path_provider: ^2.0.12
   get_it: ^7.2.0
   pinput: ^2.2.21
   flutter_secure_storage: ^7.0.1
   shimmer: ^2.0.0
-  
+  video_thumbnail_imageview: ^0.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

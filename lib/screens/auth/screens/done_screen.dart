@@ -31,7 +31,7 @@ class DoneScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               Navigator.push(context,
-                  CupertinoPageRoute(builder: (context) => DashboardScreen()));
+                  CupertinoPageRoute(builder: (context) => HomeScreen()));
             },
             child: Center(
               child: Container(

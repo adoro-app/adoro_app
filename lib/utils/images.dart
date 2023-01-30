@@ -71,7 +71,12 @@ const ic_settings = 'assets/icons/ic_settings.svg';
 const ic_result = 'assets/icons/ic_result.svg';
 const ic_refer_earn = 'assets/icons/ic_refer_earn.svg';
 const ic_messages = 'assets/icons/ic_message.svg';
-const ic_edit_ = 'assets/icons/ic_edit_.png';
+const ic_edit_ = 'assets/icons/ic_edit_.svg';
+const ic_smile = 'assets/icons/ic_smile.svg';
+const ic_tag = 'assets/icons/ic_tag.svg';
+const ic_video_ = 'assets/icons/ic_video.svg';
+const ic_photo = 'assets/icons/ic_photo.svg';
+const ic_gif = 'assets/icons/ic_gif.svg';
 
 /// Lottie Files
 const no_data = "assets/lottie/no_data.json";
@@ -81,3 +86,4 @@ const shopping_cart = "assets/lottie/shopping_cart.json";
 
 //images
 const profile_img = "assets/images/profile_img.png";
+const app_name = 'assets/app_name.svg';
