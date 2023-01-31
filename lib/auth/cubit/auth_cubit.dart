@@ -19,12 +19,11 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> _checkAuthStatus() async {
-    final token = await _authService.getSignedInCredentials();
-    final user = await _authService.getUserDetails();
-    if (token == null) {
+    final loginHandle = await _authService.getSignedInCredentials();
+    if (loginHandle == null) {
       emit(AuthState.unauthenticated());
     } else {
-      emit(AuthState.authenticated(user: user));
+      emit(AuthState.authenticated(user: loginHandle.user));
     }
   }
 

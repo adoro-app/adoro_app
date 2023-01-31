@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/auth/cubit/auth_cubit.dart';
+import 'package:socialv/choose_categories/cubit/choose_meme_categories_cubit.dart';
 import 'package:socialv/main.dart';
 import 'package:socialv/models/dashboard_api_response.dart';
 import 'package:socialv/network/rest_apis.dart';
@@ -13,10 +14,14 @@ import 'package:socialv/screens/fragments/home_fragment.dart';
 import 'package:socialv/screens/fragments/notification_fragment.dart';
 import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
+import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
 import 'package:socialv/screens/profile/screens/profile_screen.dart';
+import 'package:socialv/screens/shop/components/list_tile_component.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
+
+import '../service_locator.dart';
 
 int selectedIndex = 0;
 
@@ -449,38 +454,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 }
 
-class ListTileComponent extends StatelessWidget {
-  const ListTileComponent({
-    Key? key,
-    required this.title,
-    required this.icon,
-  }) : super(key: key);
-  final String title;
-  final String icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: SvgPicture.asset(icon),
-      // Image.asset(
-      //   ,
-      //   height: 24,
-      //   color: bodyWhite,
-      // ),
-      title: Transform(
-        transform: Matrix4.translationValues(-16, 0.0, 0.0),
-        child: Text(title,
-            style: secondaryTextStyle(
-                fontFamily: 'Poppins',
-                fontStyle: FontStyle.normal,
-                size: 14,
-                weight: FontWeight.w600,
-                color: Color(0xff07142E))),
-      ),
-    );
-  }
-}
-
 class TabBarWidget extends StatelessWidget {
   const TabBarWidget({
     Key? key,
@@ -520,7 +493,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   List _screens = [
     DashboardScreen(),
-    AddPostScreen(),
+    BlocProvider(
+      create: (BuildContext context) => CreatepostCubit(sl()),
+      child: AddPostScreen(),
+    ),
     ProfileScreen(),
     ProfileScreen(),
   ];
@@ -539,14 +515,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: BottomNavigationBar(
-            elevation: 6,
+            elevation: 0,
             backgroundColor: Colors.white,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
             currentIndex: _currentIndex,
             onTap: _updateIndex,
-            selectedItemColor: Colors.blue[700],
             selectedFontSize: 13,
             unselectedFontSize: 13,
             iconSize: 30,
