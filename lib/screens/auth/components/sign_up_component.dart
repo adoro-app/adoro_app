@@ -111,7 +111,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
         SinglePostScreen(postId: widget.activityId.validate())
             .launch(context, isNewTask: true);
       } else {
-        push(DashboardScreen(),
+        push(HomeScreen(),
             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
       }
     }).catchError((e) {
@@ -137,10 +137,10 @@ class _SignUpComponentState extends State<SignUpComponent> {
       listener: (context, state) {
         state.maybeWhen(
           orElse: () {},
-          error: (error) {
+          error: (error, _) {
             toast(error.message);
           },
-          otpSent: () {
+          otpSent: (_) {
             Navigator.push(
               context,
               CupertinoPageRoute(
@@ -163,11 +163,18 @@ class _SignUpComponentState extends State<SignUpComponent> {
               children: [
                 16.height,
                 Text('Welcome Creator',
-                        style: boldTextStyle(weight: FontWeight.w600, size: 24))
+                        style: boldTextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontFamily: 'Poppins',
+                            weight: FontWeight.w600,
+                            size: 24))
                     .paddingSymmetric(horizontal: 16),
                 8.height,
                 Text('Join the world of creators',
-                        style: secondaryTextStyle(weight: FontWeight.w500))
+                        style: secondaryTextStyle(
+                            fontStyle: FontStyle.normal,
+                            fontFamily: 'Poppins',
+                            weight: FontWeight.w500))
                     .paddingSymmetric(horizontal: 16),
                 Form(
                   key: signupFormKey,
@@ -185,8 +192,8 @@ class _SignUpComponentState extends State<SignUpComponent> {
                           decoration: inputDecoration(
                             context,
                             label: language.username,
-                            labelStyle:
-                                secondaryTextStyle(weight: FontWeight.w600),
+                            labelStyle: secondaryTextStyle(
+                                fontFamily: 'Poppins', weight: FontWeight.w600),
                           ),
                         ).paddingSymmetric(horizontal: 16),
                         8.height,
@@ -196,12 +203,15 @@ class _SignUpComponentState extends State<SignUpComponent> {
                           nextFocus: email,
                           focus: fullName,
                           textFieldType: TextFieldType.NUMBER,
-                          textStyle: boldTextStyle(),
+                          textStyle: boldTextStyle(
+                              fontFamily: 'Poppins',
+                              fontStyle: FontStyle.normal),
                           decoration: inputDecoration(
                             context,
                             label: 'Mobile Number',
-                            labelStyle:
-                                secondaryTextStyle(weight: FontWeight.w600),
+                            labelStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92),
+                                weight: FontWeight.w600),
                           ),
                         ).paddingSymmetric(horizontal: 16),
                         16.height,
@@ -230,6 +240,7 @@ class _SignUpComponentState extends State<SignUpComponent> {
                                 child: Text(
                               'GET OTP',
                               style: TextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             )),

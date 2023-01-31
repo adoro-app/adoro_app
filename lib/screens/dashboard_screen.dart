@@ -1,6 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:socialv/auth/cubit/auth_cubit.dart';
+import 'package:socialv/choose_categories/cubit/choose_meme_categories_cubit.dart';
 import 'package:socialv/main.dart';
 import 'package:socialv/models/dashboard_api_response.dart';
 import 'package:socialv/network/rest_apis.dart';
@@ -11,10 +16,14 @@ import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
 import 'package:socialv/screens/home/components/user_detail_bottomsheet_widget.dart';
 import 'package:socialv/screens/post/components/post_component.dart';
+import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
+import 'package:socialv/screens/profile/screens/profile_screen.dart';
+import 'package:socialv/screens/shop/components/list_tile_component.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
-import 'package:socialv/utils/cached_network_image.dart';
+
+import '../service_locator.dart';
 
 import '../models/posts/post_model.dart';
 
@@ -96,6 +105,8 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<AuthCubit>().state.user;
+
     return DoublePressBackWidget(
       onWillPop: () {
         if (selectedIndex != 0) {
@@ -123,45 +134,49 @@ class _DashboardScreenState extends State<DashboardScreen>
         },
         color: context.primaryColor,
         child: Scaffold(
-          bottomNavigationBar: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: BottomNavigationBar(
-                elevation: 6,
-                backgroundColor: Colors.white,
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: 0,
-                onTap: (val) async {},
-                selectedItemColor: Colors.blue[700],
-                selectedFontSize: 13,
-                unselectedFontSize: 13,
-                iconSize: 30,
-                items: [
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_home_box,
-                          height: 24, width: 24, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_plus_circle,
-                          height: 24, width: 24, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "", icon: Image.asset(ic_rank, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_user,
-                          color: Colors.black,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover)),
-                ],
-              ),
+          drawer: Drawer(
+            child: ListView(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Align(
+                      child: Icon(Icons.arrow_back),
+                      alignment: Alignment.topLeft,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  leading: CircleAvatar(
+                    radius: 33,
+                    backgroundImage: user?.image == null
+                        ? AssetImage(profile_img)
+                        : Image.network(user!.image!) as ImageProvider,
+                  ),
+                  title: Text(user?.beneficiaryName ?? '',
+                      style: boldTextStyle(size: 17, weight: FontWeight.w600)),
+                  subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 6.0),
+                      child: Text(user?.username ?? '',
+                          style: secondaryTextStyle(weight: FontWeight.w500))),
+                ),
+                ListTileComponent(
+                    title: "Notification", icon: ic_notification_svg),
+                ListTileComponent(title: "Result", icon: ic_result),
+                ListTileComponent(
+                  title: "Messages",
+                  icon: ic_messages,
+                ),
+                ListTileComponent(title: "Wallet", icon: ic_wallet),
+                ListTileComponent(title: "Refer & Earn", icon: ic_refer_earn),
+                ListTileComponent(title: "Support", icon: ic_support),
+                ListTileComponent(title: "Settings", icon: ic_settings),
+              ],
             ),
           ),
-          drawer: Drawer(),
           body: CustomScrollView(
             controller: _controller,
             slivers: <Widget>[
@@ -276,24 +291,28 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ? TabBarWidget(text: 'Relevant')
                           : Text('Relevant',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
                       selectedIndex == 1
                           ? TabBarWidget(text: 'Trending')
                           : Text('Trending',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
                       selectedIndex == 2
                           ? TabBarWidget(text: 'Fresh')
                           : Text('Fresh',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
                       selectedIndex == 3
                           ? TabBarWidget(text: 'News')
                           : Text('News',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
 
@@ -301,6 +320,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                           ? TabBarWidget(text: 'dank')
                           : Text('dank',
                               style: secondaryTextStyle(
+                                  fontFamily: 'Poppins',
                                   color: Color(0xff6F7F92),
                                   weight: FontWeight.w600)),
 
@@ -458,8 +478,80 @@ class TabBarWidget extends StatelessWidget {
           ], begin: Alignment.topLeft, end: Alignment.bottomRight),
           borderRadius: BorderRadius.circular(5)),
       child: Text(text,
-          style:
-              secondaryTextStyle(weight: FontWeight.w600, color: Colors.white)),
+          style: secondaryTextStyle(
+              fontFamily: 'Poppins',
+              weight: FontWeight.w600,
+              color: Colors.white)),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  List _screens = [
+    DashboardScreen(),
+    BlocProvider(
+      create: (BuildContext context) => CreatepostCubit(sl()),
+      child: AddPostScreen(),
+    ),
+    ProfileScreen(),
+    ProfileScreen(),
+  ];
+
+  void _updateIndex(int value) {
+    setState(() {
+      _currentIndex = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: BottomNavigationBar(
+            elevation: 0,
+            backgroundColor: Colors.white,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _currentIndex,
+            onTap: _updateIndex,
+            selectedFontSize: 13,
+            unselectedFontSize: 13,
+            iconSize: 30,
+            items: [
+              BottomNavigationBarItem(
+                  label: "",
+                  icon: Image.asset(ic_home_box,
+                      height: 24, width: 24, fit: BoxFit.cover)),
+              BottomNavigationBarItem(
+                  label: "",
+                  icon: Image.asset(ic_plus_circle,
+                      height: 24, width: 24, fit: BoxFit.cover)),
+              BottomNavigationBarItem(
+                  label: "", icon: Image.asset(ic_rank, fit: BoxFit.cover)),
+              BottomNavigationBarItem(
+                  label: "",
+                  icon: Image.asset(ic_user,
+                      color: Colors.black,
+                      height: 24,
+                      width: 24,
+                      fit: BoxFit.cover)),
+            ],
+          ),
+        ),
+      ),
+      body: _screens[_currentIndex],
     );
   }
 }

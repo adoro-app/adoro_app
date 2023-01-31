@@ -1,16 +1,17 @@
-import 'dart:io';
+import 'dart:math';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:socialv/components/loading_widget.dart';
+import 'package:socialv/choose_categories/cubit/choose_meme_categories_cubit.dart';
 import 'package:socialv/main.dart';
-import 'package:socialv/models/posts/media_model.dart';
-import 'package:socialv/models/posts/post_in_list_model.dart';
-import 'package:socialv/network/rest_apis.dart';
-import 'package:socialv/screens/post/components/show_selected_media_component.dart';
-
+import 'package:socialv/screens/dashboard_screen.dart';
+import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
+import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
+import '../../../auth/cubit/auth_cubit.dart';
 import '../../../utils/app_constants.dart';
+import '../../shop/components/list_tile_component.dart';
 
 class AddPostScreen extends StatefulWidget {
   final String? component;
@@ -23,279 +24,359 @@ class AddPostScreen extends StatefulWidget {
 }
 
 class _AddPostScreenState extends State<AddPostScreen> {
-  List<File> mediaList = [];
-
-  int selectedIndex = -1;
-
-  List<MediaModel> mediaTypeList = [];
-  List<PostInListModel> postInList = [];
-
-  MediaModel selectedType = MediaModel();
-
   TextEditingController postContentTextEditController = TextEditingController();
-
-  PostInListModel dropdownValue = PostInListModel();
-
+  String? _selectedValue;
+  String? _selectedCategoryId;
   @override
   void initState() {
     super.initState();
-    afterBuildCreated(() {
-      setStatusBarColor(context.cardColor);
-      getMediaList();
-      postIn();
-    });
-  }
-
-  Future<void> getMediaList() async {
-    appStore.setLoading(true);
-    await getMediaTypes(type: widget.component.validate()).then((value) {
-      mediaTypeList.addAll(value);
-      appStore.setLoading(false);
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString(), print: true);
-    });
-    setState(() {});
-  }
-
-  Future<void> postIn() async {
-    appStore.setLoading(true);
-    await getPostInList().then((value) {
-      postInList.addAll(value);
-
-      if (widget.groupId != null) {
-        value.forEach((element) {
-          if (element.id == widget.groupId) {
-            dropdownValue = element;
-          }
-        });
-      } else {
-        dropdownValue = value.first;
-      }
-      appStore.setLoading(false);
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString(), print: true);
-    });
-
-    setState(() {});
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
-  @override
-  void dispose() {
-    setStatusBarColorBasedOnTheme();
-    super.dispose();
+    context.read<ChooseMemeCategoriesCubit>().loadMemeCategories();
   }
 
   @override
   Widget build(BuildContext context) {
+    final user = context.read<AuthCubit>().state.user;
+    final border =
+        Border(top: BorderSide(width: 0.2, color: Color(0xff6F7F92)));
     return Scaffold(
-      backgroundColor: context.cardColor,
-      appBar: AppBar(
-        backgroundColor: context.cardColor,
-        title: Text(language.newPost, style: boldTextStyle(size: 20)),
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: context.iconColor),
-          onPressed: () {
-            finish(context);
-          },
-        ),
-        actions: [
-          AppButton(
-            enabled: true,
-            shapeBorder: RoundedRectangleBorder(borderRadius: radius(4)),
-            text: language.post,
-            textStyle: primaryTextStyle(color: Colors.white, size: 12),
-            onTap: () async {
-              hideKeyboard(context);
-              ifNotTester(() async {
-                if (mediaList.isEmpty && postContentTextEditController.text.trim().isEmpty) {
-                  toast(language.addPostContent);
-                } else {
-                  appStore.setLoading(true);
-                  await uploadPost(
-                    files: mediaList,
-                    content: postContentTextEditController.text,
-                    mediaType: selectedIndex != -1 ? mediaTypeList[selectedIndex].type : null,
-                    isMedia: selectedIndex == -1 ? false : true,
-                    postIn: dropdownValue.id.validate().toString(),
-                  ).then((value) async {
-                    appStore.setLoading(false);
-                    LiveStream().emit(OnAddPost);
-                    LiveStream().emit(OnAddPostProfile);
-                    finish(context, true);
-                  }).catchError((e) {
-                    toast(language.somethingWentWrong, print: true);
-                    appStore.setLoading(false);
-                  });
-                }
-              });
-            },
-            color: context.primaryColor,
-            width: 60,
-            padding: EdgeInsets.all(0),
-            elevation: 0,
-          ).paddingSymmetric(horizontal: 16, vertical: 12),
-        ],
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: context.width(),
-                  margin: EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(borderRadius: radius(), color: context.scaffoldBackgroundColor),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: mediaTypeList.map((e) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        decoration: BoxDecoration(
-                          color: selectedIndex == mediaTypeList.indexOf(e) ? context.primaryColor : Colors.transparent,
-                          borderRadius: selectedIndex == mediaTypeList.indexOf(e) && selectedIndex == 0
-                              ? BorderRadius.only(topLeft: Radius.circular(defaultRadius), bottomLeft: Radius.circular(defaultRadius))
-                              : selectedIndex == mediaTypeList.indexOf(e) && selectedIndex == mediaTypeList.length - 1
-                                  ? BorderRadius.only(topRight: Radius.circular(defaultRadius), bottomRight: Radius.circular(defaultRadius))
-                                  : BorderRadius.circular(0),
-                        ),
-                        child: Text(
-                          e.title.validate(),
-                          style: boldTextStyle(size: 12, color: selectedIndex == mediaTypeList.indexOf(e) ? white : Colors.grey.shade500),
-                          textAlign: TextAlign.center,
-                        ),
-                      ).onTap(() {
-                        if (!appStore.isLoading) {
-                          mediaList.clear();
-                          selectedIndex = mediaTypeList.indexOf(e);
-                          setState(() {});
-                        }
-                      }, splashColor: Colors.transparent, highlightColor: Colors.transparent).expand();
-                    }).toList(),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  margin: EdgeInsets.all(16),
-                  decoration: BoxDecoration(color: context.scaffoldBackgroundColor, borderRadius: radius(defaultRadius)),
-                  child: TextField(
-                    enabled: !appStore.isLoading,
-                    controller: postContentTextEditController,
-                    autofocus: false,
-                    maxLines: 10,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: language.whatsOnYourMind,
-                      hintStyle: secondaryTextStyle(size: 12),
-                    ),
-                  ),
-                ),
-                if (selectedIndex != -1)
-                  Stack(
-                    children: [
-                      DottedBorderWidget(
-                        padding: EdgeInsets.symmetric(vertical: 32),
-                        radius: defaultAppButtonRadius,
-                        dotsWidth: 8,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            AppButton(
-                              elevation: 0,
-                              color: appColorPrimary,
-                              text: language.selectFiles,
-                              textStyle: boldTextStyle(color: Colors.white),
-                              onTap: () async {
-                                if (!appStore.isLoading) {
-                                  appStore.setLoading(true);
-                                  mediaList.addAll(
-                                    await getMultipleFiles(mediaType: mediaTypeList[selectedIndex]).whenComplete(() => appStore.setLoading(false)),
-                                  );
-                                  setState(() {});
-                                }
-                              },
-                            ),
-                            16.height,
-                            Text(
-                              '${language.addPost} ${mediaTypeList[selectedIndex].title.capitalizeFirstLetter()}',
-                              style: secondaryTextStyle(size: 16),
-                            ).center(),
-                            8.height,
-                            Text(
-                              '${language.pleaseSelectOnly} ${mediaTypeList[selectedIndex].type} ${language.files} ',
-                              style: secondaryTextStyle(),
-                            ).center(),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        child: Icon(Icons.cancel_outlined, color: appColorPrimary, size: 18).onTap(() {
-                          if (!appStore.isLoading) {
-                            mediaList.clear();
-                            selectedIndex = -1;
-                            setState(() {});
-                          }
-                        }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
-                        right: 6,
-                        top: 6,
-                      ),
-                    ],
-                  ).paddingSymmetric(horizontal: 16, vertical: 16),
-                if (mediaList.isNotEmpty) ShowSelectedMediaComponent(mediaList: mediaList, mediaType: mediaTypeList[selectedIndex]),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        resizeToAvoidBottomInset: false,
+        body: SafeArea(child: BlocBuilder<CreatepostCubit, CreatepostState>(
+            builder: (context, state) {
+          return state.maybeWhen(
+            loading: () => Center(child: CircularProgressIndicator()),
+            error: (error) => Center(child: Text('Something went wrong!')),
+            orElse: () {
+              return SingleChildScrollView(
+                child: Column(
                   children: [
-                    Text(language.postIn, style: boldTextStyle()).paddingSymmetric(horizontal: 16),
-                    if (dropdownValue.id != null)
-                      Container(
-                        height: 40,
-                        decoration: BoxDecoration(color: context.scaffoldBackgroundColor, borderRadius: radius(commonRadius)),
-                        margin: EdgeInsets.symmetric(horizontal: 16),
-                        child: DropdownButtonHideUnderline(
-                          child: ButtonTheme(
-                            alignedDropdown: true,
-                            child: DropdownButton<PostInListModel>(
-                              borderRadius: BorderRadius.circular(commonRadius),
-                              value: dropdownValue,
-                              icon: Icon(Icons.arrow_drop_down, color: appStore.isDarkMode ? bodyDark : bodyWhite),
-                              elevation: 8,
-                              style: primaryTextStyle(),
-                              underline: Container(height: 2, color: appColorPrimary),
-                              alignment: Alignment.bottomCenter,
-                              onChanged: (PostInListModel? newValue) {
-                                setState(() {
-                                  dropdownValue = newValue!;
-                                });
-                              },
-                              items: postInList.map<DropdownMenuItem<PostInListModel>>((e) {
-                                return DropdownMenuItem<PostInListModel>(
-                                  value: e,
-                                  child: Text('${e.title.validate()}', overflow: TextOverflow.ellipsis, maxLines: 1),
-                                );
-                              }).toList(),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.close, color: context.iconColor),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()));
+                          },
+                        ),
+                        Text('Share post',
+                            style: secondaryTextStyle(
+                              color: Color(0xff07142E),
+                              size: 20,
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            )),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: BlocBuilder<CreatepostCubit, CreatepostState>(
+                            builder: (context, state) {
+                              return InkWell(
+                                onTap: state.maybeWhen(
+                                  orElse: () => null,
+                                  selectFile: (selectedFile) =>
+                                      selectedFile != null &&
+                                              _selectedCategoryId != null
+                                          ? () async {
+                                              await context
+                                                  .read<CreatepostCubit>()
+                                                  .createPost(
+                                                      file: selectedFile,
+                                                      categoryId:
+                                                          _selectedCategoryId!,
+                                                      content:
+                                                          postContentTextEditController
+                                                              .text);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          HomeScreen()));
+                                            }
+                                          : null,
+                                ),
+                                child: Container(
+                                  width: 96,
+                                  height: 30,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xff00FFFF),
+                                            Color(0xffFFC0CB),
+                                            Color(0xffFFFF00),
+                                          ],
+                                          begin: Alignment.bottomLeft,
+                                          end: Alignment.topRight),
+                                      borderRadius: BorderRadius.circular(80)),
+                                  child: Text(language.post,
+                                      style: secondaryTextStyle(
+                                        weight: FontWeight.w600,
+                                        color: Colors.white,
+                                        fontFamily: 'Poppins',
+                                      )),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 33,
+                          backgroundImage: user?.image == null
+                              ? AssetImage(profile_img)
+                              : Image.network(user!.image!) as ImageProvider,
+                        ),
+                        title: Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Text(user?.username ?? '',
+                                style: secondaryTextStyle(
+                                  color: Color(0xff07142E),
+                                  size: 20,
+                                  weight: FontWeight.w600,
+                                  fontFamily: 'Poppins',
+                                ))),
+                        subtitle: Transform(
+                          transform: Matrix4.translationValues(-10, -10, 0.0),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                BlocBuilder<ChooseMemeCategoriesCubit,
+                                        ChooseMemeCategoriesState>(
+                                    builder: (context, state) {
+                                  return state.maybeWhen(
+                                    orElse: () => SizedBox(),
+                                    success: (categories, selectedCategories) {
+                                      return DropdownButton(
+                                          underline: SizedBox(),
+                                          hint: Row(
+                                            children: [
+                                              Image.asset(
+                                                ic_plus,
+                                                height: 18,
+                                              ),
+                                              SizedBox(width: 4),
+                                              Text(_selectedValue ?? 'Category',
+                                                  style: secondaryTextStyle(
+                                                    color: Color(0xff07142E),
+                                                    size: 14,
+                                                    weight: FontWeight.w600,
+                                                    fontFamily: 'Poppins',
+                                                  )),
+                                            ],
+                                          ),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              _selectedValue = newValue;
+                                            });
+                                          },
+                                          items: categories.map((category) {
+                                            return DropdownMenuItem<String>(
+                                              onTap: () {
+                                                setState(() {
+                                                  _selectedCategoryId =
+                                                      category.id.toString();
+                                                });
+                                              },
+                                              value: category.title,
+                                              child: Text(category.title),
+                                            );
+                                          }).toList());
+                                    },
+                                  );
+                                })
+                              ],
                             ),
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 40),
+                      child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        controller: postContentTextEditController,
+                        autofocus: false,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'What  do you want to talk about?',
+                          hintStyle: secondaryTextStyle(
+                            color: Color(0xff6F7F92),
+                            size: 14,
+                            weight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                      ),
+                    ),
+                    BlocBuilder<CreatepostCubit, CreatepostState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                            orElse: () => SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 2.8,
+                                ),
+                            selectFile: (selectedFile) {
+                              return context
+                                      .read<CreatepostCubit>()
+                                      .isVideo(selectedFile!.path)
+                                  ? VTImageView(
+                                      assetPlaceHolder: selectedFile.path,
+                                      videoUrl: selectedFile.path,
+                                      width: 200.0,
+                                      height: 200.0,
+                                      errorBuilder: (context, error, stack) {
+                                        return Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 40),
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              4,
+                                          width: double.infinity,
+                                          child: Center(
+                                            child:
+                                                Text(" Falied to load Image"),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  : Column(
+                                      children: [
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              8,
+                                        ),
+                                        Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                4,
+                                            width: double.infinity,
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 40),
+                                            child: Image.file(
+                                              selectedFile,
+                                              fit: BoxFit.fill,
+                                            )),
+                                      ],
+                                    );
+                            });
+                      },
+                    ),
+                    BlocBuilder<CreatepostCubit, CreatepostState>(
+                      builder: (context, state) {
+                        return state.maybeWhen(
+                            orElse: () => Column(
+                                  children: [
+                                    InkWell(
+                                      onTap: () => context
+                                          .read<CreatepostCubit>()
+                                          .openFileExplorer(FileType.image),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16),
+                                        decoration:
+                                            BoxDecoration(border: border),
+                                        child: ListTileComponent(
+                                          dense: true,
+                                          visualDensity:
+                                              VisualDensity(vertical: -3),
+                                          title: "Upload a photo",
+                                          icon: ic_photo,
+                                          translationValue: -24,
+                                          color: Color(0xff6F7F92),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => context
+                                          .read<CreatepostCubit>()
+                                          .openFileExplorer(FileType.video),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16),
+                                        decoration:
+                                            BoxDecoration(border: border),
+                                        child: ListTileComponent(
+                                          dense: true,
+                                          visualDensity:
+                                              VisualDensity(vertical: -3),
+                                          title: "Upload a Video",
+                                          icon: ic_video_,
+                                          translationValue: -24,
+                                          color: Color(0xff6F7F92),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () => context
+                                          .read<CreatepostCubit>()
+                                          .openFileExplorer(FileType.custom),
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16),
+                                        decoration:
+                                            BoxDecoration(border: border),
+                                        child: ListTileComponent(
+                                          dense: true,
+                                          visualDensity:
+                                              VisualDensity(vertical: -3),
+                                          title: "Upload a GIF",
+                                          icon: ic_gif,
+                                          translationValue: -24,
+                                          color: Color(0xff6F7F92),
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      decoration: BoxDecoration(border: border),
+                                      child: ListTileComponent(
+                                        dense: true,
+                                        visualDensity:
+                                            VisualDensity(vertical: -3),
+                                        title: "choose a template",
+                                        icon: ic_smile,
+                                        translationValue: -24,
+                                        color: Color(0xff6F7F92),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      decoration: BoxDecoration(border: border),
+                                      child: ListTileComponent(
+                                        dense: true,
+                                        visualDensity:
+                                            VisualDensity(vertical: -3),
+                                        title: "Tag a friend",
+                                        icon: ic_tag,
+                                        translationValue: -24,
+                                        color: Color(0xff6F7F92),
+                                      ),
+                                    ),
+                                  ],
+                                ));
+                      },
+                    ),
                   ],
                 ),
-                50.height,
-              ],
-            ),
-          ),
-          Observer(builder: (_) => LoadingWidget().center().visible(appStore.isLoading))
-        ],
-      ),
-    );
+              );
+            },
+          );
+        })));
   }
 }

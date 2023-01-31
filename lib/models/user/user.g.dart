@@ -10,13 +10,13 @@ _$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
       id: json['id'] as int,
       username: json['username'] as String,
       email: json['email'] as String,
-      mobileNo: json['mobileNo'] as int,
+      mobileNo: json['mobileNo'] as String,
       otp: json['otp'] as int,
       image: json['image'] as String?,
       bankName: json['bankName'] as String?,
       beneficiaryName: json['beneficiaryName'] as String?,
-      accountNumber: json['accountNumber'] as int?,
-      ifscCode: json['ifscCode'] as int?,
+      accountNumber: json['accountNumber'] as String?,
+      ifscCode: json['ifscCode'] as String?,
     );
 
 Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{

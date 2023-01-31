@@ -14,7 +14,7 @@ _$_Feed _$$_FeedFromJson(Map<String, dynamic> json) => _$_Feed(
       content_url: json['content_url'] as String,
       category_id: json['category_id'] as String,
       created_on: json['created_on'] as String,
-      noOfLikes: noOfLikesConverter().fromJson(json['noOfLikes'] as String),
+      noOfLikes: getLikesfromJson(json['noOfLikes']),
       likedByPeople: (json['likedByPeople'] as List<dynamic>)
           .map((e) => Followers.fromJson(e as Map<String, dynamic>))
           .toList(),

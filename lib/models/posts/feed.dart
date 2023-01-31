@@ -16,7 +16,7 @@ class Feed with _$Feed {
     required String content_url,
     required String category_id,
     required String created_on,
-    @noOfLikesConverter() required int noOfLikes,
+    @JsonKey(fromJson: getLikesfromJson) required int noOfLikes,
     required List<Followers> likedByPeople,
     required bool likedByMe,
     required List<Followers> author,
@@ -25,18 +25,30 @@ class Feed with _$Feed {
   factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
 }
 
-class noOfLikesConverter implements JsonConverter<int, String> {
-  const noOfLikesConverter();
+// class NoOfLikesConverter implements JsonConverter {
+//   const NoOfLikesConverter();
 
-  @override
-  int fromJson(String json) {
-    if (json.contains("")) {
-      json = '0';
+//   @override
+//   int fromJson(json) {
+//     if (json.runtimeType == String) {
+//       if (json.contains("")) {
+//         json = '0';
+//       }
+//       return int.parse(json);
+//     } else
+//       return json;
+//   }
+
+//   @override
+//   int toJson(object) => object;
+// }
+
+int getLikesfromJson(dynamic data) {
+  if (data.runtimeType == String) {
+    if (data.contains("")) {
+      data = '0';
     }
-
-    return int.parse(json);
-  }
-
-  @override
-  String toJson(int object) => object.toString();
+    return int.parse(data);
+  } else
+    return data;
 }

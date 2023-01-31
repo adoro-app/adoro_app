@@ -27,7 +27,7 @@ mixin _$Feed {
   String get content_url => throw _privateConstructorUsedError;
   String get category_id => throw _privateConstructorUsedError;
   String get created_on => throw _privateConstructorUsedError;
-  @noOfLikesConverter()
+  @JsonKey(fromJson: getLikesfromJson)
   int get noOfLikes => throw _privateConstructorUsedError;
   List<Followers> get likedByPeople => throw _privateConstructorUsedError;
   bool get likedByMe => throw _privateConstructorUsedError;
@@ -51,7 +51,7 @@ abstract class $FeedCopyWith<$Res> {
       String content_url,
       String category_id,
       String created_on,
-      @noOfLikesConverter() int noOfLikes,
+      @JsonKey(fromJson: getLikesfromJson) int noOfLikes,
       List<Followers> likedByPeople,
       bool likedByMe,
       List<Followers> author});
@@ -145,7 +145,7 @@ abstract class _$$_FeedCopyWith<$Res> implements $FeedCopyWith<$Res> {
       String content_url,
       String category_id,
       String created_on,
-      @noOfLikesConverter() int noOfLikes,
+      @JsonKey(fromJson: getLikesfromJson) int noOfLikes,
       List<Followers> likedByPeople,
       bool likedByMe,
       List<Followers> author});
@@ -232,7 +232,7 @@ class _$_Feed extends _Feed {
       required this.content_url,
       required this.category_id,
       required this.created_on,
-      @noOfLikesConverter() required this.noOfLikes,
+      @JsonKey(fromJson: getLikesfromJson) required this.noOfLikes,
       required final List<Followers> likedByPeople,
       required this.likedByMe,
       required final List<Followers> author})
@@ -257,7 +257,7 @@ class _$_Feed extends _Feed {
   @override
   final String created_on;
   @override
-  @noOfLikesConverter()
+  @JsonKey(fromJson: getLikesfromJson)
   final int noOfLikes;
   final List<Followers> _likedByPeople;
   @override
@@ -346,7 +346,7 @@ abstract class _Feed extends Feed {
       required final String content_url,
       required final String category_id,
       required final String created_on,
-      @noOfLikesConverter() required final int noOfLikes,
+      @JsonKey(fromJson: getLikesfromJson) required final int noOfLikes,
       required final List<Followers> likedByPeople,
       required final bool likedByMe,
       required final List<Followers> author}) = _$_Feed;
@@ -369,7 +369,7 @@ abstract class _Feed extends Feed {
   @override
   String get created_on;
   @override
-  @noOfLikesConverter()
+  @JsonKey(fromJson: getLikesfromJson)
   int get noOfLikes;
   @override
   List<Followers> get likedByPeople;

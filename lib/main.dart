@@ -58,7 +58,18 @@ void main() async {
   });
   exitFullScreen();
 
-  runApp(const MyApp());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => AuthCubit(sl()),
+      ),
+      BlocProvider(
+        create: (BuildContext context) =>
+            ChooseMemeCategoriesCubit(apiService: sl()),
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -119,7 +130,7 @@ class _MyAppState extends State<MyApp> {
         listener: (context, state) {
           state.maybeWhen(
             orElse: () {},
-            unauthenticated: () {
+            unauthenticated: (user) {
               navigatorKey.currentState?.pushAndRemoveUntil(
                 CupertinoPageRoute(
                   builder: (context) => SignInScreen(),
@@ -127,7 +138,7 @@ class _MyAppState extends State<MyApp> {
                 (_) => false,
               );
             },
-            authenticated: () {
+            authenticated: (_) {
               // navigatorKey.currentState?.pushAndRemoveUntil(
               //   CupertinoPageRoute(
               //     builder: (context) => DashboardScreen(),

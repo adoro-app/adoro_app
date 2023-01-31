@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/components/loading_widget.dart';
@@ -9,6 +10,7 @@ import 'package:socialv/network/rest_apis.dart';
 import 'package:socialv/screens/dashboard_screen.dart';
 import 'package:socialv/screens/home/components/ad_component.dart';
 import 'package:socialv/screens/home/components/initial_home_component.dart';
+import 'package:socialv/screens/home/cubit/home_cubit.dart';
 import 'package:socialv/screens/post/components/post_component.dart';
 import 'package:socialv/screens/stories/component/home_story_component.dart';
 
@@ -23,7 +25,8 @@ class HomeFragment extends StatefulWidget {
   State<HomeFragment> createState() => _HomeFragmentState();
 }
 
-class _HomeFragmentState extends State<HomeFragment> with SingleTickerProviderStateMixin {
+class _HomeFragmentState extends State<HomeFragment>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   List<PostModel> postList = [];
@@ -35,6 +38,7 @@ class _HomeFragmentState extends State<HomeFragment> with SingleTickerProviderSt
 
   @override
   void initState() {
+    context.read<HomeCubit>().loadFeed();
     future = getPostList();
 
     _animationController = BottomSheet.createAnimationController(this);
@@ -48,7 +52,8 @@ class _HomeFragmentState extends State<HomeFragment> with SingleTickerProviderSt
     widget.controller.addListener(() {
       /// pagination
       if (selectedIndex == 0) {
-        if (widget.controller.position.pixels == widget.controller.position.maxScrollExtent) {
+        if (widget.controller.position.pixels ==
+            widget.controller.position.maxScrollExtent) {
           if (!mIsLastPage) {
             mPage++;
             setState(() {});
@@ -104,59 +109,54 @@ class _HomeFragmentState extends State<HomeFragment> with SingleTickerProviderSt
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            20.height,
-            if (!isError)
-              HomeStoryComponent(callback: () {
-                LiveStream().emit(GetUserStories);
-              }),
-            AnimatedListView(
-              padding: EdgeInsets.only(left: 8, right: 8, bottom: mIsLastPage ? 16 : 60),
-              itemCount: postList.length,
-              slideConfiguration: SlideConfiguration(delay: 80.milliseconds, verticalOffset: 300),
-              itemBuilder: (context, index) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    PostComponent(
-                      post: postList[index],
-                      count: 0,
-                      callback: () {
-                        mPage = 1;
-                        future = getPostList();
-                      },
+        BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+                error: (error) => SizedBox(
+                      height: context.height() * 0.8,
+                      child: NoDataWidget(
+                        imageWidget: NoDataLottieWidget(),
+                        title: language.somethingWentWrong,
+                        onRetry: () {
+                          isError = false;
+                          LiveStream().emit(OnAddPost);
+                        },
+                        retryText: '   ${language.clickToRefresh}   ',
+                      ).center(),
                     ),
-                    if ((index + 1) % 5 == 0) AdComponent(),
-                  ],
-                );
-              },
-              shrinkWrap: true,
-            ),
-          ],
-        ),
-        if (!appStore.isLoading && isError)
-          SizedBox(
-            height: context.height() * 0.8,
-            child: NoDataWidget(
-              imageWidget: NoDataLottieWidget(),
-              title: isError ? language.somethingWentWrong : language.noDataFound,
-              onRetry: () {
-                isError = false;
-                LiveStream().emit(OnAddPost);
-              },
-              retryText: '   ${language.clickToRefresh}   ',
-            ).center(),
-          ),
-        if (postList.isEmpty && !appStore.isLoading && !isError)
-          SizedBox(
-            height: context.height() * 0.8,
-            child: InitialHomeComponent().center(),
-          ),
-        Positioned(
-          bottom: mPage != 1 ? 8 : null,
-          child: Observer(builder: (_) => LoadingWidget(isBlurBackground: mPage == 1 ? true : false).center().visible(appStore.isLoading)),
+                orElse: () => SizedBox(),
+                success: (feed) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      20.height,
+                      AnimatedListView(
+                        padding: EdgeInsets.only(
+                            left: 8, right: 8, bottom: mIsLastPage ? 16 : 60),
+                        itemCount: feed.length,
+                        slideConfiguration: SlideConfiguration(
+                            delay: 80.milliseconds, verticalOffset: 300),
+                        itemBuilder: (context, index) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              PostComponent(
+                                post: feed[index],
+                                count: 0,
+                                callback: () {
+                                  mPage = 1;
+                                  future = getPostList();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                        shrinkWrap: true,
+                      ),
+                    ],
+                  );
+                });
+          },
         ),
       ],
     );

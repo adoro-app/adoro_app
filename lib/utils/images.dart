@@ -23,6 +23,7 @@ const ic_logout = 'assets/icons/ic_Logout.png';
 const ic_more = 'assets/icons/ic_more.png';
 const ic_message = 'assets/icons/ic_message.png';
 const ic_notification = 'assets/icons/ic_notification.png';
+const ic_notification_svg = 'assets/icons/ic_notification.svg';
 const ic_notification_selected = 'assets/icons/ic_notification_selected.png';
 const ic_plus_circle = 'assets/icons/ic_plus_circle.png';
 const ic_paper = 'assets/icons/ic_paper.png';
@@ -63,9 +64,26 @@ const ic_profile_filled = 'assets/icons/ic_profile_filled.png';
 const ic_forum = 'assets/icons/ic_forum.png';
 const ic_forum_filled = 'assets/icons/ic_forum_filled.png';
 const ic_tick_filled = 'assets/icons/ic_tick_filled.png';
+const ic_verified_user = 'assets/icons/ic_verified_user.png';
+const ic_wallet = 'assets/icons/ic_wallet.svg';
+const ic_support = 'assets/icons/ic_support.svg';
+const ic_settings = 'assets/icons/ic_settings.svg';
+const ic_result = 'assets/icons/ic_result.svg';
+const ic_refer_earn = 'assets/icons/ic_refer_earn.svg';
+const ic_messages = 'assets/icons/ic_message.svg';
+const ic_edit_ = 'assets/icons/ic_edit_.svg';
+const ic_smile = 'assets/icons/ic_smile.svg';
+const ic_tag = 'assets/icons/ic_tag.svg';
+const ic_video_ = 'assets/icons/ic_video.svg';
+const ic_photo = 'assets/icons/ic_photo.svg';
+const ic_gif = 'assets/icons/ic_gif.svg';
 
 /// Lottie Files
 const no_data = "assets/lottie/no_data.json";
 const add_post = "assets/lottie/add_post.json";
 const story_loader = "assets/lottie/story_loader.json";
 const shopping_cart = "assets/lottie/shopping_cart.json";
+
+//images
+const profile_img = "assets/images/profile_img.png";
+const app_name = 'assets/app_name.svg';

@@ -3,6 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:socialv/auth/auth_error.dart';
 import 'package:socialv/auth/credentials_storage.dart';
+import 'package:socialv/models/user/login_handle.dart';
+
+import '../models/user/user.dart';
 
 class AuthService {
   final Dio _dio;
@@ -13,7 +16,7 @@ class AuthService {
     this._credentialsStorage,
   );
 
-  Future<String?> getSignedInCredentials() async {
+  Future<LoginHandle?> getSignedInCredentials() async {
     try {
       final storedCredentials = await _credentialsStorage.read();
       return storedCredentials;
@@ -71,7 +74,7 @@ class AuthService {
     }
   }
 
-  Future<Either<AuthError, Unit>> validateOTP(
+  Future<Either<AuthError, User>> validateOTP(
     String mobileNo,
     String otp,
   ) async {
@@ -87,13 +90,16 @@ class AuthService {
 
       if (status == 200) {
         final token = response.data['token'] as String;
-        _credentialsStorage.save(token);
-        return right(unit);
+        final data = response.data["data"];
+        final user = User.fromJson(data as Map<String, dynamic>);
+        final loginHandle = LoginHandle(token: token, user: user);
+        _credentialsStorage.save(loginHandle);
+        return right(user);
       }
       return left(const AuthError.wrongOTP());
     } catch (e) {
       print('---------------------');
-      print('ERROR: e');
+      print('ERROR: $e');
       print('---------------------');
       return left(const AuthError.unknown());
     }

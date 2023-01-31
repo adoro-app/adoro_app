@@ -16,37 +16,38 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthState {
+  User? get user => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -84,12 +85,20 @@ mixin _$AuthState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AuthStateCopyWith<AuthState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res, AuthState>;
+  @useResult
+  $Res call({User? user});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -101,13 +110,44 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_value.copyWith(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
+abstract class _$$_InitialCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
   factory _$$_InitialCopyWith(
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({User? user});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -116,69 +156,93 @@ class __$$_InitialCopyWithImpl<$Res>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$_Initial(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial();
+  const _$_Initial({this.user});
+
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthState.initial()';
+    return 'AuthState.initial(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType &&
+            other is _$_Initial &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) {
-    return initial();
+    return initial(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) {
-    return initial?.call();
+    return initial?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(user);
     }
     return orElse();
   }
@@ -231,14 +295,28 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements AuthState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial({final User? user}) = _$_Initial;
+
+  @override
+  User? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_UnAuthenticatedCopyWith<$Res> {
+abstract class _$$_UnAuthenticatedCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
   factory _$$_UnAuthenticatedCopyWith(
           _$_UnAuthenticated value, $Res Function(_$_UnAuthenticated) then) =
       __$$_UnAuthenticatedCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({User? user});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -248,69 +326,93 @@ class __$$_UnAuthenticatedCopyWithImpl<$Res>
   __$$_UnAuthenticatedCopyWithImpl(
       _$_UnAuthenticated _value, $Res Function(_$_UnAuthenticated) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$_UnAuthenticated(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_UnAuthenticated implements _UnAuthenticated {
-  const _$_UnAuthenticated();
+  const _$_UnAuthenticated({this.user});
+
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthState.unauthenticated()';
+    return 'AuthState.unauthenticated(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_UnAuthenticated);
+        (other.runtimeType == runtimeType &&
+            other is _$_UnAuthenticated &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_UnAuthenticatedCopyWith<_$_UnAuthenticated> get copyWith =>
+      __$$_UnAuthenticatedCopyWithImpl<_$_UnAuthenticated>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) {
-    return unauthenticated();
+    return unauthenticated(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) {
-    return unauthenticated?.call();
+    return unauthenticated?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
-      return unauthenticated();
+      return unauthenticated(user);
     }
     return orElse();
   }
@@ -363,14 +465,28 @@ class _$_UnAuthenticated implements _UnAuthenticated {
 }
 
 abstract class _UnAuthenticated implements AuthState {
-  const factory _UnAuthenticated() = _$_UnAuthenticated;
+  const factory _UnAuthenticated({final User? user}) = _$_UnAuthenticated;
+
+  @override
+  User? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_UnAuthenticatedCopyWith<_$_UnAuthenticated> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_SendingOtpCopyWith<$Res> {
+abstract class _$$_SendingOtpCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
   factory _$$_SendingOtpCopyWith(
           _$_SendingOtp value, $Res Function(_$_SendingOtp) then) =
       __$$_SendingOtpCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({User? user});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -380,69 +496,93 @@ class __$$_SendingOtpCopyWithImpl<$Res>
   __$$_SendingOtpCopyWithImpl(
       _$_SendingOtp _value, $Res Function(_$_SendingOtp) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$_SendingOtp(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_SendingOtp implements _SendingOtp {
-  const _$_SendingOtp();
+  const _$_SendingOtp({this.user});
+
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthState.sendingOtp()';
+    return 'AuthState.sendingOtp(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_SendingOtp);
+        (other.runtimeType == runtimeType &&
+            other is _$_SendingOtp &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SendingOtpCopyWith<_$_SendingOtp> get copyWith =>
+      __$$_SendingOtpCopyWithImpl<_$_SendingOtp>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) {
-    return sendingOtp();
+    return sendingOtp(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) {
-    return sendingOtp?.call();
+    return sendingOtp?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) {
     if (sendingOtp != null) {
-      return sendingOtp();
+      return sendingOtp(user);
     }
     return orElse();
   }
@@ -495,14 +635,27 @@ class _$_SendingOtp implements _SendingOtp {
 }
 
 abstract class _SendingOtp implements AuthState {
-  const factory _SendingOtp() = _$_SendingOtp;
+  const factory _SendingOtp({final User? user}) = _$_SendingOtp;
+
+  @override
+  User? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_SendingOtpCopyWith<_$_SendingOtp> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_OtpStentCopyWith<$Res> {
+abstract class _$$_OtpStentCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
   factory _$$_OtpStentCopyWith(
           _$_OtpStent value, $Res Function(_$_OtpStent) then) =
       __$$_OtpStentCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({User? user});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -512,69 +665,93 @@ class __$$_OtpStentCopyWithImpl<$Res>
   __$$_OtpStentCopyWithImpl(
       _$_OtpStent _value, $Res Function(_$_OtpStent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$_OtpStent(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_OtpStent implements _OtpStent {
-  const _$_OtpStent();
+  const _$_OtpStent({this.user});
+
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthState.otpSent()';
+    return 'AuthState.otpSent(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_OtpStent);
+        (other.runtimeType == runtimeType &&
+            other is _$_OtpStent &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_OtpStentCopyWith<_$_OtpStent> get copyWith =>
+      __$$_OtpStentCopyWithImpl<_$_OtpStent>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) {
-    return otpSent();
+    return otpSent(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) {
-    return otpSent?.call();
+    return otpSent?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) {
     if (otpSent != null) {
-      return otpSent();
+      return otpSent(user);
     }
     return orElse();
   }
@@ -627,14 +804,28 @@ class _$_OtpStent implements _OtpStent {
 }
 
 abstract class _OtpStent implements AuthState {
-  const factory _OtpStent() = _$_OtpStent;
+  const factory _OtpStent({final User? user}) = _$_OtpStent;
+
+  @override
+  User? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_OtpStentCopyWith<_$_OtpStent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_VerifyingOtpCopyWith<$Res> {
+abstract class _$$_VerifyingOtpCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
   factory _$$_VerifyingOtpCopyWith(
           _$_VerifyingOtp value, $Res Function(_$_VerifyingOtp) then) =
       __$$_VerifyingOtpCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({User? user});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -644,69 +835,93 @@ class __$$_VerifyingOtpCopyWithImpl<$Res>
   __$$_VerifyingOtpCopyWithImpl(
       _$_VerifyingOtp _value, $Res Function(_$_VerifyingOtp) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$_VerifyingOtp(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_VerifyingOtp implements _VerifyingOtp {
-  const _$_VerifyingOtp();
+  const _$_VerifyingOtp({this.user});
+
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthState.verifyingOtp()';
+    return 'AuthState.verifyingOtp(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_VerifyingOtp);
+        (other.runtimeType == runtimeType &&
+            other is _$_VerifyingOtp &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VerifyingOtpCopyWith<_$_VerifyingOtp> get copyWith =>
+      __$$_VerifyingOtpCopyWithImpl<_$_VerifyingOtp>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) {
-    return verifyingOtp();
+    return verifyingOtp(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) {
-    return verifyingOtp?.call();
+    return verifyingOtp?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) {
     if (verifyingOtp != null) {
-      return verifyingOtp();
+      return verifyingOtp(user);
     }
     return orElse();
   }
@@ -759,14 +974,28 @@ class _$_VerifyingOtp implements _VerifyingOtp {
 }
 
 abstract class _VerifyingOtp implements AuthState {
-  const factory _VerifyingOtp() = _$_VerifyingOtp;
+  const factory _VerifyingOtp({final User? user}) = _$_VerifyingOtp;
+
+  @override
+  User? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_VerifyingOtpCopyWith<_$_VerifyingOtp> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AuthenticatedCopyWith<$Res> {
+abstract class _$$_AuthenticatedCopyWith<$Res>
+    implements $AuthStateCopyWith<$Res> {
   factory _$$_AuthenticatedCopyWith(
           _$_Authenticated value, $Res Function(_$_Authenticated) then) =
       __$$_AuthenticatedCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({User? user});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -776,69 +1005,93 @@ class __$$_AuthenticatedCopyWithImpl<$Res>
   __$$_AuthenticatedCopyWithImpl(
       _$_Authenticated _value, $Res Function(_$_Authenticated) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$_Authenticated(
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Authenticated implements _Authenticated {
-  const _$_Authenticated();
+  const _$_Authenticated({required this.user});
+
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthState.authenticated()';
+    return 'AuthState.authenticated(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Authenticated);
+        (other.runtimeType == runtimeType &&
+            other is _$_Authenticated &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
+      __$$_AuthenticatedCopyWithImpl<_$_Authenticated>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) {
-    return authenticated();
+    return authenticated(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) {
-    return authenticated?.call();
+    return authenticated?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated();
+      return authenticated(user);
     }
     return orElse();
   }
@@ -891,17 +1144,27 @@ class _$_Authenticated implements _Authenticated {
 }
 
 abstract class _Authenticated implements AuthState {
-  const factory _Authenticated() = _$_Authenticated;
+  const factory _Authenticated({required final User? user}) = _$_Authenticated;
+
+  @override
+  User? get user;
+  @override
+  @JsonKey(ignore: true)
+  _$$_AuthenticatedCopyWith<_$_Authenticated> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ErrorCopyWith<$Res> {
+abstract class _$$_ErrorCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({AuthError error});
+  $Res call({AuthError error, User? user});
 
   $AuthErrorCopyWith<$Res> get error;
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -915,12 +1178,17 @@ class __$$_ErrorCopyWithImpl<$Res>
   @override
   $Res call({
     Object? error = null,
+    Object? user = freezed,
   }) {
     return _then(_$_Error(
       error: null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as AuthError,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
     ));
   }
 
@@ -936,14 +1204,16 @@ class __$$_ErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error({required this.error});
+  const _$_Error({required this.error, this.user});
 
   @override
   final AuthError error;
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthState.error(error: $error)';
+    return 'AuthState.error(error: $error, user: $user)';
   }
 
   @override
@@ -951,11 +1221,12 @@ class _$_Error implements _Error {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Error &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, error);
+  int get hashCode => Object.hash(runtimeType, error, user);
 
   @JsonKey(ignore: true)
   @override
@@ -966,45 +1237,45 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() unauthenticated,
-    required TResult Function() sendingOtp,
-    required TResult Function() otpSent,
-    required TResult Function() verifyingOtp,
-    required TResult Function() authenticated,
-    required TResult Function(AuthError error) error,
+    required TResult Function(User? user) initial,
+    required TResult Function(User? user) unauthenticated,
+    required TResult Function(User? user) sendingOtp,
+    required TResult Function(User? user) otpSent,
+    required TResult Function(User? user) verifyingOtp,
+    required TResult Function(User? user) authenticated,
+    required TResult Function(AuthError error, User? user) error,
   }) {
-    return error(this.error);
+    return error(this.error, user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? unauthenticated,
-    TResult? Function()? sendingOtp,
-    TResult? Function()? otpSent,
-    TResult? Function()? verifyingOtp,
-    TResult? Function()? authenticated,
-    TResult? Function(AuthError error)? error,
+    TResult? Function(User? user)? initial,
+    TResult? Function(User? user)? unauthenticated,
+    TResult? Function(User? user)? sendingOtp,
+    TResult? Function(User? user)? otpSent,
+    TResult? Function(User? user)? verifyingOtp,
+    TResult? Function(User? user)? authenticated,
+    TResult? Function(AuthError error, User? user)? error,
   }) {
-    return error?.call(this.error);
+    return error?.call(this.error, user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? unauthenticated,
-    TResult Function()? sendingOtp,
-    TResult Function()? otpSent,
-    TResult Function()? verifyingOtp,
-    TResult Function()? authenticated,
-    TResult Function(AuthError error)? error,
+    TResult Function(User? user)? initial,
+    TResult Function(User? user)? unauthenticated,
+    TResult Function(User? user)? sendingOtp,
+    TResult Function(User? user)? otpSent,
+    TResult Function(User? user)? verifyingOtp,
+    TResult Function(User? user)? authenticated,
+    TResult Function(AuthError error, User? user)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error);
+      return error(this.error, user);
     }
     return orElse();
   }
@@ -1057,9 +1328,13 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements AuthState {
-  const factory _Error({required final AuthError error}) = _$_Error;
+  const factory _Error({required final AuthError error, final User? user}) =
+      _$_Error;
 
   AuthError get error;
+  @override
+  User? get user;
+  @override
   @JsonKey(ignore: true)
   _$$_ErrorCopyWith<_$_Error> get copyWith =>
       throw _privateConstructorUsedError;

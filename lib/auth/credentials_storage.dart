@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../models/user/login_handle.dart';
+import '../models/user/user.dart';
 
 class CredentialsStorage {
   final FlutterSecureStorage _storage;
@@ -7,9 +12,9 @@ class CredentialsStorage {
 
   static const _key = 'auth_token';
 
-  String? _cachedCredentials;
+  LoginHandle? _cachedCredentials;
 
-  Future<String?> read() async {
+  Future<LoginHandle?> read() async {
     if (_cachedCredentials != null) {
       return _cachedCredentials;
     }
@@ -18,18 +23,18 @@ class CredentialsStorage {
       return null;
     }
     try {
-      return _cachedCredentials = json;
+      return _cachedCredentials = LoginHandle.fromJson(jsonDecode(json));
     } on FormatException {
       return null;
     }
   }
 
   @override
-  Future<void> save(String credentials) {
+  Future<void> save(LoginHandle credentials) {
     _cachedCredentials = credentials;
     return _storage.write(
       key: _key,
-      value: credentials,
+      value: jsonEncode(credentials.toJson()),
     );
   }
 

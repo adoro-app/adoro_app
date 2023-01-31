@@ -23,13 +23,13 @@ mixin _$User {
   int get id => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  int get mobileNo => throw _privateConstructorUsedError;
+  String get mobileNo => throw _privateConstructorUsedError;
   int get otp => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
   String? get bankName => throw _privateConstructorUsedError;
   String? get beneficiaryName => throw _privateConstructorUsedError;
-  int? get accountNumber => throw _privateConstructorUsedError;
-  int? get ifscCode => throw _privateConstructorUsedError;
+  String? get accountNumber => throw _privateConstructorUsedError;
+  String? get ifscCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,13 +45,13 @@ abstract class $UserCopyWith<$Res> {
       {int id,
       String username,
       String email,
-      int mobileNo,
+      String mobileNo,
       int otp,
       String? image,
       String? bankName,
       String? beneficiaryName,
-      int? accountNumber,
-      int? ifscCode});
+      String? accountNumber,
+      String? ifscCode});
 }
 
 /// @nodoc
@@ -94,7 +94,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       mobileNo: null == mobileNo
           ? _value.mobileNo
           : mobileNo // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       otp: null == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
@@ -114,11 +114,11 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       accountNumber: freezed == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       ifscCode: freezed == ifscCode
           ? _value.ifscCode
           : ifscCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
     ) as $Val);
   }
 }
@@ -133,13 +133,13 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       {int id,
       String username,
       String email,
-      int mobileNo,
+      String mobileNo,
       int otp,
       String? image,
       String? bankName,
       String? beneficiaryName,
-      int? accountNumber,
-      int? ifscCode});
+      String? accountNumber,
+      String? ifscCode});
 }
 
 /// @nodoc
@@ -178,7 +178,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       mobileNo: null == mobileNo
           ? _value.mobileNo
           : mobileNo // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       otp: null == otp
           ? _value.otp
           : otp // ignore: cast_nullable_to_non_nullable
@@ -198,11 +198,11 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       accountNumber: freezed == accountNumber
           ? _value.accountNumber
           : accountNumber // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       ifscCode: freezed == ifscCode
           ? _value.ifscCode
           : ifscCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
     ));
   }
 }
@@ -232,7 +232,7 @@ class _$_User extends _User {
   @override
   final String email;
   @override
-  final int mobileNo;
+  final String mobileNo;
   @override
   final int otp;
   @override
@@ -242,9 +242,9 @@ class _$_User extends _User {
   @override
   final String? beneficiaryName;
   @override
-  final int? accountNumber;
+  final String? accountNumber;
   @override
-  final int? ifscCode;
+  final String? ifscCode;
 
   @override
   String toString() {
@@ -298,13 +298,13 @@ abstract class _User extends User {
       {required final int id,
       required final String username,
       required final String email,
-      required final int mobileNo,
+      required final String mobileNo,
       required final int otp,
       required final String? image,
       required final String? bankName,
       required final String? beneficiaryName,
-      required final int? accountNumber,
-      required final int? ifscCode}) = _$_User;
+      required final String? accountNumber,
+      required final String? ifscCode}) = _$_User;
   const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
@@ -316,7 +316,7 @@ abstract class _User extends User {
   @override
   String get email;
   @override
-  int get mobileNo;
+  String get mobileNo;
   @override
   int get otp;
   @override
@@ -326,9 +326,9 @@ abstract class _User extends User {
   @override
   String? get beneficiaryName;
   @override
-  int? get accountNumber;
+  String? get accountNumber;
   @override
-  int? get ifscCode;
+  String? get ifscCode;
   @override
   @JsonKey(ignore: true)
   _$$_UserCopyWith<_$_User> get copyWith => throw _privateConstructorUsedError;

@@ -9,13 +9,13 @@ class User with _$User {
     required int id,
     required String username,
     required String email,
-    required int mobileNo,
+    required String mobileNo,
     required int otp,
     required String? image,
     required String? bankName,
     required String? beneficiaryName,
-    required int? accountNumber,
-    required int? ifscCode,
+    required String? accountNumber,
+    required String? ifscCode,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
