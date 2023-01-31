@@ -493,15 +493,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   List _screens = [
     DashboardScreen(),
-    MultiBlocProvider(providers: [
-      BlocProvider(
-        create: (BuildContext context) => CreatepostCubit(sl()),
-      ),
-      BlocProvider(
-        create: (BuildContext context) =>
-            ChooseMemeCategoriesCubit(apiService: sl()),
-      ),
-    ], child: AddPostScreen()),
+    BlocProvider(
+      create: (BuildContext context) => CreatepostCubit(sl()),
+      child: AddPostScreen(),
+    ),
     ProfileScreen(),
     ProfileScreen(),
   ];
