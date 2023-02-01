@@ -38,14 +38,16 @@ class ApiService {
     }
   }
 
-  Future<void> updateUserDetails(
+  Future<Either<Exception, Unit>> updateUserDetails(
       {required int userId,
       required int mobileNumber,
       required String userName,
       required String bankName,
+      required String fullName,
+      required String mailId,
       required String beneficiaryName,
-      required int accountNumber,
-      required int ifscCode}) async {
+      required String accountNumber,
+      required String ifscCode}) async {
     try {
       final response = await _dio.post('/updateUserDetails', data: {
         "userId": userId,
@@ -59,10 +61,36 @@ class ApiService {
       final status = response.data['status'] as int;
       print(response);
       print(status);
-    } catch (e) {
-      print('---------------------');
-      print('ERROR: $e');
-      print('---------------------');
+      return right(unit);
+    } on Exception catch (error) {
+      return left(error);
+    }
+  }
+
+  Future<Either<Exception, Unit>> uploadProfilePic({required File file}) async {
+    try {
+      final loginHandle = await sl.get<CredentialsStorage>().read();
+      String fileName = file.path.split('/').last;
+      var formData = FormData.fromMap({
+        'profile_pic':
+            await MultipartFile.fromFile(file.path, filename: fileName)
+      });
+      if (loginHandle?.token != null) {
+        final response = await _dio.post(
+          '/upload_profile_pic',
+          options: Options(
+            headers: {
+              'token': loginHandle!.token,
+            },
+          ),
+          data: formData,
+        );
+        print('Response: $response');
+      }
+      return right(unit);
+    } on DioError catch (e) {
+      print('ERROR Occured: ${e.response}');
+      return left(e.response?.data['msg'] ?? 'Something went wrong!');
     }
   }
 
@@ -70,6 +98,7 @@ class ApiService {
       List<int> selectedCategories) async {
     try {
       final loginHandle = await sl.get<CredentialsStorage>().read();
+      print(loginHandle?.token);
       if (loginHandle?.token != null) {
         final response = await _dio.post(
           '/user_category',

@@ -16,6 +16,7 @@ import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
 import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
+import 'package:socialv/screens/profile/screens/edit_profile_screen.dart';
 import 'package:socialv/screens/profile/screens/profile_screen.dart';
 import 'package:socialv/screens/shop/components/list_tile_component.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
@@ -149,8 +150,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                   leading: CircleAvatar(
                     radius: 33,
                     backgroundImage: user?.image == null
-                        ? AssetImage(profile_img)
-                        : Image.network(user!.image!) as ImageProvider,
+                        ? Image.asset(profile_img).image
+                        : NetworkImage(
+                            user!.image!,
+                          ),
                   ),
                   title: Text(user?.beneficiaryName ?? '',
                       style: boldTextStyle(size: 17, weight: FontWeight.w600)),
@@ -467,11 +470,20 @@ class TabBarWidget extends StatelessWidget {
       height: 40,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Color(0xff00FFFF),
-            Color(0xffFFC0CB),
-            Color(0xffFFFF00),
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          gradient: LinearGradient(
+              colors: [
+                Color(0xff00FFFF),
+                Color(0xffFFC0CB),
+                Color(0xffFFFF00),
+              ],
+              tileMode: TileMode.clamp,
+              stops: [
+                0.0,
+                0.5,
+                1,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight),
           borderRadius: BorderRadius.circular(5)),
       child: Text(text,
           style: secondaryTextStyle(
@@ -511,38 +523,44 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: BottomNavigationBar(
-            elevation: 0,
-            backgroundColor: Colors.white,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentIndex,
-            onTap: _updateIndex,
-            selectedFontSize: 13,
-            unselectedFontSize: 13,
-            iconSize: 30,
-            items: [
-              BottomNavigationBarItem(
-                  label: "",
-                  icon: Image.asset(ic_home_box,
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 4.0,
+            spreadRadius: 2.0,
+            offset: Offset(2.0, 2.0),
+          )
+        ]),
+        height: 40,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Material(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              InkWell(
+                  splashFactory: InkRipple.splashFactory,
+                  onTap: () => _updateIndex(0),
+                  child: Image.asset(ic_home_box,
                       height: 24, width: 24, fit: BoxFit.cover)),
-              BottomNavigationBarItem(
-                  label: "",
-                  icon: Image.asset(ic_plus_circle,
-                      height: 24, width: 24, fit: BoxFit.cover)),
-              BottomNavigationBarItem(
-                  label: "", icon: Image.asset(ic_rank, fit: BoxFit.cover)),
-              BottomNavigationBarItem(
-                  label: "",
-                  icon: Image.asset(ic_user,
-                      color: Colors.black,
-                      height: 24,
-                      width: 24,
-                      fit: BoxFit.cover)),
+              InkWell(
+                splashFactory: InkRipple.splashFactory,
+                onTap: () => _updateIndex(1),
+                child: Image.asset(ic_plus_circle,
+                    height: 24, width: 24, fit: BoxFit.cover),
+              ),
+              InkWell(
+                  splashFactory: InkRipple.splashFactory,
+                  onTap: () => _updateIndex(2),
+                  child: Image.asset(ic_rank, fit: BoxFit.cover)),
+              InkWell(
+                splashFactory: InkRipple.splashFactory,
+                onTap: () => _updateIndex(3),
+                child: Image.asset(ic_user,
+                    color: Colors.black,
+                    height: 24,
+                    width: 24,
+                    fit: BoxFit.cover),
+              ),
             ],
           ),
         ),
