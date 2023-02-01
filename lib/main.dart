@@ -58,8 +58,16 @@ void main() async {
   });
   exitFullScreen();
 
-  runApp(BlocProvider(
-    create: (context) => AuthCubit(sl()),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => AuthCubit(sl()),
+      ),
+      BlocProvider(
+        create: (BuildContext context) =>
+            ChooseMemeCategoriesCubit(apiService: sl()),
+      ),
+    ],
     child: MyApp(),
   ));
 }

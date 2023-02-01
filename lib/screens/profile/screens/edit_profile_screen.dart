@@ -1,371 +1,348 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:socialv/components/file_picker_dialog_component.dart';
-import 'package:socialv/components/loading_widget.dart';
-import 'package:socialv/main.dart';
-import 'package:socialv/models/members/profile_field_model.dart';
-import 'package:socialv/network/rest_apis.dart';
-import 'package:socialv/screens/profile/components/expansion_body.dart';
-import 'package:socialv/utils/app_constants.dart';
-import 'package:socialv/utils/cached_network_image.dart';
+import 'package:socialv/screens/profile/cubit/profile_cubit.dart';
+
+import '../../../auth/cubit/auth_cubit.dart';
+import '../../../utils/app_constants.dart';
+import '../../../utils/success_error_flash.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  EditProfileScreen({super.key});
+
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  String avatarUrl = appStore.loginAvatarUrl;
-  String coverImage = AppImages.profileBackgroundImage;
-
-  List<ProfileFieldModel> fieldList = [];
-
-  bool isCover = false;
-
-  TextEditingController nameCont = TextEditingController();
-
-  FocusNode name = FocusNode();
-  FocusNode mentionName = FocusNode();
-  FocusNode dOB = FocusNode();
-  FocusNode location = FocusNode();
-  FocusNode bio = FocusNode();
-
-  String gender = genderList[0];
-
-  File? avatarImage;
-  File? cover;
-
   @override
   void initState() {
-    setStatusBarColor(Colors.transparent);
+    // TODO: implement initState
     super.initState();
-    afterBuildCreated(() {
-      init();
-    });
+    final user = context.read<AuthCubit>().state.user;
+    nameController.text = user?.username ?? "";
+    userNameController.text = user?.username ?? "";
+    mailIdController.text =
+        user?.email != null || user?.email == '' ? "" : user!.email;
+    bankNameController.text = user?.bankName ?? "";
+    benificiaryNameController.text = user?.beneficiaryName ?? "";
+    accountNoController.text = user?.accountNumber ?? "";
+    ifscController.text = user?.ifscCode ?? "";
   }
 
-  Future<void> init() async {
-    getFiledList();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController fullNameController = TextEditingController();
 
-    avatarUrl = appStore.loginAvatarUrl;
-    nameCont.text = appStore.loginFullName;
-    nameCont.selection = TextSelection.fromPosition(TextPosition(offset: nameCont.text.length));
-    setState(() {});
+  TextEditingController userNameController = TextEditingController();
 
-    await getMemberCoverImage(id: appStore.loginUserId).then((value) {
-      coverImage = value.first.image.validate();
-      isCover = true;
-      setState(() {});
-    }).catchError((e) {
-      coverImage = AppImages.profileBackgroundImage;
-      isCover = false;
-    });
-  }
+  TextEditingController mailIdController = TextEditingController();
 
-  Future<void> getFiledList() async {
-    appStore.setLoading(true);
-    isDetailChange = false;
+  TextEditingController bankNameController = TextEditingController();
 
-    await getProfileFields().then((value) {
-      fieldList = value;
-      setState(() {});
-      appStore.setLoading(false);
-    }).catchError((e) {
-      appStore.setLoading(false);
-      toast(e.toString(), print: true);
-    });
-    setState(() {});
-  }
+  TextEditingController benificiaryNameController = TextEditingController();
 
-  void update() {
-    ifNotTester(() async {
-      if (nameCont.text.isNotEmpty && nameCont.text != appStore.loginFullName) {
-        appStore.setLoading(true);
+  TextEditingController accountNoController = TextEditingController();
 
-        Map request = {"name": nameCont.text};
-
-        await updateLoginUser(request: request).then((value) {
-          appStore.setLoginFullName(value.name.validate());
-          toast(language.profileUpdatedSuccessfully, print: true);
-
-          if (avatarImage == null && cover == null) {
-            appStore.setLoading(false);
-            finish(context, true);
-          }
-        }).catchError((e) {
-          appStore.setLoading(false);
-          toast(e.toString(), print: true);
-        });
-      }
-
-      if (avatarImage != null) {
-        appStore.setLoading(true);
-        await attachMemberImage(id: appStore.loginUserId, image: avatarImage).then((value) {
-          init();
-          if (cover == null) {
-            appStore.setLoading(false);
-            finish(context, true);
-          }
-        }).catchError((e) {
-          appStore.setLoading(false);
-          toast(language.somethingWentWrong);
-        });
-      }
-
-      if (cover != null) {
-        appStore.setLoading(true);
-        await attachMemberImage(id: appStore.loginUserId, image: cover, isCover: true).then((value) {
-          init();
-          appStore.setLoading(false);
-          finish(context, true);
-        }).catchError((e) {
-          appStore.setLoading(false);
-          toast(e.toString());
-        });
-      }
-    });
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
+  TextEditingController ifscController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        finish(context, true);
-        return Future.value(true);
-      },
-      child: Observer(
-        builder: (_) => Scaffold(
-          appBar: AppBar(
-            title: Text(language.editProfile, style: boldTextStyle(size: 20)),
-            elevation: 0,
-            centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: context.iconColor),
-              onPressed: () {
-                finish(context, true);
+    final user = context.read<AuthCubit>().state.user;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(),
+      body: BlocListener<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          if (state.successOrFailure != null) {
+            return state.successOrFailure!.fold(
+              (error) => showErrorFlash(context, error.toString()),
+              (success) {
+                showSuccessFlash(
+                  context,
+                  'Profile updated successfully',
+                );
+                Future.delayed(Duration(seconds: 2), () {
+                  Navigator.pop(context);
+                });
               },
-            ),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  if (!appStore.isLoading) update();
-                },
-                child: Text(
-                  language.update.capitalizeFirstLetter(),
-                  style: secondaryTextStyle(color: context.primaryColor),
-                ),
-              ).paddingSymmetric(vertical: 8, horizontal: 8),
-            ],
-          ),
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      child: Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          cover == null
-                              ? cachedImage(
-                                  coverImage,
-                                  width: context.width(),
-                                  height: 220,
-                                  fit: BoxFit.cover,
-                                ).cornerRadiusWithClipRRectOnly(topLeft: defaultRadius.toInt(), topRight: defaultRadius.toInt())
-                              : Image.file(
-                                  File(cover!.path.validate()),
-                                  width: context.width(),
-                                  height: 220,
-                                  fit: BoxFit.cover,
-                                ).cornerRadiusWithClipRRectOnly(topLeft: defaultRadius.toInt(), topRight: defaultRadius.toInt()),
-                          Positioned(
-                            right: 8,
-                            top: 8,
-                            child: GestureDetector(
-                              onTap: () async {
-                                if (!appStore.isLoading) {
-                                  FileTypes? file = await showInDialog(
-                                    context,
-                                    contentPadding: EdgeInsets.symmetric(vertical: 16),
-                                    title: Text(language.chooseAnAction, style: boldTextStyle()),
-                                    builder: (p0) {
-                                      return FilePickerDialog(isSelected: !isCover);
+            );
+          }
+        },
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            return Column(
+              children: [
+                Container(
+                  height: context.width() / 2,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Color(0xff00FFFF),
+                        Color(0xffFFC0CB),
+                        Color(0xffFFFF00),
+                      ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        width: 96,
+                        height: 96,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(60)),
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(3),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: state.selectedImage != null
+                                            ? FileImage(state.selectedImage!)
+                                            : user?.image == null
+                                                ? Image.asset(profile_img).image
+                                                : NetworkImage(
+                                                    user!.image!,
+                                                  ),
+                                      ),
+                                    ),
+                                  )),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(bottom: 12, left: 12),
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<ProfileCubit>()
+                                          .openFileExplorer();
                                     },
-                                  );
-                                  if (file != null) {
-                                    if (file == FileTypes.CANCEL) {
-                                      ifNotTester(() async {
-                                        appStore.setLoading(true);
-                                        await deleteMemberCoverImage(id: appStore.loginUserId.toInt()).then((value) {
-                                          toast(language.coverImageRemovedSuccessfully);
-                                          init();
-                                        }).catchError((e) {
-                                          appStore.setLoading(false);
-                                          toast(language.cRemoveCoverImage);
-                                        });
-                                      });
-                                    } else {
-                                      cover = await getImageSource(isCamera: file == FileTypes.CAMERA ? true : false);
-                                      setState(() {});
-                                      appStore.setLoading(false);
-                                    }
-                                  }
-                                }
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(color: appColorPrimary, borderRadius: radius(100)),
-                                child: Icon(Icons.edit_outlined, color: Colors.white, size: 18),
+                                    child: EditProfileButton()),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (state.selectedImage != null) {
+                            context
+                                .read<ProfileCubit>()
+                                .updateUserProfile(file: state.selectedImage!);
+                          }
+                          // context.read<ProfileCubit>().updateUserInfo(
+                          //     mailId: mailIdController.text,
+                          //     fullName: fullNameController.text,
+                          //     userId: user!.id,
+                          //     mobileNumber: int.parse(user.mobileNo),
+                          //     userName: userNameController.text,
+                          //     bankName: bankNameController.text,
+                          //     beneficiaryName: benificiaryNameController.text,
+                          //     accountNumber: accountNoController.text,
+                          //     ifscCode: ifscController.text);
+                        },
+                        child: Container(
+                          width: 140,
+                          height: 40,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xff00FFFF),
+                                    Color(0xffFFC0CB),
+                                    Color(0xffFFFF00),
+                                  ],
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight),
+                              borderRadius: BorderRadius.circular(80)),
+                          child: Text('Update Profile',
+                              style: secondaryTextStyle(
+                                  weight: FontWeight.w600,
+                                  color: Colors.white)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          AppTextField(
+                            controller: fullNameController,
+                            textFieldType: TextFieldType.PHONE,
+                            textStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92).withOpacity(0.5),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Full Name',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
                               ),
                             ),
                           ),
-                          Positioned(
-                            bottom: 0,
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(border: Border.all(color: Colors.white, width: 2), shape: BoxShape.circle),
-                                  child: avatarImage == null
-                                      ? cachedImage(
-                                          avatarUrl,
-                                          height: 100,
-                                          width: 100,
-                                          fit: BoxFit.cover,
-                                        ).cornerRadiusWithClipRRect(100)
-                                      : Image.file(
-                                          File(avatarImage!.path.validate()),
-                                          height: 100,
-                                          width: 100,
-                                          fit: BoxFit.cover,
-                                        ).cornerRadiusWithClipRRect(100),
-                                ),
-                                Positioned(
-                                  bottom: -4,
-                                  right: -6,
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      if (!appStore.isLoading) {
-                                        FileTypes? file = await showInDialog(
-                                          context,
-                                          contentPadding: EdgeInsets.symmetric(vertical: 16),
-                                          title: Text(language.chooseAnAction, style: boldTextStyle()),
-                                          builder: (p0) {
-                                            return FilePickerDialog(isSelected: avatarUrl.contains(AppImages.defaultAvatarUrl));
-                                          },
-                                        );
-
-                                        if (file != null) {
-                                          if (file == FileTypes.CANCEL) {
-                                            ifNotTester(() async {
-                                              appStore.setLoading(true);
-                                              await deleteMemberAvatarImage(id: appStore.loginUserId).then((value) {
-                                                avatarUrl = appStore.loginAvatarUrl;
-                                                setState(() {});
-                                              }).catchError((e) {
-                                                appStore.setLoading(false);
-                                                toast(language.somethingWentWrong);
-                                              });
-                                            });
-                                          } else {
-                                            avatarImage = await getImageSource(isCamera: file == FileTypes.CAMERA ? true : false);
-                                            setState(() {});
-                                            appStore.setLoading(false);
-                                          }
-                                        }
-                                      }
-                                    },
-                                    child: Container(
-                                      clipBehavior: Clip.antiAlias,
-                                      padding: EdgeInsets.all(8),
-                                      decoration: BoxDecoration(color: appColorPrimary, shape: BoxShape.circle),
-                                      child: Icon(Icons.edit_outlined, color: Colors.white, size: 18),
-                                    ),
-                                  ),
-                                )
-                              ],
+                          AppTextField(
+                            controller: userNameController,
+                            textFieldType: TextFieldType.PHONE,
+                            textStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92).withOpacity(0.5),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Username',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
                             ),
                           ),
+                          AppTextField(
+                            controller: mailIdController,
+                            textFieldType: TextFieldType.PHONE,
+                            textStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92).withOpacity(0.5),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'mail id',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                          AppTextField(
+                            controller: bankNameController,
+                            textFieldType: TextFieldType.PHONE,
+                            textStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92).withOpacity(0.5),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Bank Name',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                          AppTextField(
+                            controller: benificiaryNameController,
+                            textFieldType: TextFieldType.PHONE,
+                            textStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92).withOpacity(0.5),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Beneficiary Name',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                          AppTextField(
+                            controller: accountNoController,
+                            textFieldType: TextFieldType.PHONE,
+                            textStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92).withOpacity(0.5),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Account Number',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                          AppTextField(
+                            controller: ifscController,
+                            textFieldType: TextFieldType.PHONE,
+                            textStyle: secondaryTextStyle(
+                              color: Color(0xff6F7F92).withOpacity(0.5),
+                              weight: FontWeight.w600,
+                              fontFamily: 'Poppins',
+                            ),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'IFSC Code',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
+                          ),
+                          30.height
                         ],
                       ),
-                      height: 280,
                     ),
-                    50.height,
-                    AppTextField(
-                      enabled: !appStore.isLoading,
-                      controller: nameCont,
-                      focus: name,
-                      keyboardType: TextInputType.name,
-                      textInputAction: TextInputAction.next,
-                      textFieldType: TextFieldType.NAME,
-                      textStyle: boldTextStyle(),
-                      decoration: inputDecoration(
-                        context,
-                        label: language.fullName,
-                        labelStyle: secondaryTextStyle(weight: FontWeight.w600),
-                      ),
-                    ).paddingSymmetric(horizontal: 16),
-                    if (fieldList.isNotEmpty)
-                      Text(
-                        '${language.profile} ${language.settings}',
-                        style: boldTextStyle(color: context.primaryColor),
-                      ).paddingAll(16),
-                    if (fieldList.isNotEmpty)
-                      Theme(
-                        data: Theme.of(context).copyWith(useMaterial3: false),
-                        child: ExpansionPanelList.radio(
-                          elevation: 0,
-                          children: fieldList.map<ExpansionPanelRadio>(
-                            (e) {
-                              return ExpansionPanelRadio(
-                                value: e.groupId.validate(),
-                                canTapOnHeader: true,
-                                backgroundColor: context.cardColor,
-                                headerBuilder: (BuildContext context, bool isExpanded) {
-                                  if (isExpanded) {
-                                    group = e;
-                                  }
-
-                                  /// todo: icon color for dark mode
-                                  return ListTile(
-                                    title: Text(
-                                      e.groupName.validate(),
-                                      style: primaryTextStyle(color: isExpanded ? context.primaryColor : context.iconColor),
-                                    ),
-                                  );
-                                },
-                                body: ExpansionBody(
-                                  group: e,
-                                  callback: () {
-                                    appStore.setLoading(true);
-                                    getFiledList();
-                                  },
-                                ),
-
-                              );
-                            },
-                          ).toList(),
-                        ),
-                      ),
-                    60.height,
-                  ],
-                ),
-              ),
-              LoadingWidget().visible(appStore.isLoading).center(),
-            ],
-          ),
+                  ),
+                )
+              ],
+            );
+          },
         ),
       ),
+    );
+  }
+}
+
+class EditProfileButton extends StatelessWidget {
+  const EditProfileButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Image.asset(ic_edit_),
+      width: 27,
+      height: 27,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [
+            Color(0xff00FFFF),
+            Color(0xffFFC0CB),
+            Color(0xffFFFF00),
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          borderRadius: BorderRadius.circular(60)),
     );
   }
 }

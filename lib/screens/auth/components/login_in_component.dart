@@ -82,7 +82,7 @@ class _LoginInComponentState extends State<LoginInComponent> {
         SinglePostScreen(postId: widget.activityId.validate())
             .launch(context, isNewTask: true);
       } else {
-        push(DashboardScreen(),
+        push(HomeScreen(),
             isNewTask: true, pageRouteAnimation: PageRouteAnimation.Slide);
       }
     }).catchError((e) {
