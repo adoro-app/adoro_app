@@ -131,7 +131,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           radius: 33,
                           backgroundImage: user?.image == null
                               ? AssetImage(profile_img)
-                              : Image.network(user!.image!) as ImageProvider,
+                              : Image.network(user!.image!).image,
                         ),
                         title: Padding(
                             padding: const EdgeInsets.only(top: 12.0),
