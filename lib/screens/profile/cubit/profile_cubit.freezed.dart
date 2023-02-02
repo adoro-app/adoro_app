@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProfileState {
   bool get isSubmitting => throw _privateConstructorUsedError;
   File? get selectedImage => throw _privateConstructorUsedError;
+  User? get user => throw _privateConstructorUsedError;
   Either<Exception, Unit>? get successOrFailure =>
       throw _privateConstructorUsedError;
 
@@ -35,7 +36,10 @@ abstract class $ProfileStateCopyWith<$Res> {
   $Res call(
       {bool isSubmitting,
       File? selectedImage,
+      User? user,
       Either<Exception, Unit>? successOrFailure});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -53,6 +57,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   $Res call({
     Object? isSubmitting = null,
     Object? selectedImage = freezed,
+    Object? user = freezed,
     Object? successOrFailure = freezed,
   }) {
     return _then(_value.copyWith(
@@ -64,11 +69,27 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.selectedImage
           : selectedImage // ignore: cast_nullable_to_non_nullable
               as File?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
       successOrFailure: freezed == successOrFailure
           ? _value.successOrFailure
           : successOrFailure // ignore: cast_nullable_to_non_nullable
               as Either<Exception, Unit>?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -83,7 +104,11 @@ abstract class _$$_ProfileStateCopyWith<$Res>
   $Res call(
       {bool isSubmitting,
       File? selectedImage,
+      User? user,
       Either<Exception, Unit>? successOrFailure});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -99,6 +124,7 @@ class __$$_ProfileStateCopyWithImpl<$Res>
   $Res call({
     Object? isSubmitting = null,
     Object? selectedImage = freezed,
+    Object? user = freezed,
     Object? successOrFailure = freezed,
   }) {
     return _then(_$_ProfileState(
@@ -110,6 +136,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.selectedImage
           : selectedImage // ignore: cast_nullable_to_non_nullable
               as File?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
       successOrFailure: freezed == successOrFailure
           ? _value.successOrFailure
           : successOrFailure // ignore: cast_nullable_to_non_nullable
@@ -122,18 +152,23 @@ class __$$_ProfileStateCopyWithImpl<$Res>
 
 class _$_ProfileState implements _ProfileState {
   const _$_ProfileState(
-      {required this.isSubmitting, this.selectedImage, this.successOrFailure});
+      {required this.isSubmitting,
+      this.selectedImage,
+      this.user,
+      this.successOrFailure});
 
   @override
   final bool isSubmitting;
   @override
   final File? selectedImage;
   @override
+  final User? user;
+  @override
   final Either<Exception, Unit>? successOrFailure;
 
   @override
   String toString() {
-    return 'ProfileState(isSubmitting: $isSubmitting, selectedImage: $selectedImage, successOrFailure: $successOrFailure)';
+    return 'ProfileState(isSubmitting: $isSubmitting, selectedImage: $selectedImage, user: $user, successOrFailure: $successOrFailure)';
   }
 
   @override
@@ -145,13 +180,14 @@ class _$_ProfileState implements _ProfileState {
                 other.isSubmitting == isSubmitting) &&
             (identical(other.selectedImage, selectedImage) ||
                 other.selectedImage == selectedImage) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.successOrFailure, successOrFailure) ||
                 other.successOrFailure == successOrFailure));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isSubmitting, selectedImage, successOrFailure);
+  int get hashCode => Object.hash(
+      runtimeType, isSubmitting, selectedImage, user, successOrFailure);
 
   @JsonKey(ignore: true)
   @override
@@ -164,12 +200,15 @@ abstract class _ProfileState implements ProfileState {
   const factory _ProfileState(
       {required final bool isSubmitting,
       final File? selectedImage,
+      final User? user,
       final Either<Exception, Unit>? successOrFailure}) = _$_ProfileState;
 
   @override
   bool get isSubmitting;
   @override
   File? get selectedImage;
+  @override
+  User? get user;
   @override
   Either<Exception, Unit>? get successOrFailure;
   @override

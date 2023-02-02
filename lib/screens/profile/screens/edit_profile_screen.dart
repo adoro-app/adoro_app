@@ -19,6 +19,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    context.read<ProfileCubit>().getUserDetails();
     final user = context.read<AuthCubit>().state.user;
     nameController.text = user?.username ?? "";
     userNameController.text = user?.username ?? "";
@@ -46,7 +47,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   TextEditingController ifscController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final user = context.read<AuthCubit>().state.user;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
@@ -104,10 +104,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         fit: BoxFit.cover,
                                         image: state.selectedImage != null
                                             ? FileImage(state.selectedImage!)
-                                            : user?.image == null
+                                            : state.user?.image == null
                                                 ? Image.asset(profile_img).image
                                                 : NetworkImage(
-                                                    user!.image!,
+                                                    state.user!.image!,
                                                   ),
                                       ),
                                     ),

@@ -26,6 +26,7 @@ mixin _$User {
   String get mobileNo => throw _privateConstructorUsedError;
   int get otp => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
+  String? get cover_photo => throw _privateConstructorUsedError;
   String? get bankName => throw _privateConstructorUsedError;
   String? get beneficiaryName => throw _privateConstructorUsedError;
   String? get accountNumber => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $UserCopyWith<$Res> {
       String mobileNo,
       int otp,
       String? image,
+      String? cover_photo,
       String? bankName,
       String? beneficiaryName,
       String? accountNumber,
@@ -73,6 +75,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? mobileNo = null,
     Object? otp = null,
     Object? image = freezed,
+    Object? cover_photo = freezed,
     Object? bankName = freezed,
     Object? beneficiaryName = freezed,
     Object? accountNumber = freezed,
@@ -102,6 +105,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cover_photo: freezed == cover_photo
+          ? _value.cover_photo
+          : cover_photo // ignore: cast_nullable_to_non_nullable
               as String?,
       bankName: freezed == bankName
           ? _value.bankName
@@ -136,6 +143,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String mobileNo,
       int otp,
       String? image,
+      String? cover_photo,
       String? bankName,
       String? beneficiaryName,
       String? accountNumber,
@@ -157,6 +165,7 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
     Object? mobileNo = null,
     Object? otp = null,
     Object? image = freezed,
+    Object? cover_photo = freezed,
     Object? bankName = freezed,
     Object? beneficiaryName = freezed,
     Object? accountNumber = freezed,
@@ -186,6 +195,10 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cover_photo: freezed == cover_photo
+          ? _value.cover_photo
+          : cover_photo // ignore: cast_nullable_to_non_nullable
               as String?,
       bankName: freezed == bankName
           ? _value.bankName
@@ -217,6 +230,7 @@ class _$_User extends _User {
       required this.mobileNo,
       required this.otp,
       required this.image,
+      required this.cover_photo,
       required this.bankName,
       required this.beneficiaryName,
       required this.accountNumber,
@@ -238,6 +252,8 @@ class _$_User extends _User {
   @override
   final String? image;
   @override
+  final String? cover_photo;
+  @override
   final String? bankName;
   @override
   final String? beneficiaryName;
@@ -248,7 +264,7 @@ class _$_User extends _User {
 
   @override
   String toString() {
-    return 'User(id: $id, username: $username, email: $email, mobileNo: $mobileNo, otp: $otp, image: $image, bankName: $bankName, beneficiaryName: $beneficiaryName, accountNumber: $accountNumber, ifscCode: $ifscCode)';
+    return 'User(id: $id, username: $username, email: $email, mobileNo: $mobileNo, otp: $otp, image: $image, cover_photo: $cover_photo, bankName: $bankName, beneficiaryName: $beneficiaryName, accountNumber: $accountNumber, ifscCode: $ifscCode)';
   }
 
   @override
@@ -264,6 +280,8 @@ class _$_User extends _User {
                 other.mobileNo == mobileNo) &&
             (identical(other.otp, otp) || other.otp == otp) &&
             (identical(other.image, image) || other.image == image) &&
+            (identical(other.cover_photo, cover_photo) ||
+                other.cover_photo == cover_photo) &&
             (identical(other.bankName, bankName) ||
                 other.bankName == bankName) &&
             (identical(other.beneficiaryName, beneficiaryName) ||
@@ -276,8 +294,19 @@ class _$_User extends _User {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username, email, mobileNo,
-      otp, image, bankName, beneficiaryName, accountNumber, ifscCode);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      username,
+      email,
+      mobileNo,
+      otp,
+      image,
+      cover_photo,
+      bankName,
+      beneficiaryName,
+      accountNumber,
+      ifscCode);
 
   @JsonKey(ignore: true)
   @override
@@ -301,6 +330,7 @@ abstract class _User extends User {
       required final String mobileNo,
       required final int otp,
       required final String? image,
+      required final String? cover_photo,
       required final String? bankName,
       required final String? beneficiaryName,
       required final String? accountNumber,
@@ -321,6 +351,8 @@ abstract class _User extends User {
   int get otp;
   @override
   String? get image;
+  @override
+  String? get cover_photo;
   @override
   String? get bankName;
   @override

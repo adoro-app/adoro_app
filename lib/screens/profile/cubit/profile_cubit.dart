@@ -5,6 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../auth/cubit/auth_cubit.dart';
+import '../../../models/user/user.dart';
 import '../../../network/api_service.dart';
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
@@ -43,10 +45,17 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> updateUserProfile({required File file}) async {
     final successOrFailure = await apiService.uploadProfilePic(file: file);
+    successOrFailure.fold((l) {}, (r) async {
+      await apiService.getUserDetails();
+      emit(state.copyWith(
+          isSubmitting: false, successOrFailure: successOrFailure));
+    });
+  }
+
+  Future<void> getUserDetails() async {
+    final successOrFailure = await apiService.getUserDetails();
     successOrFailure.fold(
-        (l) {},
-        (r) => emit(state.copyWith(
-            isSubmitting: false, successOrFailure: successOrFailure)));
+        (l) {}, (r) => emit(state.copyWith(isSubmitting: false, user: r)));
   }
 
   void openFileExplorer() async {

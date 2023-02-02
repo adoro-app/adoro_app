@@ -16,7 +16,7 @@ import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
 import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
-import 'package:socialv/screens/profile/screens/edit_profile_screen.dart';
+import 'package:socialv/screens/profile/cubit/profile_cubit.dart';
 import 'package:socialv/screens/profile/screens/profile_screen.dart';
 import 'package:socialv/screens/shop/components/list_tile_component.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
