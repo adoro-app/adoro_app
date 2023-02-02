@@ -69,14 +69,10 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget>
           fit: BoxFit.fill,
           color: _isLiked ? Colors.red : Color(0xff6F7F92),
         ).onTap(() async {
-          if (!appStore.isLoading) {
-            ifNotTester(() async {
-              _isLiked = !_isLiked;
-              setState(() {});
-              await Future.delayed(Duration.zero);
-              widget.onPostLike.call();
-            });
-          }
+          _isLiked = !_isLiked;
+          setState(() {});
+          await Future.delayed(Duration.zero);
+          widget.onPostLike.call();
         }, splashColor: Colors.transparent, highlightColor: Colors.transparent),
       ),
     );

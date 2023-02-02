@@ -21,4 +21,22 @@ class HomeCubit extends Cubit<HomeState> {
     }
     emit(HomeState.success(feed: feed));
   }
+
+  Future<void> likePost(String postId) async {
+    final failureOrSuccess = await apiService.likePost(postId);
+    failureOrSuccess.fold((l) {
+      emit(HomeState.error(error: l));
+    }, (r) {
+      loadFeed();
+    });
+  }
+
+  Future<void> deleteLike(String postId) async {
+    final failureOrSuccess = await apiService.deleteLike(postId);
+    failureOrSuccess.fold((l) {
+      emit(HomeState.error(error: l));
+    }, (r) {
+      loadFeed();
+    });
+  }
 }

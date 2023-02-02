@@ -109,16 +109,26 @@ class _HomeFragmentState extends State<HomeFragment>
     return Stack(
       alignment: Alignment.topCenter,
       children: [
-        BlocBuilder<HomeCubit, HomeState>(
-          builder: (context, state) {
-            return state.maybeWhen(
+        BlocListener<HomeCubit, HomeState>(
+          listener: (context, state) {
+            state.maybeWhen(
+              orElse: () {},
+              error: (error) {
+                toast('SomeThing Went Wrong!!');
+              },
+            );
+          },
+          child: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                loading: () => Center(child: CircularProgressIndicator()),
                 error: (error) => SizedBox(
-                      height: context.height() * 0.8,
-                      child: NoDataWidget(
-                        imageWidget: NoDataLottieWidget(),
-                        title: language.somethingWentWrong,
-                      ).center(),
-                    ),
+                  height: context.height() * 0.8,
+                  child: NoDataWidget(
+                    imageWidget: NoDataLottieWidget(),
+                    title: language.somethingWentWrong,
+                  ).center(),
+                ),
                 orElse: () => SizedBox(),
                 success: (feed) {
                   return Column(
@@ -149,8 +159,10 @@ class _HomeFragmentState extends State<HomeFragment>
                       ),
                     ],
                   );
-                });
-          },
+                },
+              );
+            },
+          ),
         ),
       ],
     );

@@ -10,6 +10,7 @@ import 'package:socialv/main.dart';
 import 'package:socialv/models/posts/get_post_likes_model.dart';
 import 'package:socialv/models/posts/post_model.dart';
 import 'package:socialv/network/rest_apis.dart';
+import 'package:socialv/screens/home/cubit/home_cubit.dart';
 import 'package:socialv/screens/post/components/post_media_component.dart';
 import 'package:socialv/screens/post/screens/comment_screen.dart';
 import 'package:socialv/screens/post/screens/post_likes_screen.dart';
@@ -304,10 +305,21 @@ class _PostComponentState extends State<PostComponent> {
                     children: [
                       LikeButtonWidget(
                         key: ValueKey(isLiked),
-                        onPostLike: () {
-                          // postLike();
-                        },
-                        isPostLiked: isLiked,
+                        onPostLike: widget.post.likedByMe
+                            ? () {
+                                context
+                                    .read<HomeCubit>()
+                                    .deleteLike(widget.post.id.toString());
+                                isLiked = false;
+                              }
+                            : () {
+                                context
+                                    .read<HomeCubit>()
+                                    .likePost(widget.post.id.toString());
+                                isLiked = true;
+                              },
+                        isPostLiked:
+                            widget.post.likedByMe == true ? true : isLiked,
                       ),
                       Theme(
                         data: Theme.of(context).copyWith(

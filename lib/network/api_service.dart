@@ -12,6 +12,7 @@ import '../auth/cubit/auth_cubit.dart';
 import '../choose_categories/cubit/choose_meme_category_error.dart';
 import '../models/posts/feed.dart';
 import '../models/user/user.dart';
+import '../screens/home/cubit/feed_error.dart';
 import '../screens/post/cubit/create_post_error.dart';
 import '../service_locator.dart';
 
@@ -185,6 +186,67 @@ class ApiService {
       } else {
         print('ERROR Occured: ${e.response}');
         return left(ChooseMemeCategoryError.server(
+            e.response?.data['msg'] ?? 'Something went wrong!'));
+      }
+    }
+  }
+
+  Future<Either<FeedError, Unit>> likePost(String postId) async {
+    try {
+      final loginHandle = await sl.get<CredentialsStorage>().read();
+      print(loginHandle?.token);
+
+      final response = await _dio.post(
+        '/like',
+        options: Options(
+          headers: {'token': loginHandle!.token},
+        ),
+        data: {
+          "post_id": postId,
+        },
+      );
+      print('Response like: $response');
+      final status = response.data['status'] as int;
+
+      if (status == 200) {
+        return right(unit);
+      }
+      return left(FeedError.server('Something went wrong!'));
+    } on DioError catch (e) {
+      if (e.isNoConnectionError) {
+        return left(const FeedError.notConnectedToInternet());
+      } else {
+        print('ERROR Occured: ${e.response}');
+        return left(FeedError.server(
+            e.response?.data['msg'] ?? 'Something went wrong!'));
+      }
+    }
+  }
+
+  Future<Either<FeedError, Unit>> deleteLike(String postId) async {
+    try {
+      final loginHandle = await sl.get<CredentialsStorage>().read();
+
+      final response = await _dio.post(
+        '/deleteLike',
+        data: {"post_id": postId},
+        options: Options(
+          headers: {'token': loginHandle!.token},
+        ),
+      );
+      print('Response like: $response');
+      final status = response.data['status'] as int;
+
+      if (status == 200) {
+        return right(unit);
+      }
+      return left(FeedError.server('Something went wrong!'));
+    } on DioError catch (e) {
+      if (e.isNoConnectionError) {
+        return left(const FeedError.notConnectedToInternet());
+      } else {
+        print('ERROR Occured: ${e.response}');
+        return left(FeedError.server(
             e.response?.data['msg'] ?? 'Something went wrong!'));
       }
     }

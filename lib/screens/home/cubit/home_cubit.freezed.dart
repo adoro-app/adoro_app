@@ -21,6 +21,7 @@ mixin _$HomeState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Feed> feed) success,
+    required TResult Function() likePost,
     required TResult Function(FeedError error) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -29,6 +30,7 @@ mixin _$HomeState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Feed> feed)? success,
+    TResult? Function()? likePost,
     TResult? Function(FeedError error)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,6 +39,7 @@ mixin _$HomeState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Feed> feed)? success,
+    TResult Function()? likePost,
     TResult Function(FeedError error)? error,
     required TResult orElse(),
   }) =>
@@ -46,6 +49,7 @@ mixin _$HomeState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_LikePost value) likePost,
     required TResult Function(_Error value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +58,7 @@ mixin _$HomeState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_LikePost value)? likePost,
     TResult? Function(_Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -62,6 +67,7 @@ mixin _$HomeState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_LikePost value)? likePost,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) =>
@@ -125,6 +131,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Feed> feed) success,
+    required TResult Function() likePost,
     required TResult Function(FeedError error) error,
   }) {
     return initial();
@@ -136,6 +143,7 @@ class _$_Initial implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Feed> feed)? success,
+    TResult? Function()? likePost,
     TResult? Function(FeedError error)? error,
   }) {
     return initial?.call();
@@ -147,6 +155,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Feed> feed)? success,
+    TResult Function()? likePost,
     TResult Function(FeedError error)? error,
     required TResult orElse(),
   }) {
@@ -162,6 +171,7 @@ class _$_Initial implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_LikePost value) likePost,
     required TResult Function(_Error value) error,
   }) {
     return initial(this);
@@ -173,6 +183,7 @@ class _$_Initial implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_LikePost value)? likePost,
     TResult? Function(_Error value)? error,
   }) {
     return initial?.call(this);
@@ -184,6 +195,7 @@ class _$_Initial implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_LikePost value)? likePost,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -238,6 +250,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Feed> feed) success,
+    required TResult Function() likePost,
     required TResult Function(FeedError error) error,
   }) {
     return loading();
@@ -249,6 +262,7 @@ class _$_Loading implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Feed> feed)? success,
+    TResult? Function()? likePost,
     TResult? Function(FeedError error)? error,
   }) {
     return loading?.call();
@@ -260,6 +274,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Feed> feed)? success,
+    TResult Function()? likePost,
     TResult Function(FeedError error)? error,
     required TResult orElse(),
   }) {
@@ -275,6 +290,7 @@ class _$_Loading implements _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_LikePost value) likePost,
     required TResult Function(_Error value) error,
   }) {
     return loading(this);
@@ -286,6 +302,7 @@ class _$_Loading implements _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_LikePost value)? likePost,
     TResult? Function(_Error value)? error,
   }) {
     return loading?.call(this);
@@ -297,6 +314,7 @@ class _$_Loading implements _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_LikePost value)? likePost,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -383,6 +401,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Feed> feed) success,
+    required TResult Function() likePost,
     required TResult Function(FeedError error) error,
   }) {
     return success(feed);
@@ -394,6 +413,7 @@ class _$_Success implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Feed> feed)? success,
+    TResult? Function()? likePost,
     TResult? Function(FeedError error)? error,
   }) {
     return success?.call(feed);
@@ -405,6 +425,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Feed> feed)? success,
+    TResult Function()? likePost,
     TResult Function(FeedError error)? error,
     required TResult orElse(),
   }) {
@@ -420,6 +441,7 @@ class _$_Success implements _Success {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_LikePost value) likePost,
     required TResult Function(_Error value) error,
   }) {
     return success(this);
@@ -431,6 +453,7 @@ class _$_Success implements _Success {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_LikePost value)? likePost,
     TResult? Function(_Error value)? error,
   }) {
     return success?.call(this);
@@ -442,6 +465,7 @@ class _$_Success implements _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_LikePost value)? likePost,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
@@ -459,6 +483,126 @@ abstract class _Success implements HomeState {
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_LikePostCopyWith<$Res> {
+  factory _$$_LikePostCopyWith(
+          _$_LikePost value, $Res Function(_$_LikePost) then) =
+      __$$_LikePostCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_LikePostCopyWithImpl<$Res>
+    extends _$HomeStateCopyWithImpl<$Res, _$_LikePost>
+    implements _$$_LikePostCopyWith<$Res> {
+  __$$_LikePostCopyWithImpl(
+      _$_LikePost _value, $Res Function(_$_LikePost) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_LikePost implements _LikePost {
+  const _$_LikePost();
+
+  @override
+  String toString() {
+    return 'HomeState.likePost()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_LikePost);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Feed> feed) success,
+    required TResult Function() likePost,
+    required TResult Function(FeedError error) error,
+  }) {
+    return likePost();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Feed> feed)? success,
+    TResult? Function()? likePost,
+    TResult? Function(FeedError error)? error,
+  }) {
+    return likePost?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Feed> feed)? success,
+    TResult Function()? likePost,
+    TResult Function(FeedError error)? error,
+    required TResult orElse(),
+  }) {
+    if (likePost != null) {
+      return likePost();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_LikePost value) likePost,
+    required TResult Function(_Error value) error,
+  }) {
+    return likePost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_LikePost value)? likePost,
+    TResult? Function(_Error value)? error,
+  }) {
+    return likePost?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_LikePost value)? likePost,
+    TResult Function(_Error value)? error,
+    required TResult orElse(),
+  }) {
+    if (likePost != null) {
+      return likePost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LikePost implements HomeState {
+  const factory _LikePost() = _$_LikePost;
 }
 
 /// @nodoc
@@ -536,6 +680,7 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(List<Feed> feed) success,
+    required TResult Function() likePost,
     required TResult Function(FeedError error) error,
   }) {
     return error(this.error);
@@ -547,6 +692,7 @@ class _$_Error implements _Error {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(List<Feed> feed)? success,
+    TResult? Function()? likePost,
     TResult? Function(FeedError error)? error,
   }) {
     return error?.call(this.error);
@@ -558,6 +704,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(List<Feed> feed)? success,
+    TResult Function()? likePost,
     TResult Function(FeedError error)? error,
     required TResult orElse(),
   }) {
@@ -573,6 +720,7 @@ class _$_Error implements _Error {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_LikePost value) likePost,
     required TResult Function(_Error value) error,
   }) {
     return error(this);
@@ -584,6 +732,7 @@ class _$_Error implements _Error {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_LikePost value)? likePost,
     TResult? Function(_Error value)? error,
   }) {
     return error?.call(this);
@@ -595,6 +744,7 @@ class _$_Error implements _Error {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_LikePost value)? likePost,
     TResult Function(_Error value)? error,
     required TResult orElse(),
   }) {
