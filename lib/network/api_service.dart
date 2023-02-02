@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:socialv/auth/auth_service.dart';
 import 'package:socialv/auth/credentials_storage.dart';
 import 'package:socialv/models/meme_category.dart';
 import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 
+import '../auth/cubit/auth_cubit.dart';
 import '../choose_categories/cubit/choose_meme_category_error.dart';
+import '../models/user/user.dart';
 import '../screens/post/cubit/create_post_error.dart';
 import '../service_locator.dart';
 
@@ -35,6 +36,24 @@ class ApiService {
       print('ERROR: $e');
       print('---------------------');
       return null;
+    }
+  }
+
+  Future<Either<Exception, User>> getUserDetails() async {
+    try {
+      final userId = sl.get<AuthCubit>().state.user!.id;
+      final response = await _dio.get(
+        '/getUserDetails',
+        queryParameters: {"userId": userId},
+      );
+
+      final userDetails = (response.data['data'] as List<dynamic>)
+          .map((e) => User.fromJson(e))
+          .toList();
+
+      return right(userDetails.first);
+    } on Exception catch (error) {
+      return left(error);
     }
   }
 
