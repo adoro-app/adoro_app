@@ -23,11 +23,19 @@ class DoneScreen extends StatelessWidget {
               height: 170,
               width: 170,
               decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Color(0xff00FFFF),
-                  Color(0xffFFC0CB),
-                  Color(0xffFFFF00),
-                ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+                gradient: LinearGradient(
+                    colors: [
+                      Color(0xff00FFFF),
+                      Color(0xffFFC0CB),
+                      Color(0xffFFFF00),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [
+                      0.0,
+                      0.7,
+                      2,
+                    ]),
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Image.asset(ic_verified_user)),

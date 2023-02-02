@@ -12,6 +12,7 @@ class User with _$User {
     required String mobileNo,
     required int otp,
     required String? image,
+    required String? cover_photo,
     required String? bankName,
     required String? beneficiaryName,
     required String? accountNumber,

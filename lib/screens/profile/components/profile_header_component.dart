@@ -14,7 +14,9 @@ class ProfileHeaderComponent extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: avatarUrl.isNotEmpty ? context.height() * 0.26 : context.height() * 0.2,
+          height: avatarUrl.isNotEmpty
+              ? context.height() * 0.26
+              : context.height() * 0.2,
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -34,8 +36,12 @@ class ProfileHeaderComponent extends StatelessWidget {
               Positioned(
                 bottom: 0,
                 child: Container(
-                  decoration: BoxDecoration(border: Border.all(color: Colors.white, width: 2), shape: BoxShape.circle),
-                  child: cachedImage(avatarUrl, height: 88, width: 88, fit: BoxFit.cover).cornerRadiusWithClipRRect(100),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 2),
+                      shape: BoxShape.circle),
+                  child: cachedImage(avatarUrl,
+                          height: 88, width: 88, fit: BoxFit.cover)
+                      .cornerRadiusWithClipRRect(100),
                 ),
               ).visible(avatarUrl.isNotEmpty),
             ],

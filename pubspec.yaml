@@ -74,6 +74,7 @@ dependencies:
   flutter_secure_storage: ^7.0.1
   shimmer: ^2.0.0
   video_thumbnail_imageview: ^0.0.5
+  flash: ^2.0.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

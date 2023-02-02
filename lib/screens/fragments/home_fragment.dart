@@ -30,79 +30,79 @@ class _HomeFragmentState extends State<HomeFragment>
   late AnimationController _animationController;
 
   List<PostModel> postList = [];
-  late Future<List<PostModel>> future;
-
-  int mPage = 1;
-  bool mIsLastPage = false;
-  bool isError = false;
+  // late Future<List<PostModel>> future;
+  // bool isError = false;
+  // int mPage = 1;
+  // bool mIsLastPage = false;
 
   @override
   void initState() {
     context.read<HomeCubit>().loadFeed();
-    future = getPostList();
+    // future = getPostList();
 
-    _animationController = BottomSheet.createAnimationController(this);
-    _animationController.duration = const Duration(milliseconds: 500);
-    _animationController.drive(CurveTween(curve: Curves.easeOutQuad));
+    // _animationController = BottomSheet.createAnimationController(this);
+    // _animationController.duration = const Duration(milliseconds: 500);
+    // _animationController.drive(CurveTween(curve: Curves.easeOutQuad));
 
     super.initState();
 
-    setStatusBarColorBasedOnTheme();
+    // setStatusBarColorBasedOnTheme();
 
-    widget.controller.addListener(() {
-      /// pagination
-      if (selectedIndex == 0) {
-        if (widget.controller.position.pixels ==
-            widget.controller.position.maxScrollExtent) {
-          if (!mIsLastPage) {
-            mPage++;
-            setState(() {});
+    // widget.controller.addListener(() {
+    //   /// pagination
+    //   if (selectedIndex == 0) {
+    //     if (widget.controller.position.pixels ==
+    //         widget.controller.position.maxScrollExtent) {
+    //       if (!mIsLastPage) {
+    //         mPage++;
+    //         setState(() {});
 
-            future = getPostList();
-          }
-        }
-      }
-    });
+    //         future = getPostList();
+    //       }
+    //     }
+    //   }
+    // }
+    // );
 
-    LiveStream().on(OnAddPost, (p0) {
-      postList.clear();
-      mPage = 1;
-      future = getPostList();
-    });
+    // LiveStream().on(OnAddPost, (p0) {
+    //   postList.clear();
+    //   mPage = 1;
+    //   future = getPostList();
+    // });
   }
 
-  Future<List<PostModel>> getPostList() async {
-    appStore.setLoading(true);
-    await getPost(page: mPage, type: PostRequestType.all).then((value) {
-      if (mPage == 1) postList.clear();
+  // Future<List<PostModel>> getPostList() async {
+  //   appStore.setLoading(true);
+  //   await getPost(page: mPage, type: PostRequestType.all).then((value) {
+  //     if (mPage == 1) postList.clear();
 
-      mIsLastPage = value.length != PER_PAGE;
-      postList.addAll(value);
-      setState(() {});
+  //     mIsLastPage = value.length != PER_PAGE;
+  //     postList.addAll(value);
+  //     setState(() {});
 
-      appStore.setLoading(false);
-    }).catchError((e) {
-      isError = true;
-      appStore.setLoading(false);
-      toast(e.toString(), print: true);
+  //     appStore.setLoading(false);
+  //   }).catchError((e) {
+  //     isError = true;
+  //     appStore.setLoading(false);
+  //     toast(e.toString(), print: true);
 
-      setState(() {});
-    });
+  //     setState(() {});
+  //   });
 
-    return postList;
-  }
+  //   return postList;
+  // }
 
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
+  // @override
+  // void setState(fn) {
+  //   if (mounted) super.setState(fn);
+  // }
 
-  @override
-  void dispose() {
-    LiveStream().dispose(OnAddPost);
-    _animationController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   LiveStream().dispose(OnAddPost);
+  //   _animationController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -117,11 +117,6 @@ class _HomeFragmentState extends State<HomeFragment>
                       child: NoDataWidget(
                         imageWidget: NoDataLottieWidget(),
                         title: language.somethingWentWrong,
-                        onRetry: () {
-                          isError = false;
-                          LiveStream().emit(OnAddPost);
-                        },
-                        retryText: '   ${language.clickToRefresh}   ',
                       ).center(),
                     ),
                 orElse: () => SizedBox(),
@@ -131,8 +126,7 @@ class _HomeFragmentState extends State<HomeFragment>
                     children: [
                       20.height,
                       AnimatedListView(
-                        padding: EdgeInsets.only(
-                            left: 8, right: 8, bottom: mIsLastPage ? 16 : 60),
+                        padding: EdgeInsets.only(left: 8, right: 8, bottom: 60),
                         itemCount: feed.length,
                         slideConfiguration: SlideConfiguration(
                             delay: 80.milliseconds, verticalOffset: 300),
@@ -143,10 +137,10 @@ class _HomeFragmentState extends State<HomeFragment>
                               PostComponent(
                                 post: feed[index],
                                 count: 0,
-                                callback: () {
-                                  mPage = 1;
-                                  future = getPostList();
-                                },
+                                // callback: () {
+                                //   mPage = 1;
+                                //   future = getPostList();
+                                // },
                               ),
                             ],
                           );

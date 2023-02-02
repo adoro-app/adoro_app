@@ -8,6 +8,7 @@ import 'package:socialv/choose_categories/cubit/choose_meme_categories_cubit.dar
 import 'package:socialv/main.dart';
 import 'package:socialv/screens/dashboard_screen.dart';
 import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
+import 'package:socialv/screens/profile/cubit/profile_cubit.dart';
 import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 import '../../../auth/cubit/auth_cubit.dart';
 import '../../../utils/app_constants.dart';
@@ -54,10 +55,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         IconButton(
                           icon: Icon(Icons.close, color: context.iconColor),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()));
+                            Navigator.pop(context);
                           },
                         ),
                         Text('Share post',
@@ -126,76 +124,89 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 33,
-                          backgroundImage: user?.image == null
-                              ? AssetImage(profile_img)
-                              : Image.network(user!.image!) as ImageProvider,
-                        ),
-                        title: Padding(
-                            padding: const EdgeInsets.only(top: 12.0),
-                            child: Text(user?.username ?? '',
-                                style: secondaryTextStyle(
-                                  color: Color(0xff07142E),
-                                  size: 20,
-                                  weight: FontWeight.w600,
-                                  fontFamily: 'Poppins',
-                                ))),
-                        subtitle: Transform(
-                          transform: Matrix4.translationValues(-10, -10, 0.0),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Row(
-                              children: [
-                                BlocBuilder<ChooseMemeCategoriesCubit,
-                                        ChooseMemeCategoriesState>(
-                                    builder: (context, state) {
-                                  return state.maybeWhen(
-                                    orElse: () => SizedBox(),
-                                    success: (categories, selectedCategories) {
-                                      return DropdownButton(
-                                          underline: SizedBox(),
-                                          hint: Row(
-                                            children: [
-                                              Image.asset(
-                                                ic_plus,
-                                                height: 18,
+                      child: BlocBuilder<ProfileCubit, ProfileState>(
+                        builder: (context, state) {
+                          return ListTile(
+                            leading: CircleAvatar(
+                              radius: 33,
+                              backgroundImage: state.user?.image == null
+                                  ? Image.asset(profile_img).image
+                                  : NetworkImage(
+                                      state.user!.image!,
+                                    ),
+                            ),
+                            title: Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Text(user?.username ?? '',
+                                    style: secondaryTextStyle(
+                                      color: Color(0xff07142E),
+                                      size: 20,
+                                      weight: FontWeight.w600,
+                                      fontFamily: 'Poppins',
+                                    ))),
+                            subtitle: Transform(
+                              transform:
+                                  Matrix4.translationValues(-10, -10, 0.0),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 12),
+                                child: Row(
+                                  children: [
+                                    BlocBuilder<ChooseMemeCategoriesCubit,
+                                            ChooseMemeCategoriesState>(
+                                        builder: (context, state) {
+                                      return state.maybeWhen(
+                                        orElse: () => SizedBox(),
+                                        success:
+                                            (categories, selectedCategories) {
+                                          return DropdownButton(
+                                              underline: SizedBox(),
+                                              hint: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    ic_plus,
+                                                    height: 18,
+                                                  ),
+                                                  SizedBox(width: 4),
+                                                  Text(
+                                                      _selectedValue ??
+                                                          'Category',
+                                                      style: secondaryTextStyle(
+                                                        color:
+                                                            Color(0xff07142E),
+                                                        size: 14,
+                                                        weight: FontWeight.w600,
+                                                        fontFamily: 'Poppins',
+                                                      )),
+                                                ],
                                               ),
-                                              SizedBox(width: 4),
-                                              Text(_selectedValue ?? 'Category',
-                                                  style: secondaryTextStyle(
-                                                    color: Color(0xff07142E),
-                                                    size: 14,
-                                                    weight: FontWeight.w600,
-                                                    fontFamily: 'Poppins',
-                                                  )),
-                                            ],
-                                          ),
-                                          onChanged: (String? newValue) {
-                                            setState(() {
-                                              _selectedValue = newValue;
-                                            });
-                                          },
-                                          items: categories.map((category) {
-                                            return DropdownMenuItem<String>(
-                                              onTap: () {
+                                              onChanged: (String? newValue) {
                                                 setState(() {
-                                                  _selectedCategoryId =
-                                                      category.id.toString();
+                                                  _selectedValue = newValue;
                                                 });
                                               },
-                                              value: category.title,
-                                              child: Text(category.title),
-                                            );
-                                          }).toList());
-                                    },
-                                  );
-                                })
-                              ],
+                                              items: categories.map((category) {
+                                                return DropdownMenuItem<String>(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _selectedCategoryId =
+                                                          category.id
+                                                              .toString();
+                                                    });
+                                                  },
+                                                  value: category.title,
+                                                  child: Text(category.title),
+                                                );
+                                              }).toList());
+                                        },
+                                      );
+                                    })
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ),
                     SizedBox(height: 20),
