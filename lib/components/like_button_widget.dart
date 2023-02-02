@@ -9,13 +9,15 @@ class LikeButtonWidget extends StatefulWidget {
   final bool isPostLiked;
   final Key? key;
 
-  const LikeButtonWidget({this.key, required this.onPostLike, required this.isPostLiked});
+  const LikeButtonWidget(
+      {this.key, required this.onPostLike, required this.isPostLiked});
 
   @override
   State<LikeButtonWidget> createState() => _LikeButtonWidgetState();
 }
 
-class _LikeButtonWidgetState extends State<LikeButtonWidget> with SingleTickerProviderStateMixin {
+class _LikeButtonWidgetState extends State<LikeButtonWidget>
+    with SingleTickerProviderStateMixin {
   double _scale = 1.0;
   bool _isLiked = false;
   AnimationController? _controller;
@@ -65,7 +67,7 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget> with SingleTickerPr
           height: _isLiked ? 20 : 22,
           width: 22,
           fit: BoxFit.fill,
-          color: _isLiked ? Colors.red : context.iconColor,
+          color: _isLiked ? Colors.red : Color(0xff6F7F92),
         ).onTap(() async {
           if (!appStore.isLoading) {
             ifNotTester(() async {

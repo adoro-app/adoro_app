@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/auth/cubit/auth_cubit.dart';
-import 'package:socialv/choose_categories/cubit/choose_meme_categories_cubit.dart';
 import 'package:socialv/main.dart';
 import 'package:socialv/models/dashboard_api_response.dart';
 import 'package:socialv/network/rest_apis.dart';
@@ -16,13 +15,14 @@ import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
 import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
-import 'package:socialv/screens/profile/cubit/profile_cubit.dart';
 import 'package:socialv/screens/profile/screens/profile_screen.dart';
 import 'package:socialv/screens/shop/components/list_tile_component.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
 
 import '../service_locator.dart';
+
+import '../models/posts/post_model.dart';
 
 int selectedIndex = 0;
 
@@ -44,7 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   late TabController tabController;
 
   bool onAnimationEnd = true;
-
+  List<PostModel> postList = [];
   List<Widget> appFragments = [];
 
   @override

@@ -15,6 +15,7 @@ class ChooseMemeCategoriesCubit extends Cubit<ChooseMemeCategoriesState> {
 
   Future<void> loadMemeCategories() async {
     emit(ChooseMemeCategoriesState.loading());
+
     final categories = await apiService.getMemeCategories();
     if (categories == null) {
       emit(ChooseMemeCategoriesState.error());

@@ -10,6 +10,7 @@ import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 import '../auth/auth_service.dart';
 import '../auth/cubit/auth_cubit.dart';
 import '../choose_categories/cubit/choose_meme_category_error.dart';
+import '../models/posts/feed.dart';
 import '../models/user/user.dart';
 import '../screens/post/cubit/create_post_error.dart';
 import '../service_locator.dart';
@@ -41,8 +42,38 @@ class ApiService {
     }
   }
 
+  Future<List<Feed>?> getFeed(Category category) async {
+    try {
+      final loginHandle = await sl.get<CredentialsStorage>().read();
+      print(loginHandle?.token);
+      if (loginHandle?.token != null) {
+        final response = await _dio.get(
+          "/feed",
+          options: Options(
+            headers: {
+              "token": loginHandle!.token,
+            },
+          ),
+          queryParameters: {"category": category.name},
+        );
+        print(response.data);
+        final feed = (response.data as List<dynamic>)
+            .map((e) => Feed.fromJson(e))
+            .toList();
+
+        return feed;
+      }
+      return null;
+    } catch (e) {
+      print('---------------------');
+      print('ERROR: $e');
+      print('---------------------');
+      return null;
+    }
+  }
+
   Future<List<UserPost>> getAllPostByUser() async {
-    final loginHandle = await AuthService(sl(), sl()).getSignedInCredentials();
+    final loginHandle = await sl.get<CredentialsStorage>().read();
     final response = await _dio.get(
       '/getAllPostByUser',
       options: Options(
@@ -199,3 +230,5 @@ class ApiService {
     }
   }
 }
+
+enum Category { trending, relevant, fresh }

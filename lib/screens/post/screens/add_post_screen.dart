@@ -55,10 +55,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                         IconButton(
                           icon: Icon(Icons.close, color: context.iconColor),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomeScreen()));
+                            Navigator.pop(context);
                           },
                         ),
                         Text('Share post',
