@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../../auth/cubit/auth_cubit.dart';
+import '../../../models/posts/user_post.dart';
 import '../../../models/user/user.dart';
 import '../../../network/api_service.dart';
 part 'profile_state.dart';
@@ -44,6 +44,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future<void> updateUserProfile({required File file}) async {
+    emit(state.copyWith(isSubmitting: true));
     final successOrFailure = await apiService.uploadProfilePic(file: file);
     successOrFailure.fold((l) {}, (r) async {
       await apiService.getUserDetails();
@@ -66,5 +67,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     }
+  }
+
+  Future<void> loadUserPosts() async {
+    emit(state.copyWith(loading: true));
+    final userPosts = await apiService.getAllPostByUser();
+    emit(state.copyWith(userPosts: userPosts, loading: false));
   }
 }

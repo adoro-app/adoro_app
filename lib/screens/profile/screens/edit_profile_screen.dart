@@ -192,8 +192,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               weight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
-                            decoration:
-                                inputDecoration(context, label: 'Full Name'),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Full Name',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           ),
                           AppTextField(
                             controller: userNameController,
@@ -203,8 +210,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               weight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
-                            decoration:
-                                inputDecoration(context, label: 'Username'),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Username',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           ),
                           AppTextField(
                             controller: mailIdController,
@@ -214,8 +228,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               weight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
-                            decoration:
-                                inputDecoration(context, label: 'mail id'),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'mail id',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           ),
                           AppTextField(
                             controller: bankNameController,
@@ -225,8 +246,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               weight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
-                            decoration:
-                                inputDecoration(context, label: 'Bank Name'),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Bank Name',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           ),
                           AppTextField(
                             controller: benificiaryNameController,
@@ -236,8 +264,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               weight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
-                            decoration: inputDecoration(context,
-                                label: 'Beneficiary Name'),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Beneficiary Name',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           ),
                           AppTextField(
                             controller: accountNoController,
@@ -247,8 +282,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               weight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
-                            decoration: inputDecoration(context,
-                                label: 'Account Number'),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'Account Number',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           ),
                           AppTextField(
                             controller: ifscController,
@@ -258,8 +300,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               weight: FontWeight.w600,
                               fontFamily: 'Poppins',
                             ),
-                            decoration:
-                                inputDecoration(context, label: 'IFSC Code'),
+                            decoration: inputDecoration(
+                              context,
+                              hint: 'IFSC Code',
+                              hintStyle: secondaryTextStyle(
+                                color: Color(0xff6F7F92).withOpacity(0.5),
+                                weight: FontWeight.w600,
+                                fontFamily: 'Poppins',
+                              ),
+                            ),
                           ),
                           30.height
                         ],

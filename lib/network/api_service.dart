@@ -4,8 +4,10 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:socialv/auth/credentials_storage.dart';
 import 'package:socialv/models/meme_category.dart';
+import 'package:socialv/models/posts/user_post.dart';
 import 'package:socialv/utils/woo_commerce/dio_extension.dart';
 
+import '../auth/auth_service.dart';
 import '../auth/cubit/auth_cubit.dart';
 import '../choose_categories/cubit/choose_meme_category_error.dart';
 import '../models/user/user.dart';
@@ -37,6 +39,20 @@ class ApiService {
       print('---------------------');
       return null;
     }
+  }
+
+  Future<List<UserPost>> getAllPostByUser() async {
+    final loginHandle = await AuthService(sl(), sl()).getSignedInCredentials();
+    final response = await _dio.get(
+      '/getAllPostByUser',
+      options: Options(
+        headers: {'token': loginHandle!.token},
+      ),
+    );
+    final userPosts = (response.data['data'] as List<dynamic>)
+        .map((e) => UserPost.fromJson(e))
+        .toList();
+    return userPosts;
   }
 
   Future<Either<Exception, User>> getUserDetails() async {
