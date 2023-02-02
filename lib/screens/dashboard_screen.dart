@@ -17,7 +17,6 @@ import 'package:socialv/screens/fragments/search_fragment.dart';
 import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
 import 'package:socialv/screens/profile/cubit/profile_cubit.dart';
-import 'package:socialv/screens/profile/screens/edit_profile_screen.dart';
 import 'package:socialv/screens/profile/screens/profile_screen.dart';
 import 'package:socialv/screens/shop/components/list_tile_component.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
@@ -506,15 +505,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
   List _screens = [
     DashboardScreen(),
-    BlocProvider(
-      create: (BuildContext context) => CreatepostCubit(sl()),
-      child: AddPostScreen(),
-    ),
-    DashboardScreen(),
-    BlocProvider(
-      create: (context) => ProfileCubit(sl()),
-      child: ProfileScreen(),
-    ),
+    null,
+    ProfileScreen(),
+    ProfileScreen(),
   ];
 
   void _updateIndex(int value) {
@@ -548,7 +541,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 24, width: 24, fit: BoxFit.cover)),
               InkWell(
                 splashFactory: InkRipple.splashFactory,
-                onTap: () => _updateIndex(1),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (BuildContext context) => CreatepostCubit(sl()),
+                        child: AddPostScreen(),
+                      ),
+                    )),
                 child: Image.asset(ic_plus_circle,
                     height: 24, width: 24, fit: BoxFit.cover),
               ),

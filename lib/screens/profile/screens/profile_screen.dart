@@ -22,34 +22,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     context.read<ProfileCubit>().loadUserPosts();
+    context.read<ProfileCubit>().getUserDetails();
     super.initState();
   }
 
   int? initialIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final user = context.read<AuthCubit>().state.user;
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(Icons.close, color: context.iconColor),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()));
-            },
-          ),
-          title: Text('Profile',
-              style: secondaryTextStyle(
-                color: Color(0xff07142E),
-                size: 20,
-                weight: FontWeight.w600,
-                fontFamily: 'Poppins',
-              )),
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.close, color: context.iconColor),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          },
         ),
-        body: SingleChildScrollView(
-          child: Column(
+        title: Text('Profile',
+            style: secondaryTextStyle(
+              color: Color(0xff07142E),
+              size: 20,
+              weight: FontWeight.w600,
+              fontFamily: 'Poppins',
+            )),
+      ),
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          return Column(
             children: [
               Stack(
                 children: [
@@ -84,11 +85,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: user?.image == null
-                                    ? Image.asset(profile_img).image
-                                    : NetworkImage(
-                                        user!.image!,
-                                      ),
+                                image: state.selectedImage != null
+                                    ? FileImage(state.selectedImage!)
+                                    : state.user?.image == null
+                                        ? Image.asset(profile_img).image
+                                        : NetworkImage(
+                                            state.user!.image!,
+                                          ),
                               ),
                             ),
                           )),
@@ -97,16 +100,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ],
               ),
               20.height,
-              // user?.beneficiaryName != null || user?.beneficiaryName != ''
-              //     ? Text(user!.beneficiaryName!,
-              //         style: secondaryTextStyle(
-              //           color: Color(0xff07142E),
-              //           size: 20,
-              //           weight: FontWeight.w600,
-              //           fontFamily: 'Poppins',
-              //         ))
-              //     : SizedBox(),
-              Text('@${user?.username ?? ""}',
+              state.user?.beneficiaryName != null
+                  ? Text(state.user!.beneficiaryName!,
+                      style: secondaryTextStyle(
+                        color: Color(0xff07142E),
+                        size: 20,
+                        weight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                      ))
+                  : SizedBox(),
+              Text('@${state.user?.username ?? ""}',
                   style: secondaryTextStyle(
                     size: 20,
                     weight: FontWeight.w600,
@@ -146,21 +149,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           )),
                     ],
                   ),
-                  12.width,
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(language.following,
-                          style: secondaryTextStyle(size: 12)),
-                      4.height,
-                      Text('116',
-                          style: boldTextStyle(
-                            size: 18,
-                            fontFamily: 'Poppins',
-                          )),
-                    ],
-                  ),
                 ],
+              ),
+              20.height,
+              InkWell(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditProfileScreen(),
+                    )),
+                child: Container(
+                  width: context.width() - 48,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                      child: Text(
+                    'Edit Profile',
+                    style: boldTextStyle(
+                        fontFamily: 'Poppins',
+                        weight: FontWeight.w600,
+                        size: 16,
+                        color: Color(0xff6F7F92)),
+                  )),
+                ),
               ),
               20.height,
               InkWell(
@@ -277,7 +291,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 },
               ),
             ],
-          ),
-        ));
+          );
+        },
+      ),
+    );
   }
 }

@@ -19,6 +19,7 @@ mixin _$ProfileState {
   bool get isSubmitting => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   File? get selectedImage => throw _privateConstructorUsedError;
+  User? get user => throw _privateConstructorUsedError;
   Either<Exception, Unit>? get successOrFailure =>
       throw _privateConstructorUsedError;
   List<UserPost> get userPosts => throw _privateConstructorUsedError;
@@ -38,8 +39,11 @@ abstract class $ProfileStateCopyWith<$Res> {
       {bool isSubmitting,
       bool loading,
       File? selectedImage,
+      User? user,
       Either<Exception, Unit>? successOrFailure,
       List<UserPost> userPosts});
+
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -58,6 +62,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? isSubmitting = null,
     Object? loading = null,
     Object? selectedImage = freezed,
+    Object? user = freezed,
     Object? successOrFailure = freezed,
     Object? userPosts = null,
   }) {
@@ -74,6 +79,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.selectedImage
           : selectedImage // ignore: cast_nullable_to_non_nullable
               as File?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
       successOrFailure: freezed == successOrFailure
           ? _value.successOrFailure
           : successOrFailure // ignore: cast_nullable_to_non_nullable
@@ -83,6 +92,18 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           : userPosts // ignore: cast_nullable_to_non_nullable
               as List<UserPost>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserCopyWith<$Res>(_value.user!, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -98,8 +119,12 @@ abstract class _$$_ProfileStateCopyWith<$Res>
       {bool isSubmitting,
       bool loading,
       File? selectedImage,
+      User? user,
       Either<Exception, Unit>? successOrFailure,
       List<UserPost> userPosts});
+
+  @override
+  $UserCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -116,6 +141,7 @@ class __$$_ProfileStateCopyWithImpl<$Res>
     Object? isSubmitting = null,
     Object? loading = null,
     Object? selectedImage = freezed,
+    Object? user = freezed,
     Object? successOrFailure = freezed,
     Object? userPosts = null,
   }) {
@@ -132,6 +158,10 @@ class __$$_ProfileStateCopyWithImpl<$Res>
           ? _value.selectedImage
           : selectedImage // ignore: cast_nullable_to_non_nullable
               as File?,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
       successOrFailure: freezed == successOrFailure
           ? _value.successOrFailure
           : successOrFailure // ignore: cast_nullable_to_non_nullable
@@ -151,6 +181,7 @@ class _$_ProfileState implements _ProfileState {
       {required this.isSubmitting,
       required this.loading,
       this.selectedImage,
+      this.user,
       this.successOrFailure,
       required final List<UserPost> userPosts})
       : _userPosts = userPosts;
@@ -161,6 +192,8 @@ class _$_ProfileState implements _ProfileState {
   final bool loading;
   @override
   final File? selectedImage;
+  @override
+  final User? user;
   @override
   final Either<Exception, Unit>? successOrFailure;
   final List<UserPost> _userPosts;
@@ -173,7 +206,7 @@ class _$_ProfileState implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isSubmitting: $isSubmitting, loading: $loading, selectedImage: $selectedImage, successOrFailure: $successOrFailure, userPosts: $userPosts)';
+    return 'ProfileState(isSubmitting: $isSubmitting, loading: $loading, selectedImage: $selectedImage, user: $user, successOrFailure: $successOrFailure, userPosts: $userPosts)';
   }
 
   @override
@@ -186,6 +219,7 @@ class _$_ProfileState implements _ProfileState {
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.selectedImage, selectedImage) ||
                 other.selectedImage == selectedImage) &&
+            (identical(other.user, user) || other.user == user) &&
             (identical(other.successOrFailure, successOrFailure) ||
                 other.successOrFailure == successOrFailure) &&
             const DeepCollectionEquality()
@@ -198,6 +232,7 @@ class _$_ProfileState implements _ProfileState {
       isSubmitting,
       loading,
       selectedImage,
+      user,
       successOrFailure,
       const DeepCollectionEquality().hash(_userPosts));
 
@@ -213,6 +248,7 @@ abstract class _ProfileState implements ProfileState {
       {required final bool isSubmitting,
       required final bool loading,
       final File? selectedImage,
+      final User? user,
       final Either<Exception, Unit>? successOrFailure,
       required final List<UserPost> userPosts}) = _$_ProfileState;
 
@@ -222,6 +258,8 @@ abstract class _ProfileState implements ProfileState {
   bool get loading;
   @override
   File? get selectedImage;
+  @override
+  User? get user;
   @override
   Either<Exception, Unit>? get successOrFailure;
   @override
