@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:socialv/choose_categories/choose_categories_page.dart';
 import 'package:socialv/main.dart';
@@ -87,9 +88,14 @@ class _SplashScreenState extends State<SplashScreen> {
                 Color(0xffFFC0CB),
                 Color(0xffFFFF00),
               ],
+              stops: [
+                0.1,
+                0.6,
+                0.9,
+              ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             )),
-            child: Center(child: Image.asset('assets/app_logo.png'))));
+            child: Center(child: SvgPicture.asset('assets/app_name.svg'))));
   }
 }

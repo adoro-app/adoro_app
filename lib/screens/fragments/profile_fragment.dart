@@ -43,7 +43,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
 
     widget.controller?.addListener(() {
       if (selectedIndex == 4) {
-        if (widget.controller?.position.pixels == widget.controller?.position.maxScrollExtent) {
+        if (widget.controller?.position.pixels ==
+            widget.controller?.position.maxScrollExtent) {
           if (!mIsLastPage) {
             mPage++;
             future = getUserPostList();
@@ -64,7 +65,8 @@ class _ProfileFragmentState extends State<ProfileFragment> {
 
   Future<void> getMemberDetails() async {
     appStore.setLoading(true);
-    await getMemberDetail(userId: appStore.loginUserId.toInt()).then((value) async {
+    await getMemberDetail(userId: appStore.loginUserId.toInt())
+        .then((value) async {
       _memberDetails = value.first;
       setState(() {});
 
@@ -113,7 +115,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ProfileHeaderComponent(avatarUrl: appStore.loginAvatarUrl, cover: _memberDetails.memberCoverImage.validate()),
+            ProfileHeaderComponent(
+                avatarUrl: appStore.loginAvatarUrl,
+                cover: _memberDetails.memberCoverImage.validate()),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -126,7 +130,10 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ).flexible(flex: 1),
-                    if (_memberDetails.isUserVerified.validate()) Image.asset(ic_tick_filled, width: 20, height: 20, color: blueTickColor).paddingSymmetric(horizontal: 4),
+                    if (_memberDetails.isUserVerified.validate())
+                      Image.asset(ic_tick_filled,
+                              width: 20, height: 20, color: blueTickColor)
+                          .paddingSymmetric(horizontal: 4),
                   ],
                 ),
                 4.height,
@@ -138,17 +145,23 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(_memberDetails.postCount.validate().toString(), style: boldTextStyle(size: 18)),
+                    Text(_memberDetails.postCount.validate().toString(),
+                        style: boldTextStyle(size: 18)),
                     4.height,
                     Text(language.posts, style: secondaryTextStyle(size: 12)),
                   ],
                 ).paddingSymmetric(vertical: 8).onTap(() {
-                  widget.controller?.animateTo(context.height() * 0.35, duration: const Duration(milliseconds: 500), curve: Curves.linear);
-                }, splashColor: Colors.transparent, highlightColor: Colors.transparent).expand(),
+                  widget.controller?.animateTo(context.height() * 0.35,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.linear);
+                },
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent).expand(),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(_memberDetails.friendsCount.validate().toString(), style: boldTextStyle(size: 18)),
+                    Text(_memberDetails.friendsCount.validate().toString(),
+                        style: boldTextStyle(size: 18)),
                     4.height,
                     Text(language.friends, style: secondaryTextStyle(size: 12)),
                   ],
@@ -156,11 +169,14 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                   ProfileFriendsScreen().launch(context).then((value) {
                     if (value ?? false) getMemberDetails();
                   });
-                }, splashColor: Colors.transparent, highlightColor: Colors.transparent).expand(),
+                },
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent).expand(),
                 Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(_memberDetails.groupsCount.validate().toString(), style: boldTextStyle(size: 18)),
+                    Text(_memberDetails.groupsCount.validate().toString(),
+                        style: boldTextStyle(size: 18)),
                     4.height,
                     Text(language.groups, style: secondaryTextStyle(size: 12)),
                   ],
@@ -168,12 +184,17 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                   GroupScreen().launch(context).then((value) {
                     if (value) getMemberDetails();
                   });
-                }, splashColor: Colors.transparent, highlightColor: Colors.transparent).expand(),
+                },
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent).expand(),
               ],
             ),
             16.height,
             Align(
-              child: Text(language.posts, style: boldTextStyle(color: context.primaryColor, size: 20)).paddingSymmetric(horizontal: 16),
+              child: Text(language.posts,
+                      style:
+                          boldTextStyle(color: context.primaryColor, size: 20))
+                  .paddingSymmetric(horizontal: 16),
               alignment: Alignment.centerLeft,
             ),
             FutureBuilder<List<PostModel>>(
@@ -182,7 +203,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                 if (snap.hasError) {
                   return NoDataWidget(
                     imageWidget: NoDataLottieWidget(),
-                    title: isError ? language.somethingWentWrong : language.noDataFound,
+                    title: isError
+                        ? language.somethingWentWrong
+                        : language.noDataFound,
                     onRetry: () {
                       isError = false;
                       LiveStream().emit(OnAddPostProfile);
@@ -195,7 +218,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                   if (snap.data.validate().isEmpty) {
                     return NoDataWidget(
                       imageWidget: NoDataLottieWidget(),
-                      title: isError ? language.somethingWentWrong : language.noDataFound,
+                      title: isError
+                          ? language.somethingWentWrong
+                          : language.noDataFound,
                       onRetry: () {
                         isError = false;
                         LiveStream().emit(OnAddPostProfile);
@@ -205,24 +230,24 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                   } else {
                     return Stack(
                       children: [
-                        AnimatedListView(
-                          padding: EdgeInsets.only(left: 8, right: 8, bottom: 50, top: 8),
-                          itemCount: _userPostList.length,
-                          slideConfiguration: SlideConfiguration(delay: 80.milliseconds, verticalOffset: 300),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return PostComponent(
-                              post: _userPostList[index],
-                              callback: () {
-                                isLoading = true;
-                                mPage = 1;
-                                getMemberDetails();
-                                future = getUserPostList();
-                              },
-                            );
-                          },
-                        ),
+                        // AnimatedListView(
+                        //   padding: EdgeInsets.only(left: 8, right: 8, bottom: 50, top: 8),
+                        //   itemCount: _userPostList.length,
+                        //   slideConfiguration: SlideConfiguration(delay: 80.milliseconds, verticalOffset: 300),
+                        //   shrinkWrap: true,
+                        //   physics: NeverScrollableScrollPhysics(),
+                        //   itemBuilder: (context, index) {
+                        //     return PostComponent(
+                        //       post: _userPostList[index],
+                        //       callback: () {
+                        //         isLoading = true;
+                        //         mPage = 1;
+                        //         getMemberDetails();
+                        //         future = getUserPostList();
+                        //       },
+                        //     );
+                        //   },
+                        // ),
                         if (mPage != 1 && isLoading)
                           Positioned(
                             bottom: 0,
@@ -239,7 +264,9 @@ class _ProfileFragmentState extends State<ProfileFragment> {
             ),
           ],
         ),
-        Observer(builder: (_) => LoadingWidget().center().visible(appStore.isLoading)),
+        Observer(
+            builder: (_) =>
+                LoadingWidget().center().visible(appStore.isLoading)),
       ],
     );
   }

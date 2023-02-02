@@ -13,10 +13,16 @@ import 'package:socialv/screens/fragments/home_fragment.dart';
 import 'package:socialv/screens/fragments/notification_fragment.dart';
 import 'package:socialv/screens/fragments/profile_fragment.dart';
 import 'package:socialv/screens/fragments/search_fragment.dart';
+import 'package:socialv/screens/post/cubit/createpost_cubit.dart';
 import 'package:socialv/screens/post/screens/add_post_screen.dart';
 import 'package:socialv/screens/profile/screens/profile_screen.dart';
+import 'package:socialv/screens/shop/components/list_tile_component.dart';
 import 'package:socialv/screens/shop/screens/initial_shop_screen.dart';
 import 'package:socialv/utils/app_constants.dart';
+
+import '../service_locator.dart';
+
+import '../models/posts/post_model.dart';
 
 int selectedIndex = 0;
 
@@ -38,7 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   late TabController tabController;
 
   bool onAnimationEnd = true;
-
+  List<PostModel> postList = [];
   List<Widget> appFragments = [];
 
   @override
@@ -125,44 +131,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         },
         color: context.primaryColor,
         child: Scaffold(
-          bottomNavigationBar: Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: BottomNavigationBar(
-                elevation: 6,
-                backgroundColor: Colors.white,
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: 0,
-                onTap: (val) async {},
-                selectedItemColor: Colors.blue[700],
-                selectedFontSize: 13,
-                unselectedFontSize: 13,
-                iconSize: 30,
-                items: [
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_home_box,
-                          height: 24, width: 24, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_plus_circle,
-                          height: 24, width: 24, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "", icon: Image.asset(ic_rank, fit: BoxFit.cover)),
-                  BottomNavigationBarItem(
-                      label: "",
-                      icon: Image.asset(ic_user,
-                          color: Colors.black,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover)),
-                ],
-              ),
-            ),
-          ),
           drawer: Drawer(
             child: ListView(
               children: [
@@ -182,8 +150,10 @@ class _DashboardScreenState extends State<DashboardScreen>
                   leading: CircleAvatar(
                     radius: 33,
                     backgroundImage: user?.image == null
-                        ? AssetImage(profile_img)
-                        : Image.network(user!.image!) as ImageProvider,
+                        ? Image.asset(profile_img).image
+                        : NetworkImage(
+                            user!.image!,
+                          ),
                   ),
                   title: Text(user?.beneficiaryName ?? '',
                       style: boldTextStyle(size: 17, weight: FontWeight.w600)),
@@ -487,38 +457,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 }
 
-class ListTileComponent extends StatelessWidget {
-  const ListTileComponent({
-    Key? key,
-    required this.title,
-    required this.icon,
-  }) : super(key: key);
-  final String title;
-  final String icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: SvgPicture.asset(icon),
-      // Image.asset(
-      //   ,
-      //   height: 24,
-      //   color: bodyWhite,
-      // ),
-      title: Transform(
-        transform: Matrix4.translationValues(-16, 0.0, 0.0),
-        child: Text(title,
-            style: secondaryTextStyle(
-                fontFamily: 'Poppins',
-                fontStyle: FontStyle.normal,
-                size: 14,
-                weight: FontWeight.w600,
-                color: Color(0xff07142E))),
-      ),
-    );
-  }
-}
-
 class TabBarWidget extends StatelessWidget {
   const TabBarWidget({
     Key? key,
@@ -532,17 +470,106 @@ class TabBarWidget extends StatelessWidget {
       height: 40,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Color(0xff00FFFF),
-            Color(0xffFFC0CB),
-            Color(0xffFFFF00),
-          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          gradient: LinearGradient(
+              colors: [
+                Color(0xff00FFFF),
+                Color(0xffFFC0CB),
+                Color(0xffFFFF00),
+              ],
+              tileMode: TileMode.clamp,
+              stops: [
+                0.0,
+                0.5,
+                1,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight),
           borderRadius: BorderRadius.circular(5)),
       child: Text(text,
           style: secondaryTextStyle(
               fontFamily: 'Poppins',
               weight: FontWeight.w600,
               color: Colors.white)),
+    );
+  }
+}
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  List _screens = [
+    DashboardScreen(),
+    null,
+    ProfileScreen(),
+    ProfileScreen(),
+  ];
+
+  void _updateIndex(int value) {
+    setState(() {
+      _currentIndex = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 4.0,
+            spreadRadius: 2.0,
+            offset: Offset(2.0, 2.0),
+          )
+        ]),
+        height: 40,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Material(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              InkWell(
+                  splashFactory: InkRipple.splashFactory,
+                  onTap: () => _updateIndex(0),
+                  child: Image.asset(ic_home_box,
+                      height: 24, width: 24, fit: BoxFit.cover)),
+              InkWell(
+                splashFactory: InkRipple.splashFactory,
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (BuildContext context) => CreatepostCubit(sl()),
+                        child: AddPostScreen(),
+                      ),
+                    )),
+                child: Image.asset(ic_plus_circle,
+                    height: 24, width: 24, fit: BoxFit.cover),
+              ),
+              InkWell(
+                  splashFactory: InkRipple.splashFactory,
+                  onTap: () => _updateIndex(2),
+                  child: Image.asset(ic_rank, fit: BoxFit.cover)),
+              InkWell(
+                splashFactory: InkRipple.splashFactory,
+                onTap: () => _updateIndex(3),
+                child: Image.asset(ic_user,
+                    color: Colors.black,
+                    height: 24,
+                    width: 24,
+                    fit: BoxFit.cover),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: _screens[_currentIndex],
     );
   }
 }

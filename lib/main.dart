@@ -16,6 +16,7 @@ import 'package:socialv/models/common_models.dart';
 import 'package:socialv/screens/auth/screens/otp_screen.dart';
 import 'package:socialv/screens/auth/screens/sign_in_screen.dart';
 import 'package:socialv/screens/dashboard_screen.dart';
+import 'package:socialv/screens/profile/cubit/profile_cubit.dart';
 import 'package:socialv/screens/splash_screen.dart';
 import 'package:socialv/service_locator.dart';
 import 'package:socialv/store/app_store.dart';
@@ -58,8 +59,19 @@ void main() async {
   });
   exitFullScreen();
 
-  runApp(BlocProvider(
-    create: (context) => AuthCubit(sl()),
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => AuthCubit(sl()),
+      ),
+      BlocProvider(
+        create: (BuildContext context) =>
+            ChooseMemeCategoriesCubit(apiService: sl()),
+      ),
+      BlocProvider(
+        create: (BuildContext context) => ProfileCubit(sl()),
+      ),
+    ],
     child: MyApp(),
   ));
 }
